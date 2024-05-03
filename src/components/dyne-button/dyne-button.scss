@@ -1,0 +1,34 @@
+@import '../../css/typography-helpers';
+
+:host {
+  display: block;
+}
+
+$variants: 'primary', 'secondary', 'tertiary', 'background';
+
+@each $variant in $variants {
+  :host([color='#{$variant}']) {
+    --md-sys-color-primary: var(--md-sys-color-#{$variant});
+    --md-sys-color-on-primary: var(--md-sys-color-on-#{$variant});
+    --md-sys-color-primary-container: var(--md-sys-color-#{$variant}-container);
+    --md-sys-color-on-primary-container: var(--md-sys-color-on-#{$variant}-container);
+    & * {
+      --_outline-color: var(--md-sys-color-#{$variant});
+    }
+  }
+}
+
+:host([size='small']) * {
+  --_container-height: 36px;
+  @extend .label-small;
+}
+
+:host([size='medium']) * {
+  --_container-height: 46px;
+  @extend .label-medium;
+}
+
+:host([size='large']) * {
+  --_container-height: 56px;
+  @extend .label-large;
+}

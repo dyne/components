@@ -1,0 +1,26 @@
+{
+  "version": 1.1,
+  "tags": [
+    {
+      "name": "dyne-button",
+      "description": {
+        "kind": "markdown",
+        "value": ""
+      },
+      "attributes": [
+        {
+          "name": "color",
+          "description": "button color could be: 'primary', 'secondary' or 'tertiary' or even 'neutral'"
+        },
+        {
+          "name": "emphasis",
+          "description": "button emphasis could be: 'low', 'medium', 'high'"
+        },
+        {
+          "name": "size",
+          "description": "button sizes are s, m, l"
+        }
+      ]
+    }
+  ]
+}

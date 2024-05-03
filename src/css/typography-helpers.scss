@@ -1,0 +1,13 @@
+$types: title, label, headline, body;
+$sizes: small, medium, large;
+
+@each $type in $types {
+  @each $size in $sizes {
+    .#{$type}-#{$size} {
+      font-family: var(--md-sys-typescale-#{$type}-#{$size}-font);
+      font-size: var(--md-sys-typescale-#{$type}-#{$size}-size);
+      line-height: var(--md-sys-typescale-#{$type}-#{$size}-line-height);
+      font-weight: var(--md-sys-typescale-#{$type}-#{$size}-weight);
+    }
+  }
+}

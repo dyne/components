@@ -5,57 +5,59 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { Color, Emphasis, Size } from "./components/types";
+export { Color, Emphasis, Size } from "./components/types";
 export namespace Components {
-    interface MyComponent {
+    interface DyneButton {
         /**
-          * The first name
+          * button color could be: 'primary', 'secondary' or 'tertiary' or even 'neutral'
          */
-        "first": string;
+        "color"?: Color;
         /**
-          * The last name
+          * button emphasis could be: 'low', 'medium', 'high'
          */
-        "last": string;
+        "emphasis"?: Emphasis;
         /**
-          * The middle name
+          * button sizes are s, m, l
          */
-        "middle": string;
+        "size"?: Size;
     }
 }
 declare global {
-    interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {
+    interface HTMLDyneButtonElement extends Components.DyneButton, HTMLStencilElement {
     }
-    var HTMLMyComponentElement: {
-        prototype: HTMLMyComponentElement;
-        new (): HTMLMyComponentElement;
+    var HTMLDyneButtonElement: {
+        prototype: HTMLDyneButtonElement;
+        new (): HTMLDyneButtonElement;
     };
     interface HTMLElementTagNameMap {
-        "my-component": HTMLMyComponentElement;
+        "dyne-button": HTMLDyneButtonElement;
     }
 }
 declare namespace LocalJSX {
-    interface MyComponent {
+    interface DyneButton {
         /**
-          * The first name
+          * button color could be: 'primary', 'secondary' or 'tertiary' or even 'neutral'
          */
-        "first"?: string;
+        "color"?: Color;
         /**
-          * The last name
+          * button emphasis could be: 'low', 'medium', 'high'
          */
-        "last"?: string;
+        "emphasis"?: Emphasis;
         /**
-          * The middle name
+          * button sizes are s, m, l
          */
-        "middle"?: string;
+        "size"?: Size;
     }
     interface IntrinsicElements {
-        "my-component": MyComponent;
+        "dyne-button": DyneButton;
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
+            "dyne-button": LocalJSX.DyneButton & JSXBase.HTMLAttributes<HTMLDyneButtonElement>;
         }
     }
 }
