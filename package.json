@@ -34,7 +34,7 @@
     "build": "stencil build",
     "test": "stencil test --spec && playwright test",
     "generate": "stencil generate",
-    "sbb": "stencil build && storybook build --docs --test",
+    "sbb": "stencil build && storybook build --docs",
     "dev": "NODE_ENV=development npm-run-all -p dev:*",
     "dev:start": "stencil build --watch --serve",
     "dev:storybook": "sleep 6 && storybook dev -p 6006"
