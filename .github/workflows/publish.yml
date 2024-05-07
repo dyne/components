@@ -28,8 +28,15 @@ jobs:
           path: ${{ env.STORE_PATH }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: ${{ runner.os }}-pnpm-store-
+      - run: npx playwright install --with-deps
       - run: pnpm i
       - run: pnpm t
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 10
 
   release:
     name: 🔖
