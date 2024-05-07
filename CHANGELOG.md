@@ -1,3 +1,11 @@
+## [1.0.5](https://github.com/dyne/components/compare/v1.0.4...v1.0.5) (2024-05-07)
+
+
+### Bug Fixes
+
+* refactor old leftover to correct package ([d12818d](https://github.com/dyne/components/commit/d12818d24a1e54b6292a7cb4211a436594c4ccad))
+* remove testing layout from documentation ([5cfbfca](https://github.com/dyne/components/commit/5cfbfca3f6159cec2bc720146ba53c7fb227f724))
+
 ## [1.0.4](https://github.com/dyne/components/compare/v1.0.3...v1.0.4) (2024-05-07)
 
 
