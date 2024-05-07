@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/dyne/components/compare/v1.0.3...v1.0.4) (2024-05-07)
+
+
+### Bug Fixes
+
+* remove deprecated README ([b232ad1](https://github.com/dyne/components/commit/b232ad15fb5dc81a7fa5527a45b73f0a0c83cc4f))
+
 ## [1.0.3](https://github.com/dyne/components/compare/v1.0.2...v1.0.3) (2024-05-07)
 
 
