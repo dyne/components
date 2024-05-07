@@ -12,22 +12,25 @@ import '@material/web/button/text-button';
   shadow: true,
 })
 export class DyneButton {
-  /** button color could be: 'primary', 'secondary' or 'tertiary' or even 'neutral' */
+  /** button color could be: 'primary', 'secondary' or 'tertiary' */
   @Prop({ reflect: true }) color?: Color = 'primary';
-  /** button sizes are s, m, l */
+  /** button sizes could be: 'small', 'medium' or 'large' */
   @Prop({ reflect: true }) size?: Size = 'medium';
-  /** button emphasis could be: 'low', 'medium', 'high' */
-  @Prop({ reflect: true }) emphasis?: Emphasis = 'medium';
+  /** button emphasis could be: 'slight', 'moderate' or 'high' */
+  @Prop({ reflect: true }) emphasis?: Emphasis = 'moderate';
 
   render() {
     let ButtonComponent;
     switch (this.emphasis) {
-      case 'low':
+      case 's':
+      case 'slight':
         ButtonComponent = 'md-text-button';
         break;
-      case 'medium':
+      case 'm':
+      case 'moderate':
         ButtonComponent = 'md-outlined-button';
         break;
+      case 'h':
       case 'high':
         ButtonComponent = 'md-filled-button';
         break;

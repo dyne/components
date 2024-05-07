@@ -10,15 +10,15 @@ export { Color, Emphasis, Size } from "./components/types";
 export namespace Components {
     interface DyneButton {
         /**
-          * button color could be: 'primary', 'secondary' or 'tertiary' or even 'neutral'
+          * button color could be: 'primary', 'secondary' or 'tertiary'
          */
         "color"?: Color;
         /**
-          * button emphasis could be: 'low', 'medium', 'high'
+          * button emphasis could be: 'slight', 'moderate' or 'high'
          */
         "emphasis"?: Emphasis;
         /**
-          * button sizes are s, m, l
+          * button sizes could be: 'small', 'medium' or 'large'
          */
         "size"?: Size;
     }
@@ -37,15 +37,15 @@ declare global {
 declare namespace LocalJSX {
     interface DyneButton {
         /**
-          * button color could be: 'primary', 'secondary' or 'tertiary' or even 'neutral'
+          * button color could be: 'primary', 'secondary' or 'tertiary'
          */
         "color"?: Color;
         /**
-          * button emphasis could be: 'low', 'medium', 'high'
+          * button emphasis could be: 'slight', 'moderate' or 'high'
          */
         "emphasis"?: Emphasis;
         /**
-          * button sizes are s, m, l
+          * button sizes could be: 'small', 'medium' or 'large'
          */
         "size"?: Size;
     }

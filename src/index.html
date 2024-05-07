@@ -15,19 +15,25 @@
     </style>
   </head>
   <body class="p-8">
-    <div class="grid grid-cols-3 gap-8">
-        <dyne-button size="small" color="primary">small / primary</dyne-button>
-        <dyne-button size="small" color="secondary">small / secondary</dyne-button>
-        <dyne-button size="small" color="tertiary">small / tertiary</dyne-button>
+    <div class="grid grid-cols-3 gap-4" id="buttons"></div>
+    <script>
+      const sizes = ['small', 'medium', 'large'];
+      const colors = ['primary', 'secondary', 'tertiary'];
+      const emphasisLevels = ['slight', 'moderate', 'high'];
 
-        <dyne-button size="medium" color="primary">medium / primary</dyne-button>
-        <dyne-button size="medium" color="secondary">medium / secondary</dyne-button>
-        <dyne-button size="medium" color="tertiary">medium / tertiary</dyne-button>
+      let gridHTML = '';
 
-        <dyne-button size="large" color="primary">large / primary</dyne-button>
-        <dyne-button size="large" color="secondary">large / secondary</dyne-button>
-        <dyne-button size="large" color="tertiary">large / tertiary</dyne-button>
-      </div>
-    </div>
+      emphasisLevels.map(emphasis => {
+        sizes.map(size => {
+          gridHTML += `<div class="flex flex-col gap-1">`;
+          colors.map(color => {
+            gridHTML += `<dyne-button size="${size}" color="${color}" emphasis="${emphasis}">${size} / ${color} / ${emphasis}</dyne-button>\n`;
+          });
+          gridHTML += `</div>`;
+        });
+      });
+
+      document.getElementById('buttons').innerHTML = gridHTML;
+    </script>
   </body>
 </html>
