@@ -51,6 +51,7 @@ jobs:
       - name: pnpm/actions-setup@v3
         with:
           version: 8
+      - run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
       - uses: actions/cache@v4
         with:
           path: ${{ env.STORE_PATH }}
@@ -77,6 +78,7 @@ jobs:
       - uses: pnpm/action-setup@v3
         with:
           version: 8
+      - run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
       - uses: actions/cache@v4
         with:
           path: ${{ env.STORE_PATH }}
