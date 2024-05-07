@@ -10,15 +10,15 @@
       "attributes": [
         {
           "name": "color",
-          "description": "button color could be: 'primary', 'secondary' or 'tertiary' or even 'neutral'"
+          "description": "button color could be: 'primary', 'secondary' or 'tertiary'"
         },
         {
           "name": "emphasis",
-          "description": "button emphasis could be: 'low', 'medium', 'high'"
+          "description": "button emphasis could be: 'slight', 'moderate' or 'high'"
         },
         {
           "name": "size",
-          "description": "button sizes are s, m, l"
+          "description": "button sizes could be: 'small', 'medium' or 'large'"
         }
       ]
     }

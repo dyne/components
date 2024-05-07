@@ -7,7 +7,9 @@
 $variants: 'primary', 'secondary', 'tertiary', 'background';
 
 @each $variant in $variants {
-  :host([color='#{$variant}']) {
+  $alias: str-slice($variant, 1, 1);
+  :host([color='#{$variant}']),
+  :host([color='#{$alias}']) {
     --md-sys-color-primary: var(--md-sys-color-#{$variant});
     --md-sys-color-on-primary: var(--md-sys-color-on-#{$variant});
     --md-sys-color-primary-container: var(--md-sys-color-#{$variant}-container);
@@ -18,17 +20,19 @@ $variants: 'primary', 'secondary', 'tertiary', 'background';
   }
 }
 
-:host([size='small']) * {
-  --_container-height: 36px;
-  @extend .label-small;
+:host([size='l']) *,
+:host([size='large']) * {
+  --_container-height: 56px;
+  @extend .label-large;
 }
 
+:host([size='medium']) *,
 :host([size='medium']) * {
   --_container-height: 46px;
   @extend .label-medium;
 }
 
-:host([size='large']) * {
-  --_container-height: 56px;
-  @extend .label-large;
+:host([size='small']) * {
+  --_container-height: 36px;
+  @extend .label-small;
 }

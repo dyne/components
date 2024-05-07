@@ -13,28 +13,28 @@
       "import": "./dist/dyne-components/dyne-components.esm.js",
       "require": "./dist/dyne-components/dyne-components.cjs.js"
     },
-    "./my-component": {
-      "import": "./dist/components/my-component.js",
-      "types": "./dist/components/my-component.d.js"
+    "./dyne-button": {
+      "import": "./dist/components/dyne-button.js",
+      "types": "./dist/components/dyne-button.d.ts"
     }
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ionic-team/stencil-component-starter.git"
+    "url": "https://github.com/dyne/components.git"
   },
   "files": [
     "dist/",
     "loader/"
   ],
   "scripts": {
-    "clean": "rm -rf .stencil/ dist/ loader www",
+    "clean": "rm -rf .stencil/ dist/ loader www storybook-static",
     "build": "stencil build",
     "test": "stencil test --spec && playwright test",
     "generate": "stencil generate",
-    "build-storybook": "sb build --docs -s dist",
+    "sbb": "stencil build && storybook build --docs --test",
     "dev": "NODE_ENV=development npm-run-all -p dev:*",
     "dev:start": "stencil build --watch --serve",
-    "dev:storybook": "sleep 6 && sb dev -p 6006"
+    "dev:storybook": "sleep 6 && storybook dev -p 6006"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^1.3.3",
@@ -42,6 +42,12 @@
     "@fontsource-variable/syne": "^5.0.20",
     "@material/web": "^1.4.1",
     "@playwright/test": "^1.43.1",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/commit-analyzer": "^12.0.0",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^10.0.3",
+    "@semantic-release/npm": "^12.0.0",
+    "@semantic-release/release-notes-generator": "^13.0.0",
     "@stencil-community/postcss": "^2.2.0",
     "@stencil/core": "^4.16.0",
     "@stencil/playwright": "^0.2.0",
@@ -67,7 +73,8 @@
     "stencil-tailwind-plugin": "^1.8.0",
     "storybook": "^8.0.8",
     "tailwindcss": "^3.4.3",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "vite": "^5.2.11"
   },
   "license": "AGPL-3.0-only",
   "dependencies": {
@@ -75,5 +82,5 @@
     "lucide-react": "^0.372.0",
     "zenroom": "^4.26.2"
   },
-  "packageManager": "pnpm@9.0.6+sha1.648f6014eb363abb36618f2ba59282a9eeb3e879"
+  "packageManager": "pnpm@9.1.0+sha512.67f5879916a9293e5cf059c23853d571beaf4f753c707f40cb22bed5fb1578c6aad3b6c4107ccb3ba0b35be003eb621a16471ac836c87beb53f9d54bb4612724"
 }

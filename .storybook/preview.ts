@@ -8,6 +8,7 @@ const preview: Preview = {
   parameters: {
     actions: { argTypesRegex: '^on[A-Z].*' },
     docs: { toc: true, themes: dyneTheme },
+    layout: 'centered',
   },
 };
 
