@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/dyne/components/compare/v1.0.0...v1.0.1) (2024-05-07)
+
+
+### Bug Fixes
+
+* github pages publishing ([5dca00a](https://github.com/dyne/components/commit/5dca00a3b75cd4ff4f47644f6fd3ee4176de2ade))
+
 # 1.0.0 (2024-05-07)
 
 
