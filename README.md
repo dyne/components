@@ -32,8 +32,18 @@ This software is meant for the Dyne.org hackers that want to easily implement we
 ### To use it add to your html page the following:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@didroom/components/dist/dyne-components/dyne-components.css" />
-<script type="module" src="https://cdn.jsdelivr.net/npm/@didroom/components/dist/dyne-components/dyne-components.esm.js"></script>
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@dyne/components/dist/dyne-components/dyne-components.css" />
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@dyne/components/dist/dyne-components/dyne-components.esm.js"></script>
+</head>
+<body>
+    <dyne-button emphasis="high">I'm useless but I love you 🥰</dyne-button>
+</body>
+</html>
 ```
 
 for the list of components please head your browser to
