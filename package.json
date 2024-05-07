@@ -2,6 +2,9 @@
   "name": "@dyne/components",
   "version": "1.0.2",
   "description": " ♻️ Recycled UI for dyners",
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
   "types": "dist/types/index.d.ts",
