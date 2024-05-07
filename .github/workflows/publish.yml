@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   test:
-    name: 🧪 t
+    name: 🧪
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -32,7 +32,7 @@ jobs:
       - run: pnpm t
 
   release:
-    name: 🔖 r
+    name: 🔖
     needs: test
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
@@ -44,7 +44,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-      - name: pnpm/actions-setup@v3
+      - uses: pnpm/actions-setup@v3
         with:
           version: 8
       - uses: actions/cache@v4
@@ -57,8 +57,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
   docs:
-    name: 📚 d
+    name: 📚
     needs: release
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
