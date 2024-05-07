@@ -1,7 +1,7 @@
 {
-  "name": "dyne-components",
+  "name": "@dyne/components",
   "version": "1.0.0",
-  "description": "Stencil Component Starter",
+  "description": " ♻️ Recycled UI for dyners",
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
   "types": "dist/types/index.d.ts",

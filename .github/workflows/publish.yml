@@ -22,10 +22,28 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 10
+      - run: pnpm sbb
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: storybook-static
+
+  docs:
+    name: 📚
+    needs: test
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - uses: actions/deploy-pages@v4
 
   release:
     name: 🔖
-    needs: test
+    needs: docs
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
@@ -40,19 +58,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-  docs:
-    name: 📚
-    needs: release
-    if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    steps:
-      - uses: dyne/pnpm@v1
-      - uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
-        with:
-          install_command: pnpm i
-          build_command: pnpm run sbb
-          path: storybook-static
 
