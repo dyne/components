@@ -17,7 +17,7 @@ jobs:
     name: 🧪
     runs-on: ubuntu-latest
     steps:
-      - uses: dyne/workflows/.github/actions/setup-pnpm.yml@main
+      - uses: dyne/pnpm@v1
       - run: npx playwright install --with-deps
       - run: pnpm t
       - uses: actions/upload-artifact@v4
