@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/dyne/components/compare/v1.0.2...v1.0.3) (2024-05-07)
+
+
+### Bug Fixes
+
+* 🤦 allow public publishing! ([1cc247b](https://github.com/dyne/components/commit/1cc247bdb9256e35d5b77b06cc0cd24c72819358))
+
 ## [1.0.2](https://github.com/dyne/components/compare/v1.0.1...v1.0.2) (2024-05-07)
 
 
