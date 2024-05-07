@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/dyne/components/compare/v1.0.1...v1.0.2) (2024-05-07)
+
+
+### Bug Fixes
+
+* 👌 let's try to publish on npmjs.com ([4df4fce](https://github.com/dyne/components/commit/4df4fce60e47a9c450a8cbeeeaf3f2bff76c1c81))
+
 ## [1.0.1](https://github.com/dyne/components/compare/v1.0.0...v1.0.1) (2024-05-07)
 
 
