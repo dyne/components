@@ -22,6 +22,9 @@ export namespace Components {
          */
         "size"?: Size;
     }
+    interface DyneInline {
+        "gap"?: number;
+    }
 }
 declare global {
     interface HTMLDyneButtonElement extends Components.DyneButton, HTMLStencilElement {
@@ -30,8 +33,15 @@ declare global {
         prototype: HTMLDyneButtonElement;
         new (): HTMLDyneButtonElement;
     };
+    interface HTMLDyneInlineElement extends Components.DyneInline, HTMLStencilElement {
+    }
+    var HTMLDyneInlineElement: {
+        prototype: HTMLDyneInlineElement;
+        new (): HTMLDyneInlineElement;
+    };
     interface HTMLElementTagNameMap {
         "dyne-button": HTMLDyneButtonElement;
+        "dyne-inline": HTMLDyneInlineElement;
     }
 }
 declare namespace LocalJSX {
@@ -49,8 +59,12 @@ declare namespace LocalJSX {
          */
         "size"?: Size;
     }
+    interface DyneInline {
+        "gap"?: number;
+    }
     interface IntrinsicElements {
         "dyne-button": DyneButton;
+        "dyne-inline": DyneInline;
     }
 }
 export { LocalJSX as JSX };
@@ -58,6 +72,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "dyne-button": LocalJSX.DyneButton & JSXBase.HTMLAttributes<HTMLDyneButtonElement>;
+            "dyne-inline": LocalJSX.DyneInline & JSXBase.HTMLAttributes<HTMLDyneInlineElement>;
         }
     }
 }
