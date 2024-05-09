@@ -9,7 +9,7 @@ test.describe('dyne-inline', () => {
     // Rest of test
     const component = await page.locator('dyne-inline');
     await expect(component).toHaveCSS('display', 'flex');
-    await expect(component).toHaveClass('flex flex-row hydrated');
+    await expect(component).toHaveClass('hydrated');
     await expect(component).toHaveText(`
     Click me
     
