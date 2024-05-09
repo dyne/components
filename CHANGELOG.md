@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/dyne/components/compare/v1.0.5...v1.1.0) (2024-05-09)
+
+
+### Features
+
+* **dyne-inline:** add ability to put el inline ([#3](https://github.com/dyne/components/issues/3)) ([3d8973f](https://github.com/dyne/components/commit/3d8973f1ccd3e485e50dac81fee2790884ff92dc))
+
 ## [1.0.5](https://github.com/dyne/components/compare/v1.0.4...v1.0.5) (2024-05-07)
 
 
