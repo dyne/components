@@ -30,7 +30,7 @@ export const config: Config = {
     {
       type: 'www',
       serviceWorker: null, // disable service workers
-      copy: [{ src: '**/*.html' }, { src: '**/*.css' }]
+      copy: [{ src: '**/*.html' }, { src: '**/*.css' }],
     },
     {
       type: 'docs-vscode',
@@ -40,7 +40,7 @@ export const config: Config = {
   testing: {
     browserHeadless: 'new',
     // Stencil Test Runner will no longer execute any 'e2e.ts` files
-    testRegex: '(/__tests__/.*|(\\.|/)(test|spec)|[//](e2e))\\.[jt]sx?$'
+    testRegex: '(/__tests__/.*|(\\.|/)(test|spec)|[//](e2e))\\.[jt]sx?$',
   },
   plugins: [sass(), tailwind(), tailwindHMR()],
   rollupPlugins: {

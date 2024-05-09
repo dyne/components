@@ -21,6 +21,19 @@
           "description": "button sizes could be: 'small', 'medium' or 'large'"
         }
       ]
+    },
+    {
+      "name": "dyne-inline",
+      "description": {
+        "kind": "markdown",
+        "value": ""
+      },
+      "attributes": [
+        {
+          "name": "gap",
+          "description": ""
+        }
+      ]
     }
   ]
 }

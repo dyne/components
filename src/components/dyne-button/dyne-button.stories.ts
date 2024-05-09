@@ -1,5 +1,5 @@
+import type { Components } from '@/src/components.js';
 import { Meta, StoryObj } from '@storybook/html';
-import type { Components } from '../../components.js';
 import { ColorArgTypes, EmphasisArgTypes, SizeArgTypes } from '../types.js';
 
 const meta = {
@@ -15,6 +15,12 @@ const meta = {
     emphasis: 'moderate',
     color: 'primary',
     size: 'medium',
+  },
+  parameters: {
+    variants: {
+      enable: true,
+      include: ['size', 'color'],
+    },
   },
 } satisfies Meta<Components.DyneButton>;
 
