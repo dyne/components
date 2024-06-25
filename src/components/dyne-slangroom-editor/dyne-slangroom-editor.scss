@@ -1,0 +1,22 @@
+@import '../../css/typography-helpers';
+
+:host {
+  display: block;
+  background-color: aliceblue;
+}
+
+.string {
+  @apply text-neutral-600;
+}
+.number {
+  color: darkorange;
+}
+.boolean {
+  color: blue;
+}
+.null {
+  color: magenta;
+}
+.key {
+  @apply text-indigo-500 font-bold;
+}

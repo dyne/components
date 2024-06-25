@@ -25,6 +25,12 @@ export namespace Components {
     interface DyneInline {
         "gap"?: number;
     }
+    interface DyneSlangroom {
+    }
+    interface DyneSlangroomEditor {
+        "getEditorContent": () => Promise<string>;
+        "setEditorContent": (content: string) => Promise<void>;
+    }
 }
 declare global {
     interface HTMLDyneButtonElement extends Components.DyneButton, HTMLStencilElement {
@@ -39,9 +45,23 @@ declare global {
         prototype: HTMLDyneInlineElement;
         new (): HTMLDyneInlineElement;
     };
+    interface HTMLDyneSlangroomElement extends Components.DyneSlangroom, HTMLStencilElement {
+    }
+    var HTMLDyneSlangroomElement: {
+        prototype: HTMLDyneSlangroomElement;
+        new (): HTMLDyneSlangroomElement;
+    };
+    interface HTMLDyneSlangroomEditorElement extends Components.DyneSlangroomEditor, HTMLStencilElement {
+    }
+    var HTMLDyneSlangroomEditorElement: {
+        prototype: HTMLDyneSlangroomEditorElement;
+        new (): HTMLDyneSlangroomEditorElement;
+    };
     interface HTMLElementTagNameMap {
         "dyne-button": HTMLDyneButtonElement;
         "dyne-inline": HTMLDyneInlineElement;
+        "dyne-slangroom": HTMLDyneSlangroomElement;
+        "dyne-slangroom-editor": HTMLDyneSlangroomEditorElement;
     }
 }
 declare namespace LocalJSX {
@@ -62,9 +82,15 @@ declare namespace LocalJSX {
     interface DyneInline {
         "gap"?: number;
     }
+    interface DyneSlangroom {
+    }
+    interface DyneSlangroomEditor {
+    }
     interface IntrinsicElements {
         "dyne-button": DyneButton;
         "dyne-inline": DyneInline;
+        "dyne-slangroom": DyneSlangroom;
+        "dyne-slangroom-editor": DyneSlangroomEditor;
     }
 }
 export { LocalJSX as JSX };
@@ -73,6 +99,8 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "dyne-button": LocalJSX.DyneButton & JSXBase.HTMLAttributes<HTMLDyneButtonElement>;
             "dyne-inline": LocalJSX.DyneInline & JSXBase.HTMLAttributes<HTMLDyneInlineElement>;
+            "dyne-slangroom": LocalJSX.DyneSlangroom & JSXBase.HTMLAttributes<HTMLDyneSlangroomElement>;
+            "dyne-slangroom-editor": LocalJSX.DyneSlangroomEditor & JSXBase.HTMLAttributes<HTMLDyneSlangroomEditorElement>;
         }
     }
 }
