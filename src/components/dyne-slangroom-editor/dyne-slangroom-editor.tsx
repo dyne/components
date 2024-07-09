@@ -1,11 +1,12 @@
 import { Component, Element, Method, State, h } from '@stencil/core';
 
 import { basicSetup } from 'codemirror';
-import { dracula } from 'thememirror';
+// import { dracula } from 'thememirror';
 import { defaultKeymap } from '@codemirror/commands';
 import { EditorState, EditorStateConfig, Extension } from '@codemirror/state';
 import { EditorView, keymap } from '@codemirror/view';
 import '@slangroom/browser/build/slangroom.js';
+import { json } from '@codemirror/lang-json';
 
 //
 
@@ -103,11 +104,11 @@ Then print data`;
         }),
         data: createEditor(dataEditorContainer, {
           doc: 'asdsadw',
-          extensions,
+          extensions: [extensions, json()],
         }),
         keys: createEditor(keysEditorContainer, {
           doc: 'ascxa',
-          extensions,
+          extensions: [extensions, json()],
         }),
       };
     }
@@ -170,7 +171,7 @@ Then print data`;
 // -- Utils -- //
 
 function createEditor(parent: Element, config: EditorStateConfig = {}) {
-  const state = EditorState.create({ ...config, extensions: [dracula, basicSetup, config.extensions ?? []] });
+  const state = EditorState.create({ ...config, extensions: [basicSetup, config.extensions ?? []] });
   return new EditorView({
     state,
     parent,
