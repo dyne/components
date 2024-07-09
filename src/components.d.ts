@@ -6,7 +6,9 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { Color, Emphasis, Size } from "./components/types";
+import { EditorName } from "./components/dyne-slangroom-editor/dyne-slangroom-editor";
 export { Color, Emphasis, Size } from "./components/types";
+export { EditorName } from "./components/dyne-slangroom-editor/dyne-slangroom-editor";
 export namespace Components {
     interface DyneButton {
         /**
@@ -26,8 +28,8 @@ export namespace Components {
         "gap"?: number;
     }
     interface DyneSlangroomEditor {
-        "getEditorContent": () => Promise<string>;
-        "setEditorContent": (content: string) => Promise<void>;
+        "getEditorContent": (editorName: EditorName) => Promise<string>;
+        "setEditorContent": (editorName: EditorName, content: string) => Promise<void>;
     }
 }
 declare global {

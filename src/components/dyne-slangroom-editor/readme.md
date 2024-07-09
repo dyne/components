@@ -5,9 +5,15 @@
 
 ## Methods
 
-### `getEditorContent() => Promise<string>`
+### `getEditorContent(editorName: EditorName) => Promise<string>`
 
 
+
+#### Parameters
+
+| Name         | Type                           | Description |
+| ------------ | ------------------------------ | ----------- |
+| `editorName` | `"script" \| "data" \| "keys"` |             |
 
 #### Returns
 
@@ -15,15 +21,16 @@ Type: `Promise<string>`
 
 
 
-### `setEditorContent(content: string) => Promise<void>`
+### `setEditorContent(editorName: EditorName, content: string) => Promise<void>`
 
 
 
 #### Parameters
 
-| Name      | Type     | Description |
-| --------- | -------- | ----------- |
-| `content` | `string` |             |
+| Name         | Type                           | Description |
+| ------------ | ------------------------------ | ----------- |
+| `editorName` | `"script" \| "data" \| "keys"` |             |
+| `content`    | `string`                       |             |
 
 #### Returns
 
