@@ -36,14 +36,6 @@
       ]
     },
     {
-      "name": "dyne-slangroom",
-      "description": {
-        "kind": "markdown",
-        "value": ""
-      },
-      "attributes": []
-    },
-    {
       "name": "dyne-slangroom-editor",
       "description": {
         "kind": "markdown",
