@@ -36,13 +36,11 @@ Type: `Promise<void>`
 
 ### Depends on
 
-- [dyne-inline](../dyne-inline)
 - [dyne-button](../dyne-button)
 
 ### Graph
 ```mermaid
 graph TD;
-  dyne-slangroom-editor --> dyne-inline
   dyne-slangroom-editor --> dyne-button
   style dyne-slangroom-editor fill:#f9f,stroke:#333,stroke-width:4px
 ```

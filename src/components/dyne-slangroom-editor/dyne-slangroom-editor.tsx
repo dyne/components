@@ -1,5 +1,6 @@
 import { Component, Element, Method, State, h } from '@stencil/core';
 
+import { basicSetup } from 'codemirror';
 import { defaultKeymap } from '@codemirror/commands';
 import { EditorState } from '@codemirror/state';
 import { EditorView, keymap } from '@codemirror/view';
@@ -60,7 +61,7 @@ Given I connect to 'did_url' and do get and output into 'did'
 Given I have a 'string dictionary' named 'did'
 Given I have a 'string' named 'foo'
 Then print data`,
-        extensions: [keymap.of([...defaultKeymap, { key: 'Ctrl-Enter', run: this.executeContract.bind(this) }])],
+        extensions: [basicSetup, keymap.of([...defaultKeymap, { key: 'Ctrl-Enter', run: this.executeContract.bind(this) }])],
       });
 
       this.editorView = new EditorView({
@@ -121,7 +122,7 @@ Then print data`,
 
   render() {
     return (
-      <dyne-inline>
+      <div>
         <div>
           <div class="editor-container"></div>
           <dyne-button onClick={() => this.executeContract()}>Run Contract</dyne-button>
@@ -131,7 +132,7 @@ Then print data`,
           <pre id="trace" class="font-mono border border-red-400"></pre>
           <pre id="heap" class="font-mono border border-red-400"></pre>
         </div>
-      </dyne-inline>
+      </div>
     );
   }
 }
