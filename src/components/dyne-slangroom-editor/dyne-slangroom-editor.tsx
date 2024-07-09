@@ -1,6 +1,7 @@
 import { Component, Element, Method, State, h } from '@stencil/core';
 
 import { basicSetup } from 'codemirror';
+import { dracula } from 'thememirror';
 import { defaultKeymap } from '@codemirror/commands';
 import { EditorState, EditorStateConfig, Extension } from '@codemirror/state';
 import { EditorView, keymap } from '@codemirror/view';
@@ -169,7 +170,7 @@ Then print data`;
 // -- Utils -- //
 
 function createEditor(parent: Element, config: EditorStateConfig = {}) {
-  const state = EditorState.create({ ...config, extensions: [basicSetup, config.extensions ?? []] });
+  const state = EditorState.create({ ...config, extensions: [dracula, basicSetup, config.extensions ?? []] });
   return new EditorView({
     state,
     parent,

@@ -90,6 +90,7 @@
     "@types/node": "^20.14.8",
     "codemirror": "^6.0.1",
     "lucide-react": "^0.396.0",
+    "thememirror": "^2.0.1",
     "zenroom": "^4.32.3"
   }
 }
