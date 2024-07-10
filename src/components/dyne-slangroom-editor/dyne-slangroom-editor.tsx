@@ -1,4 +1,4 @@
-import { Component, Element, Method, State, h } from '@stencil/core';
+import { Component, Element, Method, State, h, Watch } from '@stencil/core';
 
 import { basicSetup } from 'codemirror';
 // import { dracula } from 'thememirror';
@@ -10,45 +10,20 @@ import { json } from '@codemirror/lang-json';
 
 //
 
-const SCRIPT_EDITOR_ID = 'script-editor';
-const DATA_EDITOR_ID = 'data-editor';
-const KEYS_EDITOR_ID = 'keys-editor';
+const contractSample = `Rule unknown ignore
+Given I connect to 'did_url' and do get and output into 'did'
+Given I have a 'string dictionary' named 'did'
+Given I have a 'string' named 'foo'
+Then print data`;
+
+const dataSample = `{
+  "foo": "bar",
+  "did_url": "https://did.dyne.org/dids/did:dyne:sandbox.test:pEn78CGNEKvMR7DJQ1yvUVUpAHKzsBz45mQw3zD2js9"
+}`;
+
+const HIDDEN_CLASS = 'hidden';
 
 //
-
-function highlight(text) {
-  const json = JSON.stringify(JSON.parse(text), null, 3).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
-    var cls = 'number';
-    if (/^"/.test(match)) {
-      if (/:$/.test(match)) {
-        cls = 'key';
-      } else {
-        cls = 'string';
-      }
-    } else if (/true|false/.test(match)) {
-      cls = 'boolean';
-    } else if (/null/.test(match)) {
-      cls = 'null';
-    }
-    return '<span class="' + cls + '">' + match + '</span>';
-  });
-}
-
-const parse = (token, text) => {
-  const line = text.split(token)[1];
-  const value = line.split('"')[0];
-
-  return highlight(atob(value.trim()));
-};
-
-function trace(t) {
-  return '<h3>Trace</h3>' + parse('J64 TRACE:', t);
-}
-
-function heap(t) {
-  return '<h3>Heap</h3>' + parse('J64 HEAP:', t);
-}
 
 @Component({
   tag: 'dyne-slangroom-editor',
@@ -57,15 +32,19 @@ function heap(t) {
 })
 export class DyneSlangroomEditor {
   @Element() el: HTMLElement;
-  @State() output: string;
-  @State() trace: string;
-  @State() heap: string;
+
+  @State() contractResult: ExecuteContractResult | undefined = undefined;
+  @State() isRunning = false;
 
   private editors: {
-    script: EditorView;
+    contract: EditorView;
     data: EditorView;
     keys: EditorView;
+    output: EditorView;
+    // error: EditorView;
   };
+
+  //
 
   async componentDidLoad() {
     this.createEditors();
@@ -85,83 +64,108 @@ export class DyneSlangroomEditor {
   }
 
   private createEditors() {
-    const extensions: Extension = [keymap.of([...defaultKeymap, { key: 'Ctrl-Enter', run: this.executeContract.bind(this) }])];
+    const extensions: Extension = [keymap.of([...defaultKeymap, { key: 'Ctrl-Enter', run: this.executeSlangroomContract.bind(this) }])];
 
-    const contractSample = `Rule unknown ignore
-Given I connect to 'did_url' and do get and output into 'did'
-Given I have a 'string dictionary' named 'did'
-Given I have a 'string' named 'foo'
-Then print data`;
-
-    const scriptEditorContainer = this.el.shadowRoot.querySelector(`.${SCRIPT_EDITOR_ID}`);
-    const dataEditorContainer = this.el.shadowRoot.querySelector(`.${DATA_EDITOR_ID}`);
-    const keysEditorContainer = this.el.shadowRoot.querySelector(`.${KEYS_EDITOR_ID}`);
-    if (scriptEditorContainer && dataEditorContainer && keysEditorContainer) {
-      this.editors = {
-        script: createEditor(scriptEditorContainer, {
-          doc: contractSample,
-          extensions,
-        }),
-        data: createEditor(dataEditorContainer, {
-          doc: 'asdsadw',
-          extensions: [extensions, json()],
-        }),
-        keys: createEditor(keysEditorContainer, {
-          doc: 'ascxa',
-          extensions: [extensions, json()],
-        }),
-      };
-    }
+    this.editors = {
+      contract: this.initalizeEditor('contract', {
+        doc: contractSample,
+        extensions,
+      }),
+      data: this.initalizeEditor('data', {
+        doc: dataSample,
+        extensions: [extensions, json()],
+      }),
+      keys: this.initalizeEditor('keys', {
+        doc: '{}',
+        extensions: [extensions, json()],
+      }),
+      output: this.initalizeEditor('output', { extensions: [json()] }),
+      // error: this.initalizeEditor('error', { extensions: [json()] }),
+    };
   }
 
-  private async executeContract(): Promise<boolean> {
-    const contract = await this.getEditorContent('script');
+  private initalizeEditor(editorName: EditorName, config: EditorStateConfig = {}) {
+    const container = this.getEditorContainer(editorName);
+    return createEditor(container, config);
+  }
+
+  private async executeSlangroomContract(): Promise<boolean> {
+    this.contractResult = undefined;
+    this.isRunning = true;
+
+    const contract = await this.getEditorContent('contract');
     const data = await this.getEditorContent('data');
     const keys = await this.getEditorContent('keys');
-    try {
-      console.log('Executing contract:', contract, 'with window.slangroom:', window['slangroom']);
-      const result = await window['slangroom'].execute(contract, {
-        data: parseJsonObjectWithFallback(data),
-        keys: parseJsonObjectWithFallback(keys),
-      });
-      this.output = JSON.stringify(result.result, null, 2);
-    } catch (error) {
-      console.log(error);
-      this.trace = error.message;
-      this.heap = error.message;
-    }
-    this.updateOutput();
+
+    this.contractResult = await executeContract({
+      contract,
+      data: parseJsonObjectWithFallback(data),
+      keys: parseJsonObjectWithFallback(keys),
+    });
+
+    this.isRunning = false;
     return true; // Prevent default behavior
   }
 
-  private updateOutput() {
-    const outputDiv = this.el.shadowRoot.querySelector('#output');
-    const traceDiv = this.el.shadowRoot.querySelector('#trace');
-    const heapDiv = this.el.shadowRoot.querySelector('#heap');
-    if (this.output) outputDiv.innerHTML = highlight(this.output);
-    if (this.trace && this.heap) {
-      traceDiv.innerHTML = trace(this.trace);
-      heapDiv.innerHTML = heap(this.heap);
+  private getErrorMessage() {
+    if (this.contractResult?.success === false) {
+      return this.contractResult.error;
     }
   }
+
+  //
+
+  getEditorContainer(editorName: EditorName) {
+    const editorContainer = this.el.shadowRoot?.getElementById(editorName);
+    if (!editorContainer) throw new Error('Container not initialized');
+    return editorContainer;
+  }
+
+  //
+
+  @Watch('contractResult')
+  showResult() {
+    if (this.contractResult === undefined) {
+      // this.hideEditor('error');
+      this.hideEditor('output');
+    } else if (this.contractResult.success === true) {
+      this.showEditor('output');
+      this.setEditorContent('output', JSON.stringify(this.contractResult.value, null, 2));
+    } else if (this.contractResult.success === false) {
+      // this.showEditor('error');
+      console.log(this.contractResult.error);
+      // this.setEditorContent('error', this.error);
+    }
+  }
+
+  hideEditor(name: EditorName) {
+    this.getEditorContainer(name).classList.add(HIDDEN_CLASS);
+  }
+
+  showEditor(name: EditorName) {
+    this.getEditorContainer(name).classList.remove(HIDDEN_CLASS);
+  }
+
+  //
 
   render() {
     return (
       <div>
-        <div>
-          <div class={SCRIPT_EDITOR_ID}></div>
+        <div class="space-y-4">
+          <EditorContainer name="contract" />
+          <EditorContainer name="data" />
+          <EditorContainer name="keys" />
         </div>
-        <div>
-          <div class={DATA_EDITOR_ID}></div>
-        </div>
-        <div>
-          <div class={KEYS_EDITOR_ID}></div>
-        </div>
-        <dyne-button onClick={() => this.executeContract()}>Run Contract</dyne-button>
+
+        <dyne-button onClick={() => this.executeSlangroomContract()}>Run Contract</dyne-button>
+
+        {this.isRunning && <p>loading...</p>}
+
+        {Boolean(this.getErrorMessage()) && <ErrorRenderer error={this.getErrorMessage()!} />}
+
         <div class="gap-10">
-          <pre id="output" class="font-mono"></pre>
-          <pre id="trace" class="font-mono border border-red-400"></pre>
-          <pre id="heap" class="font-mono border border-red-400"></pre>
+          <EditorContainer name="output" className="hidden" />
+          {/* <EditorContainer name="error" className="hidden" /> */}
         </div>
       </div>
     );
@@ -171,12 +175,14 @@ Then print data`;
 // -- Utils -- //
 
 function createEditor(parent: Element, config: EditorStateConfig = {}) {
-  const state = EditorState.create({ ...config, extensions: [basicSetup, config.extensions ?? []] });
+  const state = EditorState.create({ ...config, extensions: [config.extensions ?? [], basicSetup] });
   return new EditorView({
     state,
     parent,
   });
 }
+
+//
 
 async function loadSlangroom() {
   try {
@@ -186,12 +192,152 @@ async function loadSlangroom() {
   }
 }
 
+type ExecuteContractProps = {
+  contract: string;
+  data: Record<string, unknown>;
+  keys: Record<string, unknown>;
+};
+
+type ExecuteContractResult = { success: true; value: Record<string, unknown> } | { success: false; error: string };
+
+async function executeContract(props: ExecuteContractProps): Promise<ExecuteContractResult> {
+  const { contract, data = {}, keys = {} } = props;
+  try {
+    console.log('Executing contract:', contract, 'with window.slangroom:', window['slangroom']);
+    const result = await window['slangroom'].execute(contract, {
+      data,
+      keys,
+    });
+    return {
+      success: true,
+      value: result.result,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error: error.message,
+    };
+  }
+}
+
+function parseErrorString(errorMessage: string) {
+  try {
+    const parsed = JSON.parse(errorMessage);
+    if (isArrayError(parsed)) return parsed;
+    else throw new Error('Unknown error format');
+  } catch (e) {
+    console.log(e);
+  }
+  return errorMessage;
+}
+
+function isArrayError(data: unknown): data is Array<string> {
+  return Array.isArray(data) && data.every(i => typeof i == 'string');
+}
+
+function processArrayError(arrayError: string[]): ParsedArrayError {
+  const HEAP_TOKEN = 'J64 HEAP:';
+  const TRACE_TOKEN = 'J64 TRACE:';
+
+  function findBase64(token: string) {
+    return (
+      arrayError
+        .find(s => s.startsWith(token))
+        ?.split(token)
+        .at(-1)
+        ?.trim() ?? ''
+    );
+  }
+
+  const heap = parseHeap(atob(findBase64(HEAP_TOKEN)));
+  const trace = parseTrace(atob(findBase64(TRACE_TOKEN)));
+
+  const logs = arrayError.filter(s => !s.startsWith(HEAP_TOKEN) && !s.startsWith(TRACE_TOKEN)).join('\n');
+
+  return {
+    logs,
+    heap,
+    trace,
+  };
+}
+
+function parseTrace(traceString: string) {
+  const parsedTrace = JSON.parse(traceString) as Array<string>;
+  return parsedTrace.join('\n');
+}
+
+function parseHeap(heapString: string) {
+  const parsedHeap = JSON.parse(heapString) as Record<string, unknown>;
+  return JSON.stringify(parsedHeap, null, 2);
+}
+
+type ParsedArrayError = {
+  logs: string;
+  heap: string;
+  trace: string;
+};
+
+function parseError(errorMessage: string) {
+  const parsed = parseErrorString(errorMessage);
+  if (Array.isArray(parsed)) return processArrayError(parsed);
+  else return parsed;
+}
+
+//
+
+function ErrorRenderer(props: { error: string }) {
+  const error = parseError(props.error);
+  if (typeof error == 'string') {
+    return (
+      <div>
+        <Title name="error" className="mb-1" />
+        <p>{error}</p>
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        <Title name="logs" className="mb-1" />
+        <pre>{error.logs}</pre>
+        <Title name="trace" className="mb-1" />
+        <pre>{error.trace}</pre>
+        <Title name="heap" className="mb-1" />
+        <pre>{error.heap}</pre>
+      </div>
+    );
+  }
+}
+
+function Title(props: { name: string; className: string }) {
+  return <h4 class={`capitalize font-medium text-lg ${props.className}`}>{props.name}</h4>;
+}
+
+function EditorContainer(props: { name: EditorName; className?: string }) {
+  const { name, className = '' } = props;
+  return (
+    <div id={name} class={className}>
+      <Title name={name} className="mb-1" />
+    </div>
+  );
+}
+
+//
+
 function parseJsonObjectWithFallback(string: string): Record<string, unknown> {
   try {
     return JSON.parse(string);
-  } catch {
+  } catch (e) {
     return {};
   }
 }
 
 export type EditorName = keyof DyneSlangroomEditor['editors'];
+
+//
+
+// const parse = (token, text) => {
+//   const line = text.split(token)[1];
+//   const value = line.split('"')[0];
+
+//   return highlight(atob(value.trim()));
+// };

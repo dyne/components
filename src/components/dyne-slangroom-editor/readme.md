@@ -11,9 +11,9 @@
 
 #### Parameters
 
-| Name         | Type                           | Description |
-| ------------ | ------------------------------ | ----------- |
-| `editorName` | `"script" \| "data" \| "keys"` |             |
+| Name         | Type                                         | Description |
+| ------------ | -------------------------------------------- | ----------- |
+| `editorName` | `"contract" \| "data" \| "keys" \| "output"` |             |
 
 #### Returns
 
@@ -27,10 +27,10 @@ Type: `Promise<string>`
 
 #### Parameters
 
-| Name         | Type                           | Description |
-| ------------ | ------------------------------ | ----------- |
-| `editorName` | `"script" \| "data" \| "keys"` |             |
-| `content`    | `string`                       |             |
+| Name         | Type                                         | Description |
+| ------------ | -------------------------------------------- | ----------- |
+| `editorName` | `"contract" \| "data" \| "keys" \| "output"` |             |
+| `content`    | `string`                                     |             |
 
 #### Returns
 
