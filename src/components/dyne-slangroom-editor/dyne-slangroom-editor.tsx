@@ -8,7 +8,7 @@ import { EditorView, keymap } from '@codemirror/view';
 import '@slangroom/browser/build/slangroom.js';
 import { json } from '@codemirror/lang-json';
 
-import { SlangroomResult, executeSlangroomContract, loadSlangroom } from './utils/slangroom';
+import { SlangroomResult, executeSlangroomContract, loadSlangroom, parseSlangroomError } from './utils/slangroom';
 
 //
 
@@ -186,73 +186,8 @@ function createEditor(parent: Element, config: EditorStateConfig = {}) {
 
 //
 
-function parseErrorString(errorMessage: string) {
-  try {
-    const parsed = JSON.parse(errorMessage);
-    if (isArrayError(parsed)) return parsed;
-    else throw new Error('Unknown error format');
-  } catch (e) {
-    console.log(e);
-  }
-  return errorMessage;
-}
-
-function isArrayError(data: unknown): data is Array<string> {
-  return Array.isArray(data) && data.every(i => typeof i == 'string');
-}
-
-function processArrayError(arrayError: string[]): ParsedArrayError {
-  const HEAP_TOKEN = 'J64 HEAP:';
-  const TRACE_TOKEN = 'J64 TRACE:';
-
-  function findBase64(token: string) {
-    return (
-      arrayError
-        .find(s => s.startsWith(token))
-        ?.split(token)
-        .at(-1)
-        ?.trim() ?? ''
-    );
-  }
-
-  const heap = parseHeap(atob(findBase64(HEAP_TOKEN)));
-  const trace = parseTrace(atob(findBase64(TRACE_TOKEN)));
-
-  const logs = arrayError.filter(s => !s.startsWith(HEAP_TOKEN) && !s.startsWith(TRACE_TOKEN)).join('\n');
-
-  return {
-    logs,
-    heap,
-    trace,
-  };
-}
-
-function parseTrace(traceString: string) {
-  const parsedTrace = JSON.parse(traceString) as Array<string>;
-  return parsedTrace.join('\n');
-}
-
-function parseHeap(heapString: string) {
-  const parsedHeap = JSON.parse(heapString) as Record<string, unknown>;
-  return JSON.stringify(parsedHeap, null, 2);
-}
-
-type ParsedArrayError = {
-  logs: string;
-  heap: string;
-  trace: string;
-};
-
-function parseError(errorMessage: string) {
-  const parsed = parseErrorString(errorMessage);
-  if (Array.isArray(parsed)) return processArrayError(parsed);
-  else return parsed;
-}
-
-//
-
 function ErrorRenderer(props: { error: string }) {
-  const error = parseError(props.error);
+  const error = parseSlangroomError(props.error);
   if (typeof error == 'string') {
     return (
       <div>
