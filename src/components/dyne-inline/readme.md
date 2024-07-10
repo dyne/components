@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type     | Default |
-| -------- | --------- | ----------- | -------- | ------- |
-| `gap`    | `gap`     |             | `number` | `4`     |
+| Property | Attribute | Description | Type                  | Default |
+| -------- | --------- | ----------- | --------------------- | ------- |
+| `gap`    | `gap`     |             | `number \| undefined` | `4`     |
 
 
 ----------------------------------------------

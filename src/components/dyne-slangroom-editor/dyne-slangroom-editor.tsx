@@ -8,6 +8,8 @@ import { EditorView, keymap } from '@codemirror/view';
 import '@slangroom/browser/build/slangroom.js';
 import { json } from '@codemirror/lang-json';
 
+import { SlangroomResult, executeSlangroomContract, loadSlangroom } from './utils/slangroom';
+
 //
 
 const contractSample = `Rule unknown ignore
@@ -33,7 +35,7 @@ const HIDDEN_CLASS = 'hidden';
 export class DyneSlangroomEditor {
   @Element() el: HTMLElement;
 
-  @State() contractResult: ExecuteContractResult | undefined = undefined;
+  @State() contractResult: SlangroomResult | undefined = undefined;
   @State() isRunning = false;
 
   private editors: {
@@ -97,7 +99,7 @@ export class DyneSlangroomEditor {
     const data = await this.getEditorContent('data');
     const keys = await this.getEditorContent('keys');
 
-    this.contractResult = await executeContract({
+    this.contractResult = await executeSlangroomContract({
       contract,
       data: parseJsonObjectWithFallback(data),
       keys: parseJsonObjectWithFallback(keys),
@@ -183,42 +185,6 @@ function createEditor(parent: Element, config: EditorStateConfig = {}) {
 }
 
 //
-
-async function loadSlangroom() {
-  try {
-    await import('@slangroom/browser/build/slangroom.js');
-  } catch (error) {
-    console.error('Failed to load slangroom:', error);
-  }
-}
-
-type ExecuteContractProps = {
-  contract: string;
-  data: Record<string, unknown>;
-  keys: Record<string, unknown>;
-};
-
-type ExecuteContractResult = { success: true; value: Record<string, unknown> } | { success: false; error: string };
-
-async function executeContract(props: ExecuteContractProps): Promise<ExecuteContractResult> {
-  const { contract, data = {}, keys = {} } = props;
-  try {
-    console.log('Executing contract:', contract, 'with window.slangroom:', window['slangroom']);
-    const result = await window['slangroom'].execute(contract, {
-      data,
-      keys,
-    });
-    return {
-      success: true,
-      value: result.result,
-    };
-  } catch (error) {
-    return {
-      success: false,
-      error: error.message,
-    };
-  }
-}
 
 function parseErrorString(errorMessage: string) {
   try {
