@@ -2,7 +2,10 @@
 <html dir="ltr" lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"
+    />
     <title>Dyne - 899 test page</title>
     <link rel="stylesheet" href="/build/dyne-components.css" />
     <script type="module" src="/build/dyne-components.esm.js"></script>
@@ -17,7 +20,18 @@
   <body class="p-8">
     <div class="p-8 bg-slate-900 border border-slate-700 mb-8">
       <h1 class="text-xl pb-8 font-extrabold text-white">Slangroom editor</h1>
-      <dyne-slangroom-editor>ciaone</dyne-slangroom-editor>
+
+      <dyne-slangroom-editor
+        contract="Rule unknown ignore
+Given I connect to 'did_url' and do get and output into 'did'
+Given I have a 'string dictionary' named 'did'
+Given I have a 'string' named 'foo'
+Then print data"
+        data='{
+  "foo": "bar",
+  "did_url": "https://did.dyne.org/dids/did:dyne:sandbox.test:pEn78CGNEKvMR7DJQ1yvUVUpAHKzsBz45mQw3zD2js9"
+}'
+      ></dyne-slangroom-editor>
     </div>
 
     <div class="p-8 bg-slate-900 border border-slate-700 mb-8">

@@ -1,4 +1,4 @@
-import { Component, Element, Method, State, Prop, h } from '@stencil/core';
+import { Component, Element, State, Prop, Method, h } from '@stencil/core';
 
 // import { dracula } from 'thememirror';
 import { defaultKeymap } from '@codemirror/commands';
@@ -20,19 +20,6 @@ import Convert from 'ansi-to-html';
 
 //
 
-const contractSample = `Rule unknown ignore
-Given I connect to 'did_url' and do get and output into 'did'
-Given I have a 'string dictionary' named 'did'
-Given I have a 'string' named 'foo'
-Then print data`;
-
-const dataSample = `{
-  "foo": "bar",
-  "did_url": "https://did.dyne.org/dids/did:dyne:sandbox.test:pEn78CGNEKvMR7DJQ1yvUVUpAHKzsBz45mQw3zD2js9"
-}`;
-
-//
-
 @Component({
   tag: 'dyne-slangroom-editor',
   styleUrl: 'dyne-slangroom-editor.scss',
@@ -49,18 +36,13 @@ export class DyneSlangroomEditor {
   @Prop() keys = '';
 
   @Method()
-  async getEditorContent(): Promise<string> {
-    // Todo get the whole data: keys, data, config, etc
-    return '';
-    // return this.editors[editorName].state.doc.toString();
-  }
-
-  @Method()
-  async setEditorContent(): Promise<void> {
-    // Todo implement
-    // this.editors[editorName].dispatch({
-    // changes: { from: 0, to: this.editors[editorName].state.doc.length, insert: content },
-    // });
+  async getContent(): Promise<SlangroomEditorContent> {
+    return {
+      contract: await this.getEditor(EditorId.CONTRACT).getContent(),
+      data: await this.getEditor(EditorId.DATA).getContent(),
+      keys: await this.getEditor(EditorId.KEYS).getContent(),
+      result: this.result,
+    };
   }
 
   //
@@ -121,7 +103,7 @@ export class DyneSlangroomEditor {
     return (
       <div class="space-y-4">
         <Container>
-          <div class="  flex justify-between items-center">
+          <div class="flex justify-between items-center">
             <Title name="Slangroom" />
             <dyne-button size="small" emphasis="high" onClick={() => this.executeContract()}>
               Execute contract
@@ -134,22 +116,22 @@ export class DyneSlangroomEditor {
             <div class="space-y-4">
               <Section title={EditorId.CONTRACT}>
                 <dyne-code-editor
-                  id={EditorId.CONTRACT}
-                  config={{ doc: contractSample, extensions: this.keyboardExtension }}
+                  name={EditorId.CONTRACT}
+                  config={{ doc: this.contract, extensions: this.keyboardExtension }}
                 ></dyne-code-editor>
               </Section>
 
               <Section title={EditorId.DATA}>
                 <dyne-code-editor
-                  id={EditorId.DATA}
-                  config={{ doc: dataSample, extensions: [this.keyboardExtension, json()] }}
+                  name={EditorId.DATA}
+                  config={{ doc: this.data, extensions: [this.keyboardExtension, json()] }}
                 ></dyne-code-editor>
               </Section>
 
               <Section title={EditorId.KEYS}>
                 <dyne-code-editor
-                  id={EditorId.KEYS}
-                  config={{ extensions: [this.keyboardExtension, json()] }}
+                  name={EditorId.KEYS}
+                  config={{ doc: this.keys, extensions: [this.keyboardExtension, json()] }}
                 ></dyne-code-editor>
               </Section>
             </div>
@@ -177,6 +159,13 @@ export enum EditorId {
   RESULT = 'result',
 }
 
+export type SlangroomEditorContent = {
+  contract: string;
+  data: string;
+  keys: string;
+  result: SlangroomResult | undefined;
+};
+
 // Utils
 
 function parseJsonObjectWithFallback(string: string): Record<string, unknown> {
@@ -193,7 +182,7 @@ function ValueRenderer(props: { value: SlangroomValue }) {
   return (
     <Section title="Result">
       <dyne-code-editor
-        id={EditorId.RESULT}
+        name={EditorId.RESULT}
         config={{
           doc: JSON.stringify(props.value, null, 2),
           extensions: [json()],
@@ -207,32 +196,33 @@ function ErrorRenderer(props: { error: SlangroomError }) {
   const { error } = props;
   if (typeof error == 'string') {
     if (hasAnsi(error)) {
-      const converter = new Convert();
       return (
         <Section title="Error">
-          <pre class="text-[13px] overflow-auto" innerHTML={converter.toHtml(error)}></pre>
+          <AnsiRenderer className="text-[13px] overflow-auto" text={error}></AnsiRenderer>
         </Section>
       );
     } else {
       return (
         <Section title="Error">
-          <p>{error}</p>
+          <p class="bg-red-50  text-red-800 rounded-lg border border-red-300  divide-red-300  p-4 gap-3 text-sm flex items-center">
+            {error}
+          </p>
         </Section>
       );
     }
   } else {
-    return <ZencodeErrorRenderer error={error}/>
+    return <ZencodeErrorRenderer error={error} />;
   }
 }
 
-function AnsiErrorRenderer(props:{error:string, className?:string}) {
-  const {error, className =''} = props
+function AnsiRenderer(props: { text: string; className?: string }) {
+  const { text, className = '' } = props;
   const converter = new Convert();
-  return (<pre class={className} innerHTML={converter.toHtml(error)}></pre>)
+  return <pre class={className} innerHTML={converter.toHtml(text)}></pre>;
 }
 
-function ZencodeErrorRenderer(props: {error: ZencodeRuntimeError}) {
-  const {error} = props
+function ZencodeErrorRenderer(props: { error: ZencodeRuntimeError }) {
+  const { error } = props;
   return (
     <div>
       <Title name="trace" className="mb-1" />

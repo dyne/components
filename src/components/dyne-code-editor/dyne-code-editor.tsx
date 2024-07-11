@@ -16,7 +16,7 @@ import { nanoid } from 'nanoid';
 export class DyneCodeEditor {
   @Element() el: HTMLElement;
 
-  @Prop() id = nanoid(5);
+  @Prop() name = nanoid(5);
   @Prop() config: EditorStateConfig = { extensions: basicSetup };
   @Prop() class = '';
 
@@ -45,13 +45,13 @@ export class DyneCodeEditor {
   }
 
   private getContainer() {
-    const editorContainer = this.el.shadowRoot?.getElementById(this.id);
+    const editorContainer = this.el.shadowRoot?.getElementById(this.name);
     if (!editorContainer) throw new Error('Container not initialized');
     return editorContainer;
   }
 
   render() {
-    return <div id={this.id} class={this.class}></div>;
+    return <div id={this.name} class={this.class}></div>;
   }
 }
 

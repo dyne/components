@@ -9,7 +9,7 @@
 | -------- | --------- | ----------- | ------------------- | ---------------------------- |
 | `class`  | `class`   |             | `string`            | `''`                         |
 | `config` | --        |             | `EditorStateConfig` | `{ extensions: basicSetup }` |
-| `id`     | `id`      |             | `string`            | `nanoid(5)`                  |
+| `name`   | `name`    |             | `string`            | `nanoid(5)`                  |
 
 
 ## Methods

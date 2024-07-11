@@ -7,8 +7,10 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { Color, Emphasis, Size } from "./components/types";
 import { EditorStateConfig } from "@codemirror/state";
+import { SlangroomEditorContent } from "./components/dyne-slangroom-editor/dyne-slangroom-editor";
 export { Color, Emphasis, Size } from "./components/types";
 export { EditorStateConfig } from "@codemirror/state";
+export { SlangroomEditorContent } from "./components/dyne-slangroom-editor/dyne-slangroom-editor";
 export namespace Components {
     interface DyneButton {
         /**
@@ -28,7 +30,7 @@ export namespace Components {
         "class": string;
         "config": EditorStateConfig;
         "getContent": () => Promise<string>;
-        "id": string;
+        "name": string;
         "setContent": (text: string) => Promise<void>;
     }
     interface DyneInline {
@@ -37,9 +39,8 @@ export namespace Components {
     interface DyneSlangroomEditor {
         "contract": string;
         "data": string;
-        "getEditorContent": () => Promise<string>;
+        "getContent": () => Promise<SlangroomEditorContent>;
         "keys": string;
-        "setEditorContent": () => Promise<void>;
     }
 }
 declare global {
@@ -92,7 +93,7 @@ declare namespace LocalJSX {
     interface DyneCodeEditor {
         "class"?: string;
         "config"?: EditorStateConfig;
-        "id"?: string;
+        "name"?: string;
     }
     interface DyneInline {
         "gap"?: number;

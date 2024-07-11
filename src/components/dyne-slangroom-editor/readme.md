@@ -14,23 +14,13 @@
 
 ## Methods
 
-### `getEditorContent() => Promise<string>`
+### `getContent() => Promise<SlangroomEditorContent>`
 
 
 
 #### Returns
 
-Type: `Promise<string>`
-
-
-
-### `setEditorContent() => Promise<void>`
-
-
-
-#### Returns
-
-Type: `Promise<void>`
+Type: `Promise<SlangroomEditorContent>`
 
 
 
