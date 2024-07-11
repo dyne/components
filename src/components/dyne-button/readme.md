@@ -14,19 +14,6 @@
 | `size`     | `size`     | button sizes could be: 'small', 'medium' or 'large'         | `string \| undefined` | `'medium'`   |
 
 
-## Dependencies
-
-### Used by
-
- - [dyne-slangroom-editor](../dyne-slangroom-editor)
-
-### Graph
-```mermaid
-graph TD;
-  dyne-slangroom-editor --> dyne-button
-  style dyne-button fill:#f9f,stroke:#333,stroke-width:4px
-```
-
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

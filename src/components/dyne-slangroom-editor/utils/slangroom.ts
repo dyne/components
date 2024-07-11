@@ -1,3 +1,6 @@
+import { Type as T, type Static } from '@sinclair/typebox';
+import { Value } from '@sinclair/typebox/value';
+
 // -- Loading -- //
 
 export async function loadSlangroom() {
@@ -16,7 +19,9 @@ function slangroom() {
 
 // -- Running -- //
 
-export async function executeSlangroomContract(props: ExecuteContractProps): Promise<SlangroomResult> {
+export async function executeSlangroomContract(
+  props: ExecuteContractProps,
+): Promise<SlangroomResult> {
   const { contract, data = {}, keys = {} } = props;
   try {
     console.log('Executing contract:', contract, 'with window.slangroom:', slangroom());
@@ -31,12 +36,16 @@ export async function executeSlangroomContract(props: ExecuteContractProps): Pro
   } catch (error) {
     return {
       success: false,
-      error: error.message,
+      error: parseSlangroomError(error.message as string),
     };
   }
 }
 
-export type SlangroomResult = { success: true; value: Record<string, unknown> } | { success: false; error: string };
+export type SlangroomResult =
+  | { success: true; value: SlangroomValue }
+  | { success: false; error: SlangroomError };
+
+export type SlangroomValue = Record<string, unknown>;
 
 type ExecuteContractProps = {
   contract: string;
@@ -46,38 +55,31 @@ type ExecuteContractProps = {
 
 // -- Error Handling -- //
 
-// type ZenroomError = {
-//   logs: Array<string>
-//   trace: Array<string>
-//   heap: Record<string,unknown>
-// }
+export type SlangroomError = ZencodeRuntimeError | BaseError;
 
-// type BaseError = {
-//   message: string
-// }
+type ZencodeRuntimeError = {
+  logs: Logs;
+  trace: Trace;
+  heap: Heap;
+};
 
-function parseErrorString(errorMessage: string) {
-  try {
-    const parsed = JSON.parse(errorMessage);
-    if (isArrayError(parsed)) return parsed;
-    else throw new Error('Unknown error format');
-  } catch (e) {
-    console.log(e);
+type BaseError = string;
+
+export function parseSlangroomError(errorMessage: string): SlangroomError {
+  if (isZenroomLog(errorMessage)) {
+    return processZencodeLogs(parseLogs(errorMessage));
+  } else {
+    return errorMessage;
   }
-  return errorMessage;
 }
 
-function isArrayError(data: unknown): data is Array<string> {
-  return Array.isArray(data) && data.every(i => typeof i == 'string');
-}
-
-function processArrayError(arrayError: string[]): ParsedArrayError {
+function processZencodeLogs(zencodeLogs: string[]): ZencodeRuntimeError {
   const HEAP_TOKEN = 'J64 HEAP:';
   const TRACE_TOKEN = 'J64 TRACE:';
 
   function findBase64(token: string) {
     return (
-      arrayError
+      zencodeLogs
         .find(s => s.startsWith(token))
         ?.split(token)
         .at(-1)
@@ -85,10 +87,13 @@ function processArrayError(arrayError: string[]): ParsedArrayError {
     );
   }
 
-  const heap = parseHeap(atob(findBase64(HEAP_TOKEN)));
-  const trace = parseTrace(atob(findBase64(TRACE_TOKEN)));
+  function removeHeapAndTraceFromLogs(logs: Logs) {
+    return logs.filter(s => !s.startsWith(HEAP_TOKEN) && !s.startsWith(TRACE_TOKEN));
+  }
 
-  const logs = arrayError.filter(s => !s.startsWith(HEAP_TOKEN) && !s.startsWith(TRACE_TOKEN)).join('\n');
+  const logs = removeHeapAndTraceFromLogs(zencodeLogs);
+  const heap = parseHeap(findBase64(HEAP_TOKEN));
+  const trace = parseTrace(findBase64(TRACE_TOKEN));
 
   return {
     logs,
@@ -97,24 +102,33 @@ function processArrayError(arrayError: string[]): ParsedArrayError {
   };
 }
 
-function parseTrace(traceString: string) {
-  const parsedTrace = JSON.parse(traceString) as Array<string>;
-  return parsedTrace.join('\n');
+function isZenroomLog(errorMessage: string) {
+  try {
+    const isStringArray = Value.Check(LogsSchema, JSON.parse(errorMessage));
+    const hasZenroomString = errorMessage.includes('ZENROOM JSON LOG START');
+    return isStringArray && hasZenroomString;
+  } catch {
+    return false;
+  }
 }
 
-function parseHeap(heapString: string) {
-  const parsedHeap = JSON.parse(heapString) as Record<string, unknown>;
-  return JSON.stringify(parsedHeap, null, 2);
+const LogsSchema = T.Array(T.String());
+type Logs = Static<typeof LogsSchema>;
+
+function parseLogs(logsString: string) {
+  return Value.Decode(LogsSchema, JSON.parse(logsString));
 }
 
-type ParsedArrayError = {
-  logs: string;
-  heap: string;
-  trace: string;
-};
+const HeapSchema = T.Record(T.String(), T.Unknown());
+type Heap = Static<typeof HeapSchema>;
 
-export function parseSlangroomError(errorMessage: string) {
-  const parsed = parseErrorString(errorMessage);
-  if (Array.isArray(parsed)) return processArrayError(parsed);
-  else return parsed;
+function parseHeap(heapB64String: string) {
+  return Value.Decode(HeapSchema, JSON.parse(atob(heapB64String)));
+}
+
+const TraceSchema = T.Array(T.String());
+type Trace = Static<typeof TraceSchema>;
+
+function parseTrace(traceB64String: string) {
+  return Value.Decode(TraceSchema, JSON.parse(atob(traceB64String)));
 }

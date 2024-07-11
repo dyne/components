@@ -87,10 +87,15 @@
     "@codemirror/lang-json": "^6.0.1",
     "@codemirror/state": "^6.4.1",
     "@codemirror/view": "^6.28.2",
+    "@sinclair/typebox": "^0.32.34",
     "@slangroom/browser": "^1.33.12",
     "@types/node": "^20.14.8",
+    "ansi-to-html": "^0.7.2",
     "codemirror": "^6.0.1",
+    "has-ansi": "^6.0.0",
     "lucide-react": "^0.396.0",
+    "nanoid": "^5.0.7",
+    "prismjs": "^1.29.0",
     "thememirror": "^2.0.1",
     "zenroom": "^4.32.3"
   }

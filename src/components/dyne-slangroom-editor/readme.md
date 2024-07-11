@@ -5,15 +5,9 @@
 
 ## Methods
 
-### `getEditorContent(editorName: EditorName) => Promise<string>`
+### `getEditorContent() => Promise<string>`
 
 
-
-#### Parameters
-
-| Name         | Type                                         | Description |
-| ------------ | -------------------------------------------- | ----------- |
-| `editorName` | `"contract" \| "data" \| "keys" \| "output"` |             |
 
 #### Returns
 
@@ -21,16 +15,9 @@ Type: `Promise<string>`
 
 
 
-### `setEditorContent(editorName: EditorName, content: string) => Promise<void>`
+### `setEditorContent() => Promise<void>`
 
 
-
-#### Parameters
-
-| Name         | Type                                         | Description |
-| ------------ | -------------------------------------------- | ----------- |
-| `editorName` | `"contract" \| "data" \| "keys" \| "output"` |             |
-| `content`    | `string`                                     |             |
 
 #### Returns
 
@@ -43,12 +30,12 @@ Type: `Promise<void>`
 
 ### Depends on
 
-- [dyne-button](../dyne-button)
+- [dyne-code-editor](../dyne-code-editor)
 
 ### Graph
 ```mermaid
 graph TD;
-  dyne-slangroom-editor --> dyne-button
+  dyne-slangroom-editor --> dyne-code-editor
   style dyne-slangroom-editor fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

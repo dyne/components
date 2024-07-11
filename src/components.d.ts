@@ -6,9 +6,9 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { Color, Emphasis, Size } from "./components/types";
-import { EditorName } from "./components/dyne-slangroom-editor/dyne-slangroom-editor";
+import { EditorStateConfig } from "@codemirror/state";
 export { Color, Emphasis, Size } from "./components/types";
-export { EditorName } from "./components/dyne-slangroom-editor/dyne-slangroom-editor";
+export { EditorStateConfig } from "@codemirror/state";
 export namespace Components {
     interface DyneButton {
         /**
@@ -24,12 +24,19 @@ export namespace Components {
          */
         "size"?: Size;
     }
+    interface DyneCodeEditor {
+        "class": string;
+        "config": EditorStateConfig;
+        "getContent": () => Promise<string>;
+        "id": string;
+        "setContent": (text: string) => Promise<void>;
+    }
     interface DyneInline {
         "gap"?: number;
     }
     interface DyneSlangroomEditor {
-        "getEditorContent": (editorName: EditorName) => Promise<string>;
-        "setEditorContent": (editorName: EditorName, content: string) => Promise<void>;
+        "getEditorContent": () => Promise<string>;
+        "setEditorContent": () => Promise<void>;
     }
 }
 declare global {
@@ -38,6 +45,12 @@ declare global {
     var HTMLDyneButtonElement: {
         prototype: HTMLDyneButtonElement;
         new (): HTMLDyneButtonElement;
+    };
+    interface HTMLDyneCodeEditorElement extends Components.DyneCodeEditor, HTMLStencilElement {
+    }
+    var HTMLDyneCodeEditorElement: {
+        prototype: HTMLDyneCodeEditorElement;
+        new (): HTMLDyneCodeEditorElement;
     };
     interface HTMLDyneInlineElement extends Components.DyneInline, HTMLStencilElement {
     }
@@ -53,6 +66,7 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "dyne-button": HTMLDyneButtonElement;
+        "dyne-code-editor": HTMLDyneCodeEditorElement;
         "dyne-inline": HTMLDyneInlineElement;
         "dyne-slangroom-editor": HTMLDyneSlangroomEditorElement;
     }
@@ -72,6 +86,11 @@ declare namespace LocalJSX {
          */
         "size"?: Size;
     }
+    interface DyneCodeEditor {
+        "class"?: string;
+        "config"?: EditorStateConfig;
+        "id"?: string;
+    }
     interface DyneInline {
         "gap"?: number;
     }
@@ -79,6 +98,7 @@ declare namespace LocalJSX {
     }
     interface IntrinsicElements {
         "dyne-button": DyneButton;
+        "dyne-code-editor": DyneCodeEditor;
         "dyne-inline": DyneInline;
         "dyne-slangroom-editor": DyneSlangroomEditor;
     }
@@ -88,6 +108,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "dyne-button": LocalJSX.DyneButton & JSXBase.HTMLAttributes<HTMLDyneButtonElement>;
+            "dyne-code-editor": LocalJSX.DyneCodeEditor & JSXBase.HTMLAttributes<HTMLDyneCodeEditorElement>;
             "dyne-inline": LocalJSX.DyneInline & JSXBase.HTMLAttributes<HTMLDyneInlineElement>;
             "dyne-slangroom-editor": LocalJSX.DyneSlangroomEditor & JSXBase.HTMLAttributes<HTMLDyneSlangroomEditorElement>;
         }

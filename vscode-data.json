@@ -23,6 +23,23 @@
       ]
     },
     {
+      "name": "dyne-code-editor",
+      "description": {
+        "kind": "markdown",
+        "value": ""
+      },
+      "attributes": [
+        {
+          "name": "class",
+          "description": ""
+        },
+        {
+          "name": "id",
+          "description": ""
+        }
+      ]
+    },
+    {
       "name": "dyne-inline",
       "description": {
         "kind": "markdown",
