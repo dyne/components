@@ -95,6 +95,7 @@
     "has-ansi": "^6.0.0",
     "lucide-react": "^0.396.0",
     "nanoid": "^5.0.7",
+    "thememirror": "^2.0.1",
     "zenroom": "^4.32.3"
   }
 }

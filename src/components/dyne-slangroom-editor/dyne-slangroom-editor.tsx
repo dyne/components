@@ -122,7 +122,7 @@ export class DyneSlangroomEditor {
     ];
   }
 
-  private get editors() {
+  get editors() {
     return (
       this.el.shadowRoot?.querySelectorAll(`dyne-code-editor`) ??
       ([] as unknown as NodeListOf<HTMLDyneCodeEditorElement>)
@@ -130,7 +130,7 @@ export class DyneSlangroomEditor {
   }
 
   private getEditor(id: EditorId) {
-    const editor = Array.from(this.editors).find(editor => editor.id == id);
+    const editor = Array.from(this.editors).find(editor => editor.name == id);
     if (!editor) throw new Error('Editor not initialized in DOM');
     return editor;
   }
