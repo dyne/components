@@ -7,12 +7,25 @@
 
 ## Properties
 
-| Property   | Attribute  | Description                                                 | Type                  | Default      |
-| ---------- | ---------- | ----------------------------------------------------------- | --------------------- | ------------ |
-| `color`    | `color`    | button color could be: 'primary', 'secondary' or 'tertiary' | `string \| undefined` | `'primary'`  |
-| `emphasis` | `emphasis` | button emphasis could be: 'slight', 'moderate' or 'high'    | `string \| undefined` | `'moderate'` |
-| `size`     | `size`     | button sizes could be: 'small', 'medium' or 'large'         | `string \| undefined` | `'medium'`   |
+| Property   | Attribute  | Description                                                 | Type                                                                 | Default      |
+| ---------- | ---------- | ----------------------------------------------------------- | -------------------------------------------------------------------- | ------------ |
+| `color`    | `color`    | button color could be: 'primary', 'secondary' or 'tertiary' | `"primary" \| "secondary" \| "tertiary" \| undefined`                | `'primary'`  |
+| `emphasis` | `emphasis` | button emphasis could be: 'slight', 'moderate' or 'high'    | `"h" \| "high" \| "m" \| "moderate" \| "s" \| "slight" \| undefined` | `'moderate'` |
+| `size`     | `size`     | button sizes could be: 'small', 'medium' or 'large'         | `"large" \| "medium" \| "small" \| undefined`                        | `'medium'`   |
 
+
+## Dependencies
+
+### Used by
+
+ - [dyne-slangroom-editor](../dyne-slangroom-editor)
+
+### Graph
+```mermaid
+graph TD;
+  dyne-slangroom-editor --> dyne-button
+  style dyne-button fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

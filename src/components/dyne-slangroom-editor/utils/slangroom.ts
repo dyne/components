@@ -57,7 +57,7 @@ type ExecuteContractProps = {
 
 export type SlangroomError = ZencodeRuntimeError | BaseError;
 
-type ZencodeRuntimeError = {
+export type ZencodeRuntimeError = {
   logs: Logs;
   trace: Trace;
   heap: Heap;

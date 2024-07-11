@@ -10,15 +10,57 @@
       "attributes": [
         {
           "name": "color",
-          "description": "button color could be: 'primary', 'secondary' or 'tertiary'"
+          "description": "button color could be: 'primary', 'secondary' or 'tertiary'",
+          "values": [
+            {
+              "name": "primary"
+            },
+            {
+              "name": "secondary"
+            },
+            {
+              "name": "tertiary"
+            }
+          ]
         },
         {
           "name": "emphasis",
-          "description": "button emphasis could be: 'slight', 'moderate' or 'high'"
+          "description": "button emphasis could be: 'slight', 'moderate' or 'high'",
+          "values": [
+            {
+              "name": "h"
+            },
+            {
+              "name": "high"
+            },
+            {
+              "name": "m"
+            },
+            {
+              "name": "moderate"
+            },
+            {
+              "name": "s"
+            },
+            {
+              "name": "slight"
+            }
+          ]
         },
         {
           "name": "size",
-          "description": "button sizes could be: 'small', 'medium' or 'large'"
+          "description": "button sizes could be: 'small', 'medium' or 'large'",
+          "values": [
+            {
+              "name": "large"
+            },
+            {
+              "name": "medium"
+            },
+            {
+              "name": "small"
+            }
+          ]
         }
       ]
     },
@@ -58,7 +100,20 @@
         "kind": "markdown",
         "value": ""
       },
-      "attributes": []
+      "attributes": [
+        {
+          "name": "contract",
+          "description": ""
+        },
+        {
+          "name": "data",
+          "description": ""
+        },
+        {
+          "name": "keys",
+          "description": ""
+        }
+      ]
     }
   ]
 }

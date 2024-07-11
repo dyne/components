@@ -35,7 +35,10 @@ export namespace Components {
         "gap"?: number;
     }
     interface DyneSlangroomEditor {
+        "contract": string;
+        "data": string;
         "getEditorContent": () => Promise<string>;
+        "keys": string;
         "setEditorContent": () => Promise<void>;
     }
 }
@@ -95,6 +98,9 @@ declare namespace LocalJSX {
         "gap"?: number;
     }
     interface DyneSlangroomEditor {
+        "contract"?: string;
+        "data"?: string;
+        "keys"?: string;
     }
     interface IntrinsicElements {
         "dyne-button": DyneButton;

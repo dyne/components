@@ -1,6 +1,6 @@
 import { ArgTypes } from '@storybook/html';
 
-const SizeOptions = 'small medium large'.split(' ');
+const SizeOptions = ['small', 'medium', 'large'] as const;
 export const SizeArgTypes: ArgTypes = {
   size: {
     options: SizeOptions,
@@ -9,14 +9,14 @@ export const SizeArgTypes: ArgTypes = {
 };
 export type Size = (typeof SizeOptions)[number];
 
-const ShapeOptions = 'round square'.split(' ');
+const ShapeOptions = ['round', 'square'] as const;
 export const ShapeArgTypes = {
   options: ShapeOptions,
   control: { type: 'inline-radio' },
 };
 export type Shape = (typeof ShapeOptions)[number];
 
-const ColorOptions = 'primary secondary tertiary'.split(' ');
+const ColorOptions = ['primary', 'secondary', 'tertiary'] as const;
 export const ColorArgTypes: ArgTypes = {
   color: {
     options: ColorOptions,
@@ -26,7 +26,7 @@ export const ColorArgTypes: ArgTypes = {
 };
 export type Color = (typeof ColorOptions)[number];
 
-const EmphasisOptions = 'slight moderate high'.split(' ');
+const EmphasisOptions = ['slight', 's', 'moderate', 'm', 'high', 'h'] as const;
 export const EmphasisArgTypes: ArgTypes = {
   emphasis: {
     description: 'How much importance have the action of this component?',
@@ -34,4 +34,4 @@ export const EmphasisArgTypes: ArgTypes = {
     control: { type: 'inline-radio' },
   },
 };
-export type Emphasis = (typeof SizeOptions)[number];
+export type Emphasis = (typeof EmphasisOptions)[number];

@@ -1,4 +1,4 @@
-import { Component, Element, Method, State, h } from '@stencil/core';
+import { Component, Element, Method, State, Prop, h } from '@stencil/core';
 
 // import { dracula } from 'thememirror';
 import { defaultKeymap } from '@codemirror/commands';
@@ -10,12 +10,13 @@ import {
   SlangroomError,
   SlangroomResult,
   SlangroomValue,
+  ZencodeRuntimeError,
   executeSlangroomContract,
   loadSlangroom,
 } from './utils/slangroom';
 
-import Convert from 'ansi-to-html';
 import hasAnsi from 'has-ansi';
+import Convert from 'ansi-to-html';
 
 //
 
@@ -42,6 +43,10 @@ export class DyneSlangroomEditor {
 
   @State() result: SlangroomResult | undefined = undefined;
   @State() isExecuting = false;
+
+  @Prop() contract = '';
+  @Prop() data = '';
+  @Prop() keys = '';
 
   @Method()
   async getEditorContent(): Promise<string> {
@@ -88,6 +93,10 @@ export class DyneSlangroomEditor {
     return this.result?.success === true ? this.result.value : undefined;
   }
 
+  private get showEmptyState() {
+    return !Boolean(this.value) && !Boolean(this.error) && !Boolean(this.isExecuting);
+  }
+
   //
 
   private get keyboardExtension(): Extension {
@@ -110,27 +119,49 @@ export class DyneSlangroomEditor {
 
   render() {
     return (
-      <div>
-        <div class="space-y-4">
-          <dyne-code-editor
-            id={EditorId.CONTRACT}
-            config={{ doc: contractSample, extensions: this.keyboardExtension }}
-          ></dyne-code-editor>
-          <dyne-code-editor
-            id={EditorId.DATA}
-            config={{ doc: dataSample, extensions: [this.keyboardExtension, json()] }}
-          ></dyne-code-editor>
-          <dyne-code-editor
-            id={EditorId.KEYS}
-            config={{ extensions: [this.keyboardExtension, json()] }}
-          ></dyne-code-editor>
+      <div class="space-y-4">
+        <Container>
+          <div class="  flex justify-between items-center">
+            <Title name="Slangroom" />
+            <dyne-button size="small" emphasis="high" onClick={() => this.executeContract()}>
+              Execute contract
+            </dyne-button>
+          </div>
+        </Container>
+
+        <div class="flex sm:flex-col md:flex-row items-stretch gap-4">
+          <Container className="md:grow md:w-0 shrink-0 md:basis-2">
+            <div class="space-y-4">
+              <Section title={EditorId.CONTRACT}>
+                <dyne-code-editor
+                  id={EditorId.CONTRACT}
+                  config={{ doc: contractSample, extensions: this.keyboardExtension }}
+                ></dyne-code-editor>
+              </Section>
+
+              <Section title={EditorId.DATA}>
+                <dyne-code-editor
+                  id={EditorId.DATA}
+                  config={{ doc: dataSample, extensions: [this.keyboardExtension, json()] }}
+                ></dyne-code-editor>
+              </Section>
+
+              <Section title={EditorId.KEYS}>
+                <dyne-code-editor
+                  id={EditorId.KEYS}
+                  config={{ extensions: [this.keyboardExtension, json()] }}
+                ></dyne-code-editor>
+              </Section>
+            </div>
+          </Container>
+
+          <Container className="md:grow md:w-0 shrink-0 md:basis-2">
+            {this.showEmptyState && <EmptyState />}
+            {this.isExecuting && <Spinner />}
+            {this.value && <ValueRenderer value={this.value} />}
+            {this.error && <ErrorRenderer error={this.error} />}
+          </Container>
         </div>
-
-        <button onClick={() => this.executeContract()}>Execute contract</button>
-
-        {this.isExecuting && <Spinner />}
-        {this.value && <ValueRenderer value={this.value} />}
-        {this.error && <ErrorRenderer error={this.error} />}
       </div>
     );
   }
@@ -160,13 +191,15 @@ function parseJsonObjectWithFallback(string: string): Record<string, unknown> {
 
 function ValueRenderer(props: { value: SlangroomValue }) {
   return (
-    <dyne-code-editor
-      id={EditorId.RESULT}
-      config={{
-        doc: JSON.stringify(props.value, null, 2),
-        extensions: [json()],
-      }}
-    ></dyne-code-editor>
+    <Section title="Result">
+      <dyne-code-editor
+        id={EditorId.RESULT}
+        config={{
+          doc: JSON.stringify(props.value, null, 2),
+          extensions: [json()],
+        }}
+      ></dyne-code-editor>
+    </Section>
   );
 }
 
@@ -175,46 +208,91 @@ function ErrorRenderer(props: { error: SlangroomError }) {
   if (typeof error == 'string') {
     if (hasAnsi(error)) {
       const converter = new Convert();
-      const errorHtml = converter.toHtml(error);
-      const e = document.createElement('div');
-      e.innerHTML = errorHtml;
-      // @ts-ignore
-      return e;
+      return (
+        <Section title="Error">
+          <pre class="text-[13px] overflow-auto" innerHTML={converter.toHtml(error)}></pre>
+        </Section>
+      );
     } else {
       return (
-        <div>
-          <Title name="error" className="mb-1" />
+        <Section title="Error">
           <p>{error}</p>
-        </div>
+        </Section>
       );
     }
   } else {
-    return (
-      <div>
-        <Title name="logs" className="mb-1" />
-        <pre>{error.logs}</pre>
-        <Title name="trace" className="mb-1" />
-        <pre>{error.trace}</pre>
-        <Title name="heap" className="mb-1" />
-        <pre>{error.heap}</pre>
-      </div>
-    );
+    return <ZencodeErrorRenderer error={error}/>
   }
 }
 
-function Title(props: { name: string; className: string }) {
-  return <h4 class={`capitalize font-medium text-lg ${props.className}`}>{props.name}</h4>;
+function AnsiErrorRenderer(props:{error:string, className?:string}) {
+  const {error, className =''} = props
+  const converter = new Convert();
+  return (<pre class={className} innerHTML={converter.toHtml(error)}></pre>)
+}
+
+function ZencodeErrorRenderer(props: {error: ZencodeRuntimeError}) {
+  const {error} = props
+  return (
+    <div>
+      <Title name="trace" className="mb-1" />
+      <dyne-code-editor
+        config={{
+          doc: error.trace.join('\n'),
+        }}
+      ></dyne-code-editor>
+
+      <Title name="logs" className="mb-1" />
+      <dyne-code-editor
+        config={{
+          doc: error.logs.join('\n'),
+        }}
+      ></dyne-code-editor>
+
+      <Title name="heap" className="mb-1" />
+      <dyne-code-editor
+        config={{
+          doc: JSON.stringify(error.heap, null, 2),
+          extensions: [json()],
+        }}
+      ></dyne-code-editor>
+    </div>
+  );
+}
+
+function Title(props: { name: string; className?: string }) {
+  const { name, className = '' } = props;
+  return <h4 class={`capitalize font-semibold text-lg text-slate-800 ${className}`}>{name}</h4>;
 }
 
 function Spinner() {
-  return <p>loading...</p>;
+  return (
+    <div class="w-full h-full flex flex-col items-center justify-center gap-2">
+      <div class="spinner"></div>
+      <p class="text-slate-400">Loading...</p>
+    </div>
+  );
 }
 
-// function EditorContainer(props: {  class?: string }, children) {
-//   return (
-//     <div  class={props.class ?? ''}>
-//       <Title name={name} className="mb-1" />
-//       {children}
-//     </div>
-//   );
-// }
+function Section(props: { className?: string; title: string }, children: JSX.Element) {
+  const { className = '', title } = props;
+  return (
+    <div class={className}>
+      <Title name={title} className="mb-2" />
+      {children}
+    </div>
+  );
+}
+
+function EmptyState() {
+  return (
+    <div class="text-slate-400 w-full h-full flex items-center justify-center">
+      <p>Result of the contract will appear here!</p>
+    </div>
+  );
+}
+
+function Container(props: { className?: string }, children: JSX.Element) {
+  const { className = '' } = props;
+  return <div class={`bg-slate-100 text-slate-800 rounded-md p-4 ${className}`}>{children}</div>;
+}
