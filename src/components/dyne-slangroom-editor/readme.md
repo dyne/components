@@ -5,13 +5,11 @@
 
 ## Properties
 
-| Property              | Attribute                | Description | Type                                   | Default     |
-| --------------------- | ------------------------ | ----------- | -------------------------------------- | ----------- |
-| `contract`            | `contract`               |             | `string`                               | `''`        |
-| `data`                | `data`                   |             | `string`                               | `''`        |
-| `keys`                | `keys`                   |             | `string`                               | `''`        |
-| `keysLocalStorageKey` | `keys-local-storage-key` |             | `string \| undefined`                  | `undefined` |
-| `keysMode`            | `keys-mode`              |             | `"editor" \| "localStorage" \| "none"` | `'editor'`  |
+| Property   | Attribute  | Description | Type     | Default |
+| ---------- | ---------- | ----------- | -------- | ------- |
+| `contract` | `contract` |             | `string` | `''`    |
+| `data`     | `data`     |             | `string` | `''`    |
+| `keys`     | `keys`     |             | `string` | `''`    |
 
 
 ## Methods

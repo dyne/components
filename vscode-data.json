@@ -112,25 +112,6 @@
         {
           "name": "keys",
           "description": ""
-        },
-        {
-          "name": "keys-local-storage-key",
-          "description": ""
-        },
-        {
-          "name": "keys-mode",
-          "description": "",
-          "values": [
-            {
-              "name": "editor"
-            },
-            {
-              "name": "localStorage"
-            },
-            {
-              "name": "none"
-            }
-          ]
         }
       ]
     }

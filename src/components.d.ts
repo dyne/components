@@ -41,8 +41,6 @@ export namespace Components {
         "data": string;
         "getContent": () => Promise<SlangroomEditorContent>;
         "keys": string;
-        "keysLocalStorageKey": string | undefined;
-        "keysMode": 'none' | 'editor' | 'localStorage';
     }
 }
 declare global {
@@ -104,8 +102,6 @@ declare namespace LocalJSX {
         "contract"?: string;
         "data"?: string;
         "keys"?: string;
-        "keysLocalStorageKey"?: string | undefined;
-        "keysMode"?: 'none' | 'editor' | 'localStorage';
     }
     interface IntrinsicElements {
         "dyne-button": DyneButton;

@@ -35,9 +35,6 @@ export class DyneSlangroomEditor {
   @Prop() data = '';
   @Prop() keys = '';
 
-  @Prop() keysMode: 'none' | 'editor' | 'localStorage' = 'editor';
-  @Prop() keysLocalStorageKey: string | undefined = undefined;
-
   @Method()
   async getContent(): Promise<SlangroomEditorContent> {
     return {
@@ -51,55 +48,23 @@ export class DyneSlangroomEditor {
   //
 
   async componentDidLoad() {
-    this.checkForMissingLocalStorageKey();
     await loadSlangroom();
-  }
-
-  private checkForMissingLocalStorageKey() {
-    const isMissing = !Boolean(this.keysLocalStorageKey) && this.keysMode == 'localStorage';
-    if (isMissing)
-      throw new Error(
-        'Prop `keys-local-storage-key` must be set when using `keys-mode = localStorage`',
-      );
   }
 
   private async executeContract() {
     this.result = undefined;
     this.isExecuting = true;
 
-    const contract = await this.getEditorContent(EditorId.CONTRACT);
-    const data = await this.getEditorContent(EditorId.DATA);
-    const keys = await this.getKeys();
+    const contract = await this.getEditor(EditorId.CONTRACT).getContent();
+    const data = await this.getEditor(EditorId.DATA).getContent();
+    const keys = await this.getEditor(EditorId.KEYS).getContent();
 
     this.result = await executeSlangroomContract({
       contract,
       data: parseJsonObjectWithFallback(data),
-      keys,
+      keys: parseJsonObjectWithFallback(keys),
     });
     this.isExecuting = false;
-  }
-
-  private getEditorContent(id: EditorId) {
-    return this.getEditor(id).getContent();
-  }
-
-  private async getKeys() {
-    switch (this.keysMode) {
-      case 'none':
-        return {};
-      case 'editor':
-        return parseJsonObjectWithFallback(await this.getEditorContent(EditorId.KEYS));
-      case 'localStorage':
-        return this.readKeysFromLocalStorage();
-    }
-  }
-
-  private readKeysFromLocalStorage() {
-    if (this.keysMode == 'localStorage' && this.keysLocalStorageKey) {
-      const item = localStorage.getItem(this.keysLocalStorageKey);
-      if (item) return parseJsonObjectWithFallback(item);
-    }
-    return {};
   }
 
   private get error() {
@@ -122,11 +87,8 @@ export class DyneSlangroomEditor {
     ];
   }
 
-  private get editors() {
-    return (
-      this.el.shadowRoot?.querySelectorAll(`dyne-code-editor`) ??
-      ([] as unknown as NodeListOf<HTMLDyneCodeEditorElement>)
-    );
+  get editors() {
+    return this.el.shadowRoot?.querySelectorAll(`dyne-code-editor`) ?? [];
   }
 
   private getEditor(id: EditorId) {
@@ -166,14 +128,12 @@ export class DyneSlangroomEditor {
                 ></dyne-code-editor>
               </Section>
 
-              {this.keysMode == 'editor' && (
-                <Section title={EditorId.KEYS}>
-                  <dyne-code-editor
-                    name={EditorId.KEYS}
-                    config={{ doc: this.keys, extensions: [this.keyboardExtension, json()] }}
-                  ></dyne-code-editor>
-                </Section>
-              )}
+              <Section title={EditorId.KEYS}>
+                <dyne-code-editor
+                  name={EditorId.KEYS}
+                  config={{ doc: this.keys, extensions: [this.keyboardExtension, json()] }}
+                ></dyne-code-editor>
+              </Section>
             </div>
           </Container>
 
