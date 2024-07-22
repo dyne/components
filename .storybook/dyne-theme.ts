@@ -3,7 +3,7 @@ import { create } from '@storybook/theming';
 export default create({
   base: 'light',
   brandTitle: 'Dyne Components',
-  brandUrl: '/',
+  brandUrl: '/components',
   brandImage: 'https://dyne.org/images/logos/black-Logotype.png',
   brandTarget: '_self',
 
