@@ -1,8 +1,12 @@
 import { StorybookConfig } from '@storybook/html-vite';
+
 const config: StorybookConfig = {
-  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
-  addons: ['@storybook/addon-links', '@storybook/addon-essentials', '@storybook/addon-interactions',
-    "@saucelabs/storybook-variants"
+  stories: ['../src/home/home.mdx', '../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+  addons: [
+    '@storybook/addon-links',
+    '@storybook/addon-essentials',
+    '@storybook/addon-interactions',
+    '@saucelabs/storybook-variants',
   ],
   framework: '@storybook/html-vite',
   staticDirs: ['../dist'],
@@ -17,4 +21,5 @@ const config: StorybookConfig = {
     autodocs: true,
   },
 };
+
 export default config;
