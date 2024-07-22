@@ -1,4 +1,4 @@
-import type { Components } from '@/src/components.js';
+import type { Components } from '@/src/components';
 import { Meta, StoryObj } from '@storybook/html';
 
 const meta = {
