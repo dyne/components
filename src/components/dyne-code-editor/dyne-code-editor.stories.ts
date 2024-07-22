@@ -2,13 +2,13 @@ import type { Components } from '@/src/components';
 import { Meta, StoryObj } from '@storybook/html';
 
 const meta = {
-  title: 'Design System/Atoms/Slangroom Editor',
-  component: 'dyne-slangroom-editor',
-  render: () => `<dyne-slangroom-editor></dyne-slangroom-editor>`,
-} satisfies Meta<Components.DyneSlangroomEditor>;
+  title: 'Components/Code Editor',
+  component: 'dyne-code-editor',
+  render: () => `<dyne-code-editor></dyne-code-editor>`,
+} satisfies Meta<Components.DyneCodeEditor>;
 
 export default meta;
-type Story = StoryObj<Components.DyneSlangroomEditor>;
+type Story = StoryObj<Components.DyneCodeEditor>;
 
 export const Defaults: Story = {
   args: {},
