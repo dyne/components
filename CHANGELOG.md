@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/dyne/components/compare/v1.2.0...v1.2.1) (2024-07-22)
+
+
+### Bug Fixes
+
+* storybook headers import updates ([#8](https://github.com/dyne/components/issues/8)) ([c52dd83](https://github.com/dyne/components/commit/c52dd8349e0093f2f8a318b1cd5ddfb7f54935fe))
+
 # [1.2.0](https://github.com/dyne/components/compare/v1.1.0...v1.2.0) (2024-07-22)
 
 
