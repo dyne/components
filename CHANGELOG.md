@@ -1,3 +1,12 @@
+# [1.2.0](https://github.com/dyne/components/compare/v1.1.0...v1.2.0) (2024-07-22)
+
+
+### Features
+
+* add slangroom editor ([#4](https://github.com/dyne/components/issues/4)) ([e8b3e85](https://github.com/dyne/components/commit/e8b3e85e65c9f84cf4bd9735abf1df7988b9c5dc))
+* allow pilot via class as host-context ([4d11f37](https://github.com/dyne/components/commit/4d11f3797395719af5eea320acc5378b28e48564))
+* WIP slangroom editor ([a16bb0f](https://github.com/dyne/components/commit/a16bb0f27993cc47118a80b79c6534125d3a471f))
+
 # [1.1.0](https://github.com/dyne/components/compare/v1.0.5...v1.1.0) (2024-05-09)
 
 
