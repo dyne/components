@@ -1,43 +1,24 @@
-import { Component, Element, Method, State, h } from '@stencil/core';
+import { Component, Element, State, Prop, Method, h } from '@stencil/core';
 
+// import { dracula } from 'thememirror';
 import { defaultKeymap } from '@codemirror/commands';
-import { EditorState } from '@codemirror/state';
-import { EditorView, keymap } from '@codemirror/view';
-import '@slangroom/browser/build/slangroom.js';
+import { Extension } from '@codemirror/state';
+import { keymap } from '@codemirror/view';
+import { json } from '@codemirror/lang-json';
 
-function highlight(text) {
-  const json = JSON.stringify(JSON.parse(text), null, 3).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
-    var cls = 'number';
-    if (/^"/.test(match)) {
-      if (/:$/.test(match)) {
-        cls = 'key';
-      } else {
-        cls = 'string';
-      }
-    } else if (/true|false/.test(match)) {
-      cls = 'boolean';
-    } else if (/null/.test(match)) {
-      cls = 'null';
-    }
-    return '<span class="' + cls + '">' + match + '</span>';
-  });
-}
+import {
+  SlangroomError,
+  SlangroomResult,
+  SlangroomValue,
+  ZencodeRuntimeError,
+  executeSlangroomContract,
+  loadSlangroom,
+} from './utils/slangroom';
 
-const parse = (token, text) => {
-  const line = text.split(token)[1];
-  const value = line.split('"')[0];
+import hasAnsi from 'has-ansi';
+import Convert from 'ansi-to-html';
 
-  return highlight(atob(value.trim()));
-};
-
-function trace(t) {
-  return '<h3>Trace</h3>' + parse('J64 TRACE:', t);
-}
-
-function heap(t) {
-  return '<h3>Heap</h3>' + parse('J64 HEAP:', t);
-}
+//
 
 @Component({
   tag: 'dyne-slangroom-editor',
@@ -46,92 +27,302 @@ function heap(t) {
 })
 export class DyneSlangroomEditor {
   @Element() el: HTMLElement;
-  @State() output: string;
-  @State() trace: string;
-  @State() heap: string;
-  private editorView: EditorView;
+
+  @State() result: SlangroomResult | undefined = undefined;
+  @State() isExecuting = false;
+
+  @Prop() contract = '';
+  @Prop() data = '';
+  @Prop() keys = '';
+
+  @Prop() keysMode: 'none' | 'editor' | 'localStorage' = 'editor';
+  @Prop() keysLocalStorageKey: string | undefined = undefined;
+
+  @Method()
+  async getContent(): Promise<SlangroomEditorContent> {
+    return {
+      contract: await this.getEditor(EditorId.CONTRACT).getContent(),
+      data: await this.getEditor(EditorId.DATA).getContent(),
+      keys: await this.getEditor(EditorId.KEYS).getContent(),
+      result: this.result,
+    };
+  }
+
+  //
 
   async componentDidLoad() {
-    const editorContainer = this.el.shadowRoot.querySelector('.editor-container');
-    if (editorContainer) {
-      const startState = EditorState.create({
-        doc: `Rule unknown ignore
-Given I connect to 'did_url' and do get and output into 'did'
-Given I have a 'string dictionary' named 'did'
-Given I have a 'string' named 'foo'
-Then print data`,
-        extensions: [keymap.of([...defaultKeymap, { key: 'Ctrl-Enter', run: this.executeContract.bind(this) }])],
-      });
-
-      this.editorView = new EditorView({
-        state: startState,
-        parent: editorContainer,
-      });
-
-      try {
-        await import('@slangroom/browser/build/slangroom.js');
-      } catch (error) {
-        console.error('Failed to load slangroom:', error);
-      }
-    }
+    this.checkForMissingLocalStorageKey();
+    await loadSlangroom();
   }
 
-  @Method()
-  async getEditorContent(): Promise<string> {
-    return this.editorView.state.doc.toString();
+  private checkForMissingLocalStorageKey() {
+    const isMissing = !Boolean(this.keysLocalStorageKey) && this.keysMode == 'localStorage';
+    if (isMissing)
+      throw new Error(
+        'Prop `keys-local-storage-key` must be set when using `keys-mode = localStorage`',
+      );
   }
 
-  @Method()
-  async setEditorContent(content: string): Promise<void> {
-    this.editorView.dispatch({
-      changes: { from: 0, to: this.editorView.state.doc.length, insert: content },
+  private async executeContract() {
+    this.result = undefined;
+    this.isExecuting = true;
+
+    const contract = await this.getEditorContent(EditorId.CONTRACT);
+    const data = await this.getEditorContent(EditorId.DATA);
+    const keys = await this.getKeys();
+
+    this.result = await executeSlangroomContract({
+      contract,
+      data: parseJsonObjectWithFallback(data),
+      keys,
     });
+    this.isExecuting = false;
   }
 
-  private async executeContract(): Promise<boolean> {
-    const contract = await this.getEditorContent();
-    try {
-      console.log('Executing contract:', contract, 'with window.slangroom:', window['slangroom']);
-      const result = await window['slangroom'].execute(contract, {
-        data: {
-          foo: 'bar',
-          did_url: 'https://did.dyne.org/dids/did:dyne:sandbox.test:pEn78CGNEKvMR7DJQ1yvUVUpAHKzsBz45mQw3zD2js9',
-        },
-      });
-      this.output = JSON.stringify(result.result, null, 2);
-    } catch (error) {
-      console.log(error);
-      this.trace = error.message;
-      this.heap = error.message;
-    }
-    this.updateOutput();
-    return true; // Prevent default behavior
+  private getEditorContent(id: EditorId) {
+    return this.getEditor(id).getContent();
   }
 
-  private updateOutput() {
-    const outputDiv = this.el.shadowRoot.querySelector('#output');
-    const traceDiv = this.el.shadowRoot.querySelector('#trace');
-    const heapDiv = this.el.shadowRoot.querySelector('#heap');
-    if (this.output) outputDiv.innerHTML = highlight(this.output);
-    if (this.trace && this.heap) {
-      traceDiv.innerHTML = trace(this.trace);
-      heapDiv.innerHTML = heap(this.heap);
+  private async getKeys() {
+    switch (this.keysMode) {
+      case 'none':
+        return {};
+      case 'editor':
+        return parseJsonObjectWithFallback(await this.getEditorContent(EditorId.KEYS));
+      case 'localStorage':
+        return this.readKeysFromLocalStorage();
     }
   }
+
+  private readKeysFromLocalStorage() {
+    if (this.keysMode == 'localStorage' && this.keysLocalStorageKey) {
+      const item = localStorage.getItem(this.keysLocalStorageKey);
+      if (item) return parseJsonObjectWithFallback(item);
+    }
+    return {};
+  }
+
+  private get error() {
+    return this.result?.success === false ? this.result.error : undefined;
+  }
+
+  private get value() {
+    return this.result?.success === true ? this.result.value : undefined;
+  }
+
+  private get showEmptyState() {
+    return !Boolean(this.value) && !Boolean(this.error) && !Boolean(this.isExecuting);
+  }
+
+  //
+
+  private get keyboardExtension(): Extension {
+    return [
+      keymap.of([...defaultKeymap, { key: 'Ctrl-Enter', run: this.executeContract.bind(this) }]),
+    ];
+  }
+
+  get editors() {
+    return (
+      this.el.shadowRoot?.querySelectorAll(`dyne-code-editor`) ??
+      ([] as unknown as NodeListOf<HTMLDyneCodeEditorElement>)
+    );
+  }
+
+  private getEditor(id: EditorId) {
+    const editor = Array.from(this.editors).find(editor => editor.name == id);
+    if (!editor) throw new Error('Editor not initialized in DOM');
+    return editor;
+  }
+
+  //
 
   render() {
     return (
-      <dyne-inline>
-        <div>
-          <div class="editor-container"></div>
-          <dyne-button onClick={() => this.executeContract()}>Run Contract</dyne-button>
+      <div class="space-y-4">
+        <Container>
+          <div class="flex justify-between items-center">
+            <Title name="Slangroom" />
+            <dyne-button size="small" emphasis="high" onClick={() => this.executeContract()}>
+              Execute contract
+            </dyne-button>
+          </div>
+        </Container>
+
+        <div class="flex sm:flex-col md:flex-row items-stretch gap-4">
+          <Container className="md:grow md:w-0 shrink-0 md:basis-2">
+            <div class="space-y-4">
+              <Section title={EditorId.CONTRACT}>
+                <dyne-code-editor
+                  name={EditorId.CONTRACT}
+                  config={{ doc: this.contract, extensions: this.keyboardExtension }}
+                ></dyne-code-editor>
+              </Section>
+
+              <Section title={EditorId.DATA}>
+                <dyne-code-editor
+                  name={EditorId.DATA}
+                  config={{ doc: this.data, extensions: [this.keyboardExtension, json()] }}
+                ></dyne-code-editor>
+              </Section>
+
+              {this.keysMode == 'editor' && (
+                <Section title={EditorId.KEYS}>
+                  <dyne-code-editor
+                    name={EditorId.KEYS}
+                    config={{ doc: this.keys, extensions: [this.keyboardExtension, json()] }}
+                  ></dyne-code-editor>
+                </Section>
+              )}
+            </div>
+          </Container>
+
+          <Container className="md:grow md:w-0 shrink-0 md:basis-2">
+            {this.showEmptyState && <EmptyState />}
+            {this.isExecuting && <Spinner />}
+            {this.value && <ValueRenderer value={this.value} />}
+            {this.error && <ErrorRenderer error={this.error} />}
+          </Container>
         </div>
-        <div class="gap-10">
-          <pre id="output" class="font-mono"></pre>
-          <pre id="trace" class="font-mono border border-red-400"></pre>
-          <pre id="heap" class="font-mono border border-red-400"></pre>
-        </div>
-      </dyne-inline>
+      </div>
     );
   }
+}
+
+// Types
+
+export enum EditorId {
+  CONTRACT = 'contract',
+  DATA = 'data',
+  KEYS = 'keys',
+  HEAP = 'heap',
+  RESULT = 'result',
+}
+
+export type SlangroomEditorContent = {
+  contract: string;
+  data: string;
+  keys: string;
+  result: SlangroomResult | undefined;
+};
+
+// Utils
+
+function parseJsonObjectWithFallback(string: string): Record<string, unknown> {
+  try {
+    return JSON.parse(string);
+  } catch (e) {
+    return {};
+  }
+}
+
+// Partials
+
+function ValueRenderer(props: { value: SlangroomValue }) {
+  return (
+    <Section title="Result">
+      <dyne-code-editor
+        name={EditorId.RESULT}
+        config={{
+          doc: JSON.stringify(props.value, null, 2),
+          extensions: [json()],
+        }}
+      ></dyne-code-editor>
+    </Section>
+  );
+}
+
+function ErrorRenderer(props: { error: SlangroomError }) {
+  const { error } = props;
+  if (typeof error == 'string') {
+    if (hasAnsi(error)) {
+      return (
+        <Section title="Error">
+          <AnsiRenderer className="text-[13px] overflow-auto" text={error}></AnsiRenderer>
+        </Section>
+      );
+    } else {
+      return (
+        <Section title="Error">
+          <p class="bg-red-50  text-red-800 rounded-lg border border-red-300  divide-red-300  p-4 gap-3 text-sm flex items-center">
+            {error}
+          </p>
+        </Section>
+      );
+    }
+  } else {
+    return <ZencodeErrorRenderer error={error} />;
+  }
+}
+
+function AnsiRenderer(props: { text: string; className?: string }) {
+  const { text, className = '' } = props;
+  const converter = new Convert();
+  return <pre class={className} innerHTML={converter.toHtml(text)}></pre>;
+}
+
+function ZencodeErrorRenderer(props: { error: ZencodeRuntimeError }) {
+  const { error } = props;
+  return (
+    <div>
+      <Title name="trace" className="mb-1" />
+      <dyne-code-editor
+        config={{
+          doc: error.trace.join('\n'),
+        }}
+      ></dyne-code-editor>
+
+      <Title name="logs" className="mb-1" />
+      <dyne-code-editor
+        config={{
+          doc: error.logs.join('\n'),
+        }}
+      ></dyne-code-editor>
+
+      <Title name="heap" className="mb-1" />
+      <dyne-code-editor
+        config={{
+          doc: JSON.stringify(error.heap, null, 2),
+          extensions: [json()],
+        }}
+      ></dyne-code-editor>
+    </div>
+  );
+}
+
+function Title(props: { name: string; className?: string }) {
+  const { name, className = '' } = props;
+  return <h4 class={`capitalize font-semibold text-lg text-slate-800 ${className}`}>{name}</h4>;
+}
+
+function Spinner() {
+  return (
+    <div class="w-full h-full flex flex-col items-center justify-center gap-2">
+      <div class="spinner"></div>
+      <p class="text-slate-400">Loading...</p>
+    </div>
+  );
+}
+
+function Section(props: { className?: string; title: string }, children: JSX.Element) {
+  const { className = '', title } = props;
+  return (
+    <div class={className}>
+      <Title name={title} className="mb-2" />
+      {children}
+    </div>
+  );
+}
+
+function EmptyState() {
+  return (
+    <div class="text-slate-400 w-full h-full flex items-center justify-center">
+      <p>Result of the contract will appear here!</p>
+    </div>
+  );
+}
+
+function Container(props: { className?: string }, children: JSX.Element) {
+  const { className = '' } = props;
+  return <div class={`bg-slate-100 text-slate-800 rounded-md p-4 ${className}`}>{children}</div>;
 }

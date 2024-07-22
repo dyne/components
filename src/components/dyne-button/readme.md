@@ -7,11 +7,11 @@
 
 ## Properties
 
-| Property   | Attribute  | Description                                                 | Type     | Default      |
-| ---------- | ---------- | ----------------------------------------------------------- | -------- | ------------ |
-| `color`    | `color`    | button color could be: 'primary', 'secondary' or 'tertiary' | `string` | `'primary'`  |
-| `emphasis` | `emphasis` | button emphasis could be: 'slight', 'moderate' or 'high'    | `string` | `'moderate'` |
-| `size`     | `size`     | button sizes could be: 'small', 'medium' or 'large'         | `string` | `'medium'`   |
+| Property   | Attribute  | Description                                                 | Type                                                                 | Default      |
+| ---------- | ---------- | ----------------------------------------------------------- | -------------------------------------------------------------------- | ------------ |
+| `color`    | `color`    | button color could be: 'primary', 'secondary' or 'tertiary' | `"primary" \| "secondary" \| "tertiary" \| undefined`                | `'primary'`  |
+| `emphasis` | `emphasis` | button emphasis could be: 'slight', 'moderate' or 'high'    | `"h" \| "high" \| "m" \| "moderate" \| "s" \| "slight" \| undefined` | `'moderate'` |
+| `size`     | `size`     | button sizes could be: 'small', 'medium' or 'large'         | `"large" \| "medium" \| "small" \| undefined`                        | `'medium'`   |
 
 
 ## Dependencies

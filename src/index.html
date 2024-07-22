@@ -2,7 +2,10 @@
 <html dir="ltr" lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"
+    />
     <title>Dyne - 899 test page</title>
     <link rel="stylesheet" href="/build/dyne-components.css" />
     <script type="module" src="/build/dyne-components.esm.js"></script>
@@ -15,16 +18,40 @@
     </style>
   </head>
   <body class="p-8">
-    <h1 class="text-4xl pb-8 font-extrabold">slangroom</h1>
-    <dyne-slangroom-editor>ciaone</dyne-slangroom-editor>
-    <hr class="p-2 bg-red-500 w-full" />
-    <div class="grid grid-cols-3 gap-4" id="buttons"></div>
-    <h1>inline</h1>
+    <div class="p-8 bg-slate-900 border border-slate-700 mb-8">
+      <h1 class="text-xl pb-8 font-extrabold text-white">Slangroom editor</h1>
 
-    <dyne-inline>
-      <dyne-button>Click me</dyne-button>
-      <dyne-button>Trust me</dyne-button>
-    </dyne-inline>
+      <dyne-slangroom-editor
+        contract="Rule unknown ignore
+Given I connect to 'did_url' and do get and output into 'did'
+Given I have a 'string dictionary' named 'did'
+Given I have a 'string' named 'foo'
+Then print data"
+        data='{
+  "foo": "bar",
+  "did_url": "https://did.dyne.org/dids/did:dyne:sandbox.test:pEn78CGNEKvMR7DJQ1yvUVUpAHKzsBz45mQw3zD2js9"
+}'
+      ></dyne-slangroom-editor>
+      <!-- <dyne-slangroom-editor></dyne-slangroom-editor> -->
+    </div>
+
+    <div class="p-8 bg-slate-900 border border-slate-700 mb-8">
+      <h1 class="text-xl pb-8 font-extrabold text-white">Code editor</h1>
+      <dyne-code-editor></dyne-code-editor>
+    </div>
+
+    <div class="p-8 bg-slate-900 border border-slate-700 mb-8">
+      <h1 class="text-xl pb-8 font-extrabold text-white">Buttons</h1>
+      <div class="grid grid-cols-3 gap-4" id="buttons"></div>
+    </div>
+
+    <div class="p-8 bg-slate-900 border border-slate-700 mb-8">
+      <h1 class="text-xl pb-8 font-extrabold text-white">Inline</h1>
+      <dyne-inline>
+        <dyne-button>Click me</dyne-button>
+        <dyne-button>Trust me</dyne-button>
+      </dyne-inline>
+    </div>
 
     <script>
       const sizes = ['small', 'medium', 'large'];

@@ -3,31 +3,26 @@
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+| Property              | Attribute                | Description | Type                                   | Default     |
+| --------------------- | ------------------------ | ----------- | -------------------------------------- | ----------- |
+| `contract`            | `contract`               |             | `string`                               | `''`        |
+| `data`                | `data`                   |             | `string`                               | `''`        |
+| `keys`                | `keys`                   |             | `string`                               | `''`        |
+| `keysLocalStorageKey` | `keys-local-storage-key` |             | `string \| undefined`                  | `undefined` |
+| `keysMode`            | `keys-mode`              |             | `"editor" \| "localStorage" \| "none"` | `'editor'`  |
+
+
 ## Methods
 
-### `getEditorContent() => Promise<string>`
+### `getContent() => Promise<SlangroomEditorContent>`
 
 
 
 #### Returns
 
-Type: `Promise<string>`
-
-
-
-### `setEditorContent(content: string) => Promise<void>`
-
-
-
-#### Parameters
-
-| Name      | Type     | Description |
-| --------- | -------- | ----------- |
-| `content` | `string` |             |
-
-#### Returns
-
-Type: `Promise<void>`
+Type: `Promise<SlangroomEditorContent>`
 
 
 
@@ -36,14 +31,14 @@ Type: `Promise<void>`
 
 ### Depends on
 
-- [dyne-inline](../dyne-inline)
 - [dyne-button](../dyne-button)
+- [dyne-code-editor](../dyne-code-editor)
 
 ### Graph
 ```mermaid
 graph TD;
-  dyne-slangroom-editor --> dyne-inline
   dyne-slangroom-editor --> dyne-button
+  dyne-slangroom-editor --> dyne-code-editor
   style dyne-slangroom-editor fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

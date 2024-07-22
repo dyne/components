@@ -84,12 +84,18 @@
   "license": "AGPL-3.0-only",
   "dependencies": {
     "@codemirror/commands": "^6.6.0",
+    "@codemirror/lang-json": "^6.0.1",
     "@codemirror/state": "^6.4.1",
     "@codemirror/view": "^6.28.2",
+    "@sinclair/typebox": "^0.32.34",
     "@slangroom/browser": "^1.33.12",
     "@types/node": "^20.14.8",
+    "ansi-to-html": "^0.7.2",
+    "codemirror": "^6.0.1",
+    "has-ansi": "^6.0.0",
     "lucide-react": "^0.396.0",
+    "nanoid": "^5.0.7",
+    "thememirror": "^2.0.1",
     "zenroom": "^4.32.3"
-  },
-  "packageManager": "pnpm@9.1.0+sha512.67f5879916a9293e5cf059c23853d571beaf4f753c707f40cb22bed5fb1578c6aad3b6c4107ccb3ba0b35be003eb621a16471ac836c87beb53f9d54bb4612724"
+  }
 }
