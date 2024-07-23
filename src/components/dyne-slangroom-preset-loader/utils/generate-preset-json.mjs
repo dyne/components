@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { glob } from 'glob';
-import { Array as A, pipe, Record as R, String as S } from 'effect';
+import { Array as A, pipe, Record as R, String as S, Option as O } from 'effect';
 import degit from 'degit';
 
 // -- Config -- //
@@ -11,11 +11,20 @@ const SLANGROOM_REPO = 'github:dyne/slangroom';
 const SLANGROOM_DIR = 'slangroom';
 const EXAMPLES_DIR = 'examples';
 const PRESETS_FILE = 'slangroom-presets.json';
+const BROWSER_LIB = 'pkg/browser/package.json';
 
 // -- Instructions -- //
 
 await cloneRepo(SLANGROOM_REPO, getTempSlangroomPath());
-pipe(await getAllExamplesFilesPaths(), processAndParseExamplesPaths, serialize, writePresetFile);
+
+const browserModules = getSlangroomBrowserModules();
+pipe(
+  await getExamplesFilesPaths(browserModules),
+  processAndParseExamplesPaths,
+  serialize,
+  writePresetFile,
+);
+
 deleteFolder(getTempSlangroomPath());
 
 // -- Functions -- //
@@ -46,10 +55,10 @@ function processAndParseExamplesPaths(paths) {
 
     R.map(contractData => ({
       group: contractData.group,
-      contract: fs.readFileSync(contractData.contract).toString(),
-      keys: fs.readFileSync(contractData.keys).toString(),
-      data: fs.readFileSync(contractData.data).toString(),
-      meta: JSON.parse(fs.readFileSync(contractData.meta).toString()),
+      contract: readFileAsString(contractData.contract),
+      keys: readFileAsString(contractData.keys),
+      data: readFileAsString(contractData.data),
+      meta: JSON.parse(readFileAsString(contractData.meta)),
     })),
 
     R.toEntries,
@@ -58,21 +67,39 @@ function processAndParseExamplesPaths(paths) {
   );
 }
 
-function getAllExamplesFilesPaths() {
-  return glob(path.join(getTempSlangroomPath(), EXAMPLES_DIR, '**', '*'));
+/** @param {string[]} folders */
+function getExamplesFilesPaths(folders = []) {
+  const f = folders.length === 0 ? '**' : `{${folders.join(',')}}`;
+  return glob(path.join(getTempSlangroomPath(), EXAMPLES_DIR, f, '*'));
 }
 
-function cwd() {
-  const __filename = fileURLToPath(import.meta.url);
-  const __dirname = path.dirname(__filename);
-  return __dirname;
+/** @param {string} data */
+function writePresetFile(data) {
+  return fs.writeFileSync(getPresetFilePath(), data);
 }
+
+function getSlangroomBrowserModules() {
+  return pipe(
+    getSlangroomBrowserModulePackageJson(),
+    packageJson => packageJson.dependencies,
+    R.toEntries,
+    A.map(A.get(0)),
+    A.map(O.map(S.replace('@slangroom/', ''))),
+    A.map(O.getOrThrow),
+  );
+}
+
+/** @typedef {Object.<string, string>} StringRecord */
+/** @returns {{dependencies: StringRecord}} browserLibPackageJson */
+function getSlangroomBrowserModulePackageJson() {
+  return pipe(getBrowserLibFilePath(), readFileAsString, JSON.parse);
+}
+
+// -- Utils: fs, cloning -- //
 
 /**
- *
  * @param {string} repo
  * @param {string} dest
- * @returns
  */
 function cloneRepo(repo, dest) {
   return new Promise((resolve, reject) => {
@@ -88,13 +115,27 @@ function cloneRepo(repo, dest) {
   });
 }
 
-/**
- *
- * @param {unknown} data
- * @returns
- */
+/** @param {string} path */
+function readFileAsString(path) {
+  return fs.readFileSync(path).toString();
+}
+
+/** @param {string} data */
 function serialize(data) {
   return JSON.stringify(data, null, 4);
+}
+
+/** @param {string} dir */
+function deleteFolder(dir) {
+  fs.rmSync(dir, { recursive: true, force: true });
+}
+
+// -- Paths -- //
+
+function cwd() {
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
+  return __dirname;
 }
 
 function getTempSlangroomPath() {
@@ -105,19 +146,6 @@ function getPresetFilePath() {
   return path.join(cwd(), PRESETS_FILE);
 }
 
-/**
- *
- * @param {string} data
- * @returns
- */
-function writePresetFile(data) {
-  return fs.writeFileSync(getPresetFilePath(), data);
-}
-
-/**
- *
- * @param {string} path
- */
-function deleteFolder(dir) {
-  fs.rmSync(dir, { recursive: true, force: true });
+function getBrowserLibFilePath() {
+  return path.join(getTempSlangroomPath(), BROWSER_LIB);
 }
