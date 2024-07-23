@@ -44,6 +44,9 @@ export namespace Components {
         "keysLocalStorageKey": string | undefined;
         "keysMode": 'none' | 'editor' | 'localStorage';
     }
+    interface DyneSlangroomPresetLoader {
+        "editorId": string;
+    }
 }
 declare global {
     interface HTMLDyneButtonElement extends Components.DyneButton, HTMLStencilElement {
@@ -70,11 +73,18 @@ declare global {
         prototype: HTMLDyneSlangroomEditorElement;
         new (): HTMLDyneSlangroomEditorElement;
     };
+    interface HTMLDyneSlangroomPresetLoaderElement extends Components.DyneSlangroomPresetLoader, HTMLStencilElement {
+    }
+    var HTMLDyneSlangroomPresetLoaderElement: {
+        prototype: HTMLDyneSlangroomPresetLoaderElement;
+        new (): HTMLDyneSlangroomPresetLoaderElement;
+    };
     interface HTMLElementTagNameMap {
         "dyne-button": HTMLDyneButtonElement;
         "dyne-code-editor": HTMLDyneCodeEditorElement;
         "dyne-inline": HTMLDyneInlineElement;
         "dyne-slangroom-editor": HTMLDyneSlangroomEditorElement;
+        "dyne-slangroom-preset-loader": HTMLDyneSlangroomPresetLoaderElement;
     }
 }
 declare namespace LocalJSX {
@@ -107,11 +117,15 @@ declare namespace LocalJSX {
         "keysLocalStorageKey"?: string | undefined;
         "keysMode"?: 'none' | 'editor' | 'localStorage';
     }
+    interface DyneSlangroomPresetLoader {
+        "editorId"?: string;
+    }
     interface IntrinsicElements {
         "dyne-button": DyneButton;
         "dyne-code-editor": DyneCodeEditor;
         "dyne-inline": DyneInline;
         "dyne-slangroom-editor": DyneSlangroomEditor;
+        "dyne-slangroom-preset-loader": DyneSlangroomPresetLoader;
     }
 }
 export { LocalJSX as JSX };
@@ -122,6 +136,7 @@ declare module "@stencil/core" {
             "dyne-code-editor": LocalJSX.DyneCodeEditor & JSXBase.HTMLAttributes<HTMLDyneCodeEditorElement>;
             "dyne-inline": LocalJSX.DyneInline & JSXBase.HTMLAttributes<HTMLDyneInlineElement>;
             "dyne-slangroom-editor": LocalJSX.DyneSlangroomEditor & JSXBase.HTMLAttributes<HTMLDyneSlangroomEditorElement>;
+            "dyne-slangroom-preset-loader": LocalJSX.DyneSlangroomPresetLoader & JSXBase.HTMLAttributes<HTMLDyneSlangroomPresetLoaderElement>;
         }
     }
 }

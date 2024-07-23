@@ -133,6 +133,19 @@
           ]
         }
       ]
+    },
+    {
+      "name": "dyne-slangroom-preset-loader",
+      "description": {
+        "kind": "markdown",
+        "value": ""
+      },
+      "attributes": [
+        {
+          "name": "editor-id",
+          "description": ""
+        }
+      ]
     }
   ]
 }
