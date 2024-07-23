@@ -255,9 +255,11 @@ function ErrorRenderer(props: { error: SlangroomError }) {
   }
 }
 
+// bg-slate-100 -> #F1F5F9
+// text-slate-800 -> #1E293B
 function AnsiRenderer(props: { text: string; className?: string }) {
   const { text, className = '' } = props;
-  const converter = new Convert();
+  const converter = new Convert({bg: '#F1F5F9', fg: '#1E293B'});
   return <pre class={className} innerHTML={converter.toHtml(text)}></pre>;
 }
 
