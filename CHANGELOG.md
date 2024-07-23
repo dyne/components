@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/dyne/components/compare/v1.2.1...v1.2.2) (2024-07-23)
+
+
+### Bug Fixes
+
+* slangroom error now are rendered with the correct background and foreground colors ([#11](https://github.com/dyne/components/issues/11)) ([50505cb](https://github.com/dyne/components/commit/50505cb5112cb7b9eec1d3bed98543a147beb42e))
+
 ## [1.2.1](https://github.com/dyne/components/compare/v1.2.0...v1.2.1) (2024-07-22)
 
 
