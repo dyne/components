@@ -1,4 +1,5 @@
 import { Component, Host, Prop, State, Element, h } from '@stencil/core';
+import s from './utils/slangroom-presets.json';
 
 @Component({
   tag: 'dyne-slangroom-preset-loader',
@@ -6,16 +7,24 @@ import { Component, Host, Prop, State, Element, h } from '@stencil/core';
   shadow: true,
 })
 export class DyneSlangroomPresetLoader {
-  @Element() el: HTMLElement;
+  @Element() el: HTMLDivElement;
 
   @Prop() editorId: string;
 
+  private getDialog() {
+    const x = this.el.shadowRoot?.querySelector('dialog');
+    console.log(x);
+    return x;
+  }
+
   render() {
     return (
-      <Host>
-        ao
+      <div>
+        <dyne-button onClick={this.getDialog}>Select preset</dyne-button>
+        <dialog>ao</dialog>
+        <pre class="text-white">{JSON.stringify(s, null, 2)}</pre>
         <slot></slot>
-      </Host>
+      </div>
     );
   }
 }
