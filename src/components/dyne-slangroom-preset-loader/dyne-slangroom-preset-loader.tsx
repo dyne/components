@@ -1,4 +1,4 @@
-import { Component, Host, Prop, State, Element, h } from '@stencil/core';
+import { Component, Host, Prop, State, Element, Watch, h } from '@stencil/core';
 import SlangroomPresets from './utils/slangroom-presets.json';
 import { EditorId } from '../dyne-slangroom-editor/dyne-slangroom-editor';
 import { Array as A, pipe, Effect } from 'effect';
@@ -14,6 +14,12 @@ export class DyneSlangroomPresetLoader {
   @Prop({ reflect: true }) editorId: string;
 
   @State() presets: SlangroomPreset[] = SlangroomPresets;
+  @State() filteredPresets: SlangroomPreset[] = this.presets;
+
+  @Watch('presets')
+  updatePresetsSearch() {
+    this.filteredPresets = this.presets;
+  }
 
   get dialog() {
     return this.el.shadowRoot?.querySelector('dialog');
