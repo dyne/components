@@ -1,5 +1,6 @@
 import { Component, Host, Prop, State, Element, h } from '@stencil/core';
 import SlangroomPresets from './utils/slangroom-presets.json';
+import { EditorId } from '../dyne-slangroom-editor/dyne-slangroom-editor';
 
 @Component({
   tag: 'dyne-slangroom-preset-loader',
@@ -19,10 +20,10 @@ export class DyneSlangroomPresetLoader {
     return document.getElementById(this.editorId) as HTMLDyneSlangroomEditorElement;
   }
 
-  private loadPresetInEditor(preset: SlangroomPreset) {
-    this.editor.setAttribute('contract', preset.contract);
-    this.editor.keys = preset.keys;
-    this.editor.data = preset.data;
+  private async loadPresetInEditor(preset: SlangroomPreset) {
+    await this.editor.setContent(EditorId.CONTRACT, preset.contract);
+    await this.editor.setContent(EditorId.DATA, preset.data);
+    await this.editor.setContent(EditorId.KEYS, preset.keys);
   }
 
   private onPresetSelect(preset: SlangroomPreset) {
@@ -33,7 +34,9 @@ export class DyneSlangroomPresetLoader {
   render() {
     return (
       <Host>
-        <dyne-button onClick={() => this.dialog?.showModal()}>Select preset</dyne-button>
+        <dyne-button emphasis="m" onClick={() => this.dialog?.showModal()}>
+          Select preset
+        </dyne-button>
         <dialog class="rounded-lg">
           <div class="flex gap-4 justify-between items-center p-4 border-b sticky top-0 bg-white">
             <p>Select a slangroom preset</p>

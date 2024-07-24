@@ -1,4 +1,4 @@
-import { Component, Element, State, Prop, Method, h } from '@stencil/core';
+import { Component, Element, State, Prop, Method, h, Host } from '@stencil/core';
 
 // import { dracula } from 'thememirror';
 import { defaultKeymap } from '@codemirror/commands';
@@ -46,6 +46,16 @@ export class DyneSlangroomEditor {
       keys: await this.getEditor(EditorId.KEYS).getContent(),
       result: this.result,
     };
+  }
+
+  @Method()
+  async setContent(editor: EditorId, content: string): Promise<void> {
+    try {
+      await this.getEditor(editor).setContent(content);
+      this.result = undefined;
+    } catch (e) {
+      console.warn(e);
+    }
   }
 
   //
@@ -139,52 +149,54 @@ export class DyneSlangroomEditor {
 
   render() {
     return (
-      <div class="space-y-4">
-        <Container>
-          <div class="flex justify-between items-center">
-            <Title name="Slangroom" />
-            <dyne-button size="small" emphasis="high" onClick={() => this.executeContract()}>
-              Execute contract
-            </dyne-button>
-          </div>
-        </Container>
-
-        <div class="flex sm:flex-col md:flex-row items-stretch gap-4">
-          <Container className="md:grow md:w-0 shrink-0 md:basis-2">
-            <div class="space-y-4">
-              <Section title={EditorId.CONTRACT}>
-                <dyne-code-editor
-                  name={EditorId.CONTRACT}
-                  config={{ doc: this.contract, extensions: this.keyboardExtension }}
-                ></dyne-code-editor>
-              </Section>
-
-              <Section title={EditorId.DATA}>
-                <dyne-code-editor
-                  name={EditorId.DATA}
-                  config={{ doc: this.data, extensions: [this.keyboardExtension, json()] }}
-                ></dyne-code-editor>
-              </Section>
-
-              {this.keysMode == 'editor' && (
-                <Section title={EditorId.KEYS}>
-                  <dyne-code-editor
-                    name={EditorId.KEYS}
-                    config={{ doc: this.keys, extensions: [this.keyboardExtension, json()] }}
-                  ></dyne-code-editor>
-                </Section>
-              )}
+      <Host>
+        <div class="space-y-4">
+          <Container>
+            <div class="flex justify-between items-center">
+              <Title name="Slangroom" />
+              <dyne-button size="small" emphasis="high" onClick={() => this.executeContract()}>
+                Execute contract
+              </dyne-button>
             </div>
           </Container>
 
-          <Container className="md:grow md:w-0 shrink-0 md:basis-2">
-            {this.showEmptyState && <EmptyState />}
-            {this.isExecuting && <Spinner />}
-            {this.value && <ValueRenderer value={this.value} />}
-            {this.error && <ErrorRenderer error={this.error} />}
-          </Container>
+          <div class="flex sm:flex-col md:flex-row items-stretch gap-4">
+            <Container className="md:grow md:w-0 shrink-0 md:basis-2">
+              <div class="space-y-4">
+                <Section title={EditorId.CONTRACT}>
+                  <dyne-code-editor
+                    name={EditorId.CONTRACT}
+                    config={{ doc: this.contract, extensions: this.keyboardExtension }}
+                  ></dyne-code-editor>
+                </Section>
+
+                <Section title={EditorId.DATA}>
+                  <dyne-code-editor
+                    name={EditorId.DATA}
+                    config={{ doc: this.data, extensions: [this.keyboardExtension, json()] }}
+                  ></dyne-code-editor>
+                </Section>
+
+                {this.keysMode == 'editor' && (
+                  <Section title={EditorId.KEYS}>
+                    <dyne-code-editor
+                      name={EditorId.KEYS}
+                      config={{ doc: this.keys, extensions: [this.keyboardExtension, json()] }}
+                    ></dyne-code-editor>
+                  </Section>
+                )}
+              </div>
+            </Container>
+
+            <Container className="md:grow md:w-0 shrink-0 md:basis-2">
+              {this.showEmptyState && <EmptyState />}
+              {this.isExecuting && <Spinner />}
+              {this.value && <ValueRenderer value={this.value} />}
+              {this.error && <ErrorRenderer error={this.error} />}
+            </Container>
+          </div>
         </div>
-      </div>
+      </Host>
     );
   }
 }

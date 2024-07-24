@@ -7,10 +7,10 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { Color, Emphasis, Size } from "./components/types";
 import { EditorStateConfig } from "@codemirror/state";
-import { SlangroomEditorContent } from "./components/dyne-slangroom-editor/dyne-slangroom-editor";
+import { EditorId, SlangroomEditorContent } from "./components/dyne-slangroom-editor/dyne-slangroom-editor";
 export { Color, Emphasis, Size } from "./components/types";
 export { EditorStateConfig } from "@codemirror/state";
-export { SlangroomEditorContent } from "./components/dyne-slangroom-editor/dyne-slangroom-editor";
+export { EditorId, SlangroomEditorContent } from "./components/dyne-slangroom-editor/dyne-slangroom-editor";
 export namespace Components {
     interface DyneButton {
         /**
@@ -43,6 +43,7 @@ export namespace Components {
         "keys": string;
         "keysLocalStorageKey": string | undefined;
         "keysMode": 'none' | 'editor' | 'localStorage';
+        "setContent": (editor: EditorId, content: string) => Promise<void>;
     }
     interface DyneSlangroomPresetLoader {
         "editorId": string;
