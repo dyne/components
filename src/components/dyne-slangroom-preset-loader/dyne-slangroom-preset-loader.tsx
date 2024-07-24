@@ -51,7 +51,7 @@ export class DyneSlangroomPresetLoader {
   }
 
   private addPresets(presets: SlangroomPreset[]) {
-    this.presets.push(...presets);
+    this.presets = [...this.presets, ...presets];
   }
 
   async componentDidLoad() {
@@ -98,8 +98,7 @@ function PresetsSelect(props: PresetsProps) {
 
   return (
     <div class="p-4 space-y-4">
-      <pre>{JSON.stringify(presets, null, 2)}</pre>
-      {/* {Object.entries(groupedPresets).map(([groupName, groupContent]) => (
+      {Object.entries(groupedPresets).map(([groupName, groupContent]) => (
         <div>
           <p class="uppercase text-xs font-semibold tracking-wide text-slate-600 mb-2">
             {groupName}
@@ -117,7 +116,7 @@ function PresetsSelect(props: PresetsProps) {
             ))}
           </ul>
         </div>
-      ))} */}
+      ))}
     </div>
   );
 }
