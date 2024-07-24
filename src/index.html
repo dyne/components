@@ -33,11 +33,6 @@
   </head>
   <body class="p-8">
     <div class="component-container">
-      <h1 class="component-title">Slangroom Preset Loader</h1>
-      <dyne-slangroom-preset-loader editor-id="slangroom-editor"></dyne-slangroom-preset-loader>
-    </div>
-
-    <div class="component-container">
       <h1 class="component-title">Slangroom editor</h1>
 
       <dyne-slangroom-editor
@@ -51,7 +46,13 @@ Then print data"
   "foo": "bar",
   "did_url": "https://did.dyne.org/dids/did:dyne:sandbox.test:pEn78CGNEKvMR7DJQ1yvUVUpAHKzsBz45mQw3zD2js9"
 }'
-      ></dyne-slangroom-editor>
+      >
+        <dyne-slangroom-preset-loader slot="topbar-right" editor-id="slangroom-editor">
+          <dyne-slangroom-preset contract="hello" id="ok" data="ma"></dyne-slangroom-preset>
+          <dyne-slangroom-preset contract="hello" id="ok" data="ma"></dyne-slangroom-preset>
+          <dyne-slangroom-preset contract="hello" id="ok" data="ma"></dyne-slangroom-preset>
+        </dyne-slangroom-preset-loader>
+      </dyne-slangroom-editor>
       <!-- <dyne-slangroom-editor></dyne-slangroom-editor> -->
     </div>
 

@@ -1,6 +1,7 @@
 import { Component, Host, Prop, State, Element, h } from '@stencil/core';
 import SlangroomPresets from './utils/slangroom-presets.json';
 import { EditorId } from '../dyne-slangroom-editor/dyne-slangroom-editor';
+import { Array as A, pipe, Effect } from 'effect';
 
 @Component({
   tag: 'dyne-slangroom-preset-loader',
@@ -10,7 +11,9 @@ import { EditorId } from '../dyne-slangroom-editor/dyne-slangroom-editor';
 export class DyneSlangroomPresetLoader {
   @Element() el: HTMLElement;
 
-  @Prop() editorId: string;
+  @Prop({ reflect: true }) editorId: string;
+
+  @State() presets: SlangroomPreset[] = SlangroomPresets;
 
   get dialog() {
     return this.el.shadowRoot?.querySelector('dialog');
@@ -31,10 +34,34 @@ export class DyneSlangroomPresetLoader {
     this.dialog?.close();
   }
 
+  private readPresetsFromElements() {
+    return pipe(
+      Effect.succeed(this.el.querySelectorAll('dyne-slangroom-preset')),
+      Effect.map(presetElementNodeList => Array.from(presetElementNodeList)),
+      Effect.flatMap(presetElementArray =>
+        pipe(
+          presetElementArray,
+          A.map(presetElement => presetElement.getPreset()),
+          A.map(presetPromise => Effect.promise(() => presetPromise)),
+          Effect.all,
+        ),
+      ),
+      Effect.runPromise,
+    );
+  }
+
+  private addPresets(presets: SlangroomPreset[]) {
+    this.presets.push(...presets);
+  }
+
+  async componentDidLoad() {
+    pipe(await this.readPresetsFromElements(), presets => this.addPresets(presets));
+  }
+
   render() {
     return (
       <Host>
-        <dyne-button emphasis="m" onClick={() => this.dialog?.showModal()}>
+        <dyne-button size="small" emphasis="m" onClick={() => this.dialog?.showModal()}>
           Select preset
         </dyne-button>
         <dialog class="rounded-lg">
@@ -44,25 +71,35 @@ export class DyneSlangroomPresetLoader {
               X
             </dyne-button>
           </div>
-          <Presets onPresetSelect={this.onPresetSelect.bind(this)}></Presets>
+          <PresetsSelect
+            presets={this.presets}
+            onPresetSelect={this.onPresetSelect.bind(this)}
+          ></PresetsSelect>
         </dialog>
       </Host>
     );
   }
 }
 
-type SlangroomPreset = (typeof SlangroomPresets)['helpers']['set'];
+export type SlangroomPreset = (typeof SlangroomPresets)[number];
 
 type PresetsProps = {
   onPresetSelect?: (preset: SlangroomPreset) => void;
+  presets?: SlangroomPreset[];
 };
 
-function Presets(props: PresetsProps) {
-  const { onPresetSelect = () => {} } = props;
+function PresetsSelect(props: PresetsProps) {
+  const { onPresetSelect = () => {}, presets = [] } = props;
+
+  const groupedPresets = pipe(
+    presets,
+    A.groupBy(p => p.group),
+  );
 
   return (
     <div class="p-4 space-y-4">
-      {Object.entries(SlangroomPresets).map(([groupName, groupContent]) => (
+      <pre>{JSON.stringify(presets, null, 2)}</pre>
+      {/* {Object.entries(groupedPresets).map(([groupName, groupContent]) => (
         <div>
           <p class="uppercase text-xs font-semibold tracking-wide text-slate-600 mb-2">
             {groupName}
@@ -80,7 +117,7 @@ function Presets(props: PresetsProps) {
             ))}
           </ul>
         </div>
-      ))}
+      ))} */}
     </div>
   );
 }

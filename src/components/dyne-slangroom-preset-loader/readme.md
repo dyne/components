@@ -17,11 +17,13 @@
 ### Depends on
 
 - [dyne-button](../dyne-button)
+- [dyne-code-editor](../dyne-code-editor)
 
 ### Graph
 ```mermaid
 graph TD;
   dyne-slangroom-preset-loader --> dyne-button
+  dyne-slangroom-preset-loader --> dyne-code-editor
   style dyne-slangroom-preset-loader fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

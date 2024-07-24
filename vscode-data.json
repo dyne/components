@@ -135,6 +135,39 @@
       ]
     },
     {
+      "name": "dyne-slangroom-preset",
+      "description": {
+        "kind": "markdown",
+        "value": ""
+      },
+      "attributes": [
+        {
+          "name": "contract",
+          "description": ""
+        },
+        {
+          "name": "data",
+          "description": ""
+        },
+        {
+          "name": "description",
+          "description": ""
+        },
+        {
+          "name": "group",
+          "description": ""
+        },
+        {
+          "name": "keys",
+          "description": ""
+        },
+        {
+          "name": "name",
+          "description": ""
+        }
+      ]
+    },
+    {
       "name": "dyne-slangroom-preset-loader",
       "description": {
         "kind": "markdown",

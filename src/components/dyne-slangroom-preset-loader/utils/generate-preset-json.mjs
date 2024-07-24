@@ -41,7 +41,8 @@ function processAndParseExamplesPaths(paths) {
     A.filter(p => fs.lstatSync(p).isFile()),
     A.groupBy(p => path.basename(p).split('.').at(0)),
 
-    R.map(paths => ({
+    R.map((paths, key) => ({
+      name: key,
       contract: paths.find(S.includes('.slang')),
       keys: paths.find(S.includes('.keys.')),
       data: paths.find(S.includes('.data.')),
@@ -49,12 +50,12 @@ function processAndParseExamplesPaths(paths) {
     })),
 
     R.map(contractData => ({
-      group: path.dirname(contractData.contract).split('/').at(-1),
       ...contractData,
+      group: path.dirname(contractData.contract).split('/').at(-1),
     })),
 
     R.map(contractData => ({
-      group: contractData.group,
+      ...contractData,
       contract: readFileAsString(contractData.contract),
       keys: readFileAsString(contractData.keys),
       data: readFileAsString(contractData.data),
@@ -62,8 +63,8 @@ function processAndParseExamplesPaths(paths) {
     })),
 
     R.toEntries,
-    A.groupBy(([_, contractData]) => contractData.group),
-    R.map(R.fromEntries),
+    A.map(A.get(1)),
+    A.map(O.getOrThrow),
   );
 }
 

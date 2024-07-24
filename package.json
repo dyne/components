@@ -38,7 +38,7 @@
     "dev": "NODE_ENV=development npm-run-all -p dev:*",
     "dev:start": "stencil build --watch --dev --serve",
     "dev:storybook": "sleep 6 && storybook dev -p 6006",
-    "generate-slangroom-preset-file": "node src/components/dyne-slangroom-preset-loader/utils/generate-preset-json.mjs"
+    "generate-slangroom-presets-file": "node src/components/dyne-slangroom-preset-loader/utils/generate-preset-json.mjs"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^1.5.0",

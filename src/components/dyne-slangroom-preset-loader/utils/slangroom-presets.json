@@ -1,222 +1,233 @@
-{
-    "helpers": {
-        "set": {
-            "group": "helpers",
-            "contract": "Rule unknown ignore\n\nGiven I send object 'object' and send path 'path' and send value 'value' and manipulate and set\n\nGiven I have a 'string dictionary' named 'object'\nThen print 'mimmo'\n",
-            "keys": "{\n\t\"path\": \"root.element\"\n}\n",
-            "data": "{\n\t\"value\": { \"name\": \"Jhon\" },\n\t\"object\": {\n\t\t\"surname\": \"Doe\"\n\t}\n}\n",
-            "meta": {
-                "title": "manipulate and set",
-                "highlight": "3"
-            }
+[
+    {
+        "name": "post_with_headers",
+        "contract": "Rule unknown ignore\nGiven I connect to 'address' and send object 'body' and send headers 'headers' and do post and output into 'result'\nGiven I have a 'string dictionary' named 'result'\nThen print the 'result'\n",
+        "keys": "{\n\t\"address\": \"https://dyne.org/slangroom\"\n}\n",
+        "data": "{\n\t\"body\": {\n\t\t\"hello\": \"world\"\n\t},\n\t\"headers\": {\n\t\t\"Content-Type\": \"application/json\"\n\t}\n}\n",
+        "meta": {
+            "title": "http post with header",
+            "highlight": "2"
         },
-        "pick": {
-            "group": "helpers",
-            "contract": "Rule unknown ignore\n\nGiven I send object 'object' and send properties 'properties' and manipulate and pick and output into 'result'\n\nGiven I have a 'string dictionary' named 'result'\nThen print the data\n",
-            "keys": "{\n\t\"properties\": [\n\t\t\"name\",\n\t\t\"personal_information.email.first\"\n\t]\n}\n",
-            "data": "{\n\t\"object\": {\n\t\t\"name\": \"Jhon\",\n\t\t\"personal_information\": {\n\t\t\t\"email\": {\n\t\t\t\t\"frist\": \"example@example.org\",\n\t\t\t\t\"second\": \"email@example.org\"\n\t\t\t},\n\t\t\t\"phone\": \"3338957823\"\n\t\t}\n\t}\n}\n",
-            "meta": {
-                "title": "manipulate and pick",
-                "highlight": "3"
-            }
-        },
-        "omit": {
-            "group": "helpers",
-            "contract": "Rule unknown ignore\n\nGiven I send object 'object' and send paths 'paths' and manipulate and omit and output into 'result'\n\nGiven I have a 'string dictionary' named 'result'\nThen print the data\n",
-            "keys": "{\n\t\"path\": [\n\t\t\"names.third\",\n\t\t\"surnames.second\"\n\t]\n}\n",
-            "data": "{\n\t\"object\": {\n\t\t\"names\": {\n\t\t\t\"first\": \"Bella\",\n\t\t\t\"third\": \"Owen\"\n\t\t},\n\t\t\"surnames\": {\n\t\t\t\"first\": \"Allen\",\n\t\t\t\"second\": \"Briggs\"\n\t\t}\n\t}\n}\n",
-            "meta": {
-                "title": "manipulate and omit",
-                "highlight": "3"
-            }
-        },
-        "merge": {
-            "group": "helpers",
-            "contract": "Rule unknown ignore\n\nGiven I send object 'object' and send sources 'sources' and manipulate and merge and output into 'result'\n\nGiven I have a 'string dictionary' named 'result'\nThen print the data\n",
-            "keys": "{\n\t\"sources\": [\n\t\t{\n\t\t\t\"names\": {\n\t\t\t\t\"second\": \"Jhon\"\n\t\t\t}\n\t\t},\n\t\t{\n\t\t\t\"surnames\": {\n\t\t\t\t\"third\": \"Doe\"\n\t\t\t}\n\t\t}\n\t]\n}\n",
-            "data": "{\n\t\"object\": {\n\t\t\"names\": {\n\t\t\t\"first\": \"Bella\",\n\t\t\t\"third\": \"Owen\"\n\t\t},\n\t\t\"surnames\": {\n\t\t\t\"first\": \"Allen\",\n\t\t\t\"second\": \"Briggs\"\n\t\t}\n\t}\n}\n",
-            "meta": {
-                "title": "manipulate and merge",
-                "highlight": "3"
-            }
-        },
-        "get": {
-            "group": "helpers",
-            "contract": "Rule unknown ignore\n\nGiven I send object 'object' and send path 'path' and manipulate and get and output into 'result'\n\nGiven I have a 'string' named 'result'\nThen print the data\n",
-            "keys": "{\n\t\"the_path\": \"root.element\"\n}\n",
-            "data": "{\n\t\"object\": {\n\t\t\"root\": {\n\t\t\t\"element\": \"value\"\n\t\t}\n\t}\n}\n",
-            "meta": {
-                "title": "manipulate and get",
-                "highlight": "3"
-            }
-        },
-        "concat": {
-            "group": "helpers",
-            "contract": "Rule unknown ignore\n\nGiven I send array 'array' and send values 'values' and manipulate and concat and output into 'result'\n\nGiven I have a 'string array' named 'result'\nThen print the data\n",
-            "keys": "{\n\t\"values\": [\n\t\t\"third\",\n\t\t\"foruth\",\n\t\t\"fifth\"\n\t]\n}\n",
-            "data": "{\n    \"array\": [\n\t\t\"first\",\n\t\t\"second\"\n\t]\n}\n",
-            "meta": {
-                "title": "manipulate and concat",
-                "highlight": "3"
-            }
-        },
-        "compact": {
-            "group": "helpers",
-            "contract": "Rule unknown ignore\n\nGiven I send array 'array' and manipulate and compact and output into 'result'\n\nGiven I have a 'string array' named 'result'\nThen print the data\n",
-            "keys": "{}\n",
-            "data": "{\n\t\"the_array\": [\n\t\t0,\n\t\t\"c\",\n\t\tfalse,\n\t\t\"d\",\n\t\t\"\"\n\t]\n}\n",
-            "meta": {
-                "title": "manipulate and compact",
-                "highlight": "3"
-            }
-        }
+        "group": "http"
     },
-    "http": {
-        "post_with_headers": {
-            "group": "http",
-            "contract": "Rule unknown ignore\nGiven I connect to 'address' and send object 'body' and send headers 'headers' and do post and output into 'result'\nGiven I have a 'string dictionary' named 'result'\nThen print the 'result'\n",
-            "keys": "{\n\t\"address\": \"https://dyne.org/slangroom\"\n}\n",
-            "data": "{\n\t\"body\": {\n\t\t\"hello\": \"world\"\n\t},\n\t\"headers\": {\n\t\t\"Content-Type\": \"application/json\"\n\t}\n}\n",
-            "meta": {
-                "title": "http post with header",
-                "highlight": "2"
-            }
+    {
+        "name": "post",
+        "contract": "Rule unknown ignore\nGiven I connect to 'address' and send object 'body' and do post and output into 'result'\nGiven I have a 'string dictionary' named 'result'\nThen print the 'result'\n",
+        "keys": "{\n\t\"address\": \"https://dyne.org/slangroom\"\n}\n",
+        "data": "{\n\t\"body\": {\n\t\t\"hello\": \"world\"\n\t}\n}\n",
+        "meta": {
+            "title": "http post",
+            "highlight": "2"
         },
-        "post": {
-            "group": "http",
-            "contract": "Rule unknown ignore\nGiven I connect to 'address' and send object 'body' and do post and output into 'result'\nGiven I have a 'string dictionary' named 'result'\nThen print the 'result'\n",
-            "keys": "{\n\t\"address\": \"https://dyne.org/slangroom\"\n}\n",
-            "data": "{\n\t\"body\": {\n\t\t\"hello\": \"world\"\n\t}\n}\n",
-            "meta": {
-                "title": "http post",
-                "highlight": "2"
-            }
-        },
-        "get_with_headers": {
-            "group": "http",
-            "contract": "Rule unknown ignore\nGiven I connect to 'address' and send headers 'headers' and do get and output into 'result'\nGiven I have a 'string dictionary' named 'result'\nThen print the 'result'\n",
-            "keys": "{\n\t\"address\": \"https://dyne.org/slangroom\"\n}\n",
-            "data": "{\n\t\"headers\": {\n\t\t\"Content-Type\": \"application/json\"\n\t}\n}\n",
-            "meta": {
-                "title": "http get with headers",
-                "highlight": "2"
-            }
-        }
+        "group": "http"
     },
-    "json-schema": {
-        "validate": {
-            "group": "json-schema",
-            "contract": "Rule unknown ignore\n\nGiven I send json_data 'json_data' and send json_schema 'json_schema' and validate json and output into 'result'\n\nGiven I have a 'string dictionary' named 'result'\nThen print the 'result'\n",
-            "keys": "{\n\t\"json_schema\": {\n\t\t\"type\": \"object\",\n\t\t\"properties\": {\n\t\t\t\"first_name\": {\n\t\t\t\t\"type\": \"string\"\n\t\t\t},\n\t\t\t\"last_name\": {\n\t\t\t\t\"type\": \"string\"\n\t\t\t}\n\t\t},\n\t\t\"required\": [\n\t\t\t\"first_name\",\n\t\t\t\"last_name\"\n\t\t]\n\t}\n}\n",
-            "data": "{\n    \"json_data\": {\n        \"first_name\": \"Jhon\",\n        \"last_name\": \"Doe\"\n    }\n}\n",
-            "meta": {
-                "title": "validate json",
-                "highlight": "3"
-            }
-        }
+    {
+        "name": "get_with_headers",
+        "contract": "Rule unknown ignore\nGiven I connect to 'address' and send headers 'headers' and do get and output into 'result'\nGiven I have a 'string dictionary' named 'result'\nThen print the 'result'\n",
+        "keys": "{\n\t\"address\": \"https://dyne.org/slangroom\"\n}\n",
+        "data": "{\n\t\"headers\": {\n\t\t\"Content-Type\": \"application/json\"\n\t}\n}\n",
+        "meta": {
+            "title": "http get with headers",
+            "highlight": "2"
+        },
+        "group": "http"
     },
-    "qrcode": {
-        "qr_code": {
-            "group": "qrcode",
-            "contract": "Rule unknown ignore\n\nGiven I send text 'text' and create qr code and output into 'result'\n\nGiven I have a 'string' named 'result'\nThen print the 'result'\n",
-            "keys": "{}\n",
-            "data": "{\n    \"text\": \"Hello World!\"\n}\n",
-            "meta": {
-                "title": "create qr code",
-                "highlight": "3"
-            }
-        }
+    {
+        "name": "get",
+        "contract": "Rule unknown ignore\nGiven I connect to 'address' and do get and output into 'result'\nGiven I have a 'string dictionary' named 'result'\nThen print the 'result'\n",
+        "keys": "{\n\t\"secret\": \"foo\"\n}\n",
+        "data": "{\n\t\"address\": \"https://dyne.org/slangroom\"\n}\n",
+        "meta": {
+            "title": "http get",
+            "highlight": "2"
+        },
+        "group": "http"
     },
-    "pocketbase": {
-        "update_record": {
-            "group": "pocketbase",
-            "contract": "Rule unknown ignore\n\nGiven I connect to 'pb_address' and start pb client\nGiven I send my_credentials 'my_credentials' and login\n\nGiven I send update_parameters 'update_parameters' and send record_parameters 'record_parameters' and update record and output into 'result'\n\nGiven I have a 'string dictionary' named 'result'\nThen print the 'result'\n",
-            "keys": "{\n\t\"pb_address\": \"http://127.0.0.1:8090\",\n\t\"my_credentials\": {\n\t\t\"email\": \"test@test.eu\",\n\t\t\"password\": \"testtest\"\n\t}\n}\n",
-            "data": "{\n\t\"update_parameters\": {\n\t\t\"id\": \"q3vijjsacrn32tk\",\n\t\t\"collection\": \"organizations\",\n\t\t\"record\": {\n\t\t\t\"name\": \"new value for name\"\n\t\t}\n\t},\n\t\"record_parameters\": {\n\t\t\"fields\": \"id, name\"\n\t}\n}\n",
-            "meta": {
-                "title": "update a record",
-                "highlight": "6"
-            }
+    {
+        "name": "set",
+        "contract": "Rule unknown ignore\n\nGiven I send object 'object' and send path 'path' and send value 'value' and manipulate and set\n\nGiven I have a 'string dictionary' named 'object'\nThen print 'mimmo'\n",
+        "keys": "{\n\t\"path\": \"root.element\"\n}\n",
+        "data": "{\n\t\"value\": { \"name\": \"Jhon\" },\n\t\"object\": {\n\t\t\"surname\": \"Doe\"\n\t}\n}\n",
+        "meta": {
+            "title": "manipulate and set",
+            "highlight": "3"
         },
-        "start_pb": {
-            "group": "pocketbase",
-            "contract": "Rule unknown ignore\n\nGiven I connect to 'pb_address' and start pb client and output into 'result'\n# for mobile contracts use instead\n# Given I connect to 'pb_address' and start capacitor pb client and output into 'result'\n\nGiven I have a 'string' named 'result'\nThen print the 'result'\n",
-            "keys": "{\n\t\"pb_address\": \"http://127.0.0.1:8090\"\n}\n",
-            "data": "{}\n",
-            "meta": {
-                "title": "start pb client",
-                "highlight": "3"
-            }
+        "group": "helpers"
+    },
+    {
+        "name": "pick",
+        "contract": "Rule unknown ignore\n\nGiven I send object 'object' and send properties 'properties' and manipulate and pick and output into 'result'\n\nGiven I have a 'string dictionary' named 'result'\nThen print the data\n",
+        "keys": "{\n\t\"properties\": [\n\t\t\"name\",\n\t\t\"personal_information.email.first\"\n\t]\n}\n",
+        "data": "{\n\t\"object\": {\n\t\t\"name\": \"Jhon\",\n\t\t\"personal_information\": {\n\t\t\t\"email\": {\n\t\t\t\t\"frist\": \"example@example.org\",\n\t\t\t\t\"second\": \"email@example.org\"\n\t\t\t},\n\t\t\t\"phone\": \"3338957823\"\n\t\t}\n\t}\n}\n",
+        "meta": {
+            "title": "manipulate and pick",
+            "highlight": "3"
         },
-        "send_request": {
-            "group": "pocketbase",
-            "contract": "Rule unknown ignore\n\nGiven I connect to 'pb_address' and start pb client\n\nGiven I send url 'url' and send send_parameters 'send_parameters' and send request and output into 'result'\n\nGiven I have a 'string dictionary' named 'result'\nThen print the 'result'\n",
-            "keys": "{\n\t\"pb_address\": \"http://127.0.0.1:8090\"\n}\n",
-            "data": "{\n\t\"url\": \"/api/hello/user\",\n\t\"send_parameters\": {}\n}\n",
-            "meta": {
-                "title": "send request",
-                "highlight": "5"
-            }
+        "group": "helpers"
+    },
+    {
+        "name": "omit",
+        "contract": "Rule unknown ignore\n\nGiven I send object 'object' and send paths 'paths' and manipulate and omit and output into 'result'\n\nGiven I have a 'string dictionary' named 'result'\nThen print the data\n",
+        "keys": "{\n\t\"path\": [\n\t\t\"names.third\",\n\t\t\"surnames.second\"\n\t]\n}\n",
+        "data": "{\n\t\"object\": {\n\t\t\"names\": {\n\t\t\t\"first\": \"Bella\",\n\t\t\t\"third\": \"Owen\"\n\t\t},\n\t\t\"surnames\": {\n\t\t\t\"first\": \"Allen\",\n\t\t\t\"second\": \"Briggs\"\n\t\t}\n\t}\n}\n",
+        "meta": {
+            "title": "manipulate and omit",
+            "highlight": "3"
         },
-        "pw_reset": {
-            "group": "pocketbase",
-            "contract": "Rule unknown ignore\n\nGiven I connect to 'pb_address' and start pb client\nGiven I send my_credentials 'my_credentials' and login\n\nGiven I send email 'email' and ask password reset and output into 'result'\n\nGiven I have a 'string dictionary' named 'result'\nThen print the 'result'\n",
-            "keys": "{\n\t\"pb_address\": \"http://127.0.0.1:8090\",\n\t\"my_credentials\": {\n\t\t\"email\": \"test@test.eu\",\n\t\t\"password\": \"testtest\"\n\t}\n}\n",
-            "data": "{\n\t\"email\": \"test@test.eu\"\n}\n",
-            "meta": {
-                "title": "password reset",
-                "highlight": "6"
-            }
+        "group": "helpers"
+    },
+    {
+        "name": "merge",
+        "contract": "Rule unknown ignore\n\nGiven I send object 'object' and send sources 'sources' and manipulate and merge and output into 'result'\n\nGiven I have a 'string dictionary' named 'result'\nThen print the data\n",
+        "keys": "{\n\t\"sources\": [\n\t\t{\n\t\t\t\"names\": {\n\t\t\t\t\"second\": \"Jhon\"\n\t\t\t}\n\t\t},\n\t\t{\n\t\t\t\"surnames\": {\n\t\t\t\t\"third\": \"Doe\"\n\t\t\t}\n\t\t}\n\t]\n}\n",
+        "data": "{\n\t\"object\": {\n\t\t\"names\": {\n\t\t\t\"first\": \"Bella\",\n\t\t\t\"third\": \"Owen\"\n\t\t},\n\t\t\"surnames\": {\n\t\t\t\"first\": \"Allen\",\n\t\t\t\"second\": \"Briggs\"\n\t\t}\n\t}\n}\n",
+        "meta": {
+            "title": "manipulate and merge",
+            "highlight": "3"
         },
-        "login": {
-            "group": "pocketbase",
-            "contract": "Rule unknown ignore\n\nGiven I connect to 'pb_address' and start pb client\n\nGiven I send my_credentials 'my_credentials' and login and output into 'result'\n\nGiven I have a 'string' named 'result'\nThen print the 'result'\n",
-            "keys": "{\n\t\"pb_address\": \"http://127.0.0.1:8090\"\n}\n",
-            "data": "{\n\t\"my_credentials\": {\n\t\t\"email\": \"test@test.eu\",\n\t\t\"password\": \"testtest\"\n\t}\n}\n",
-            "meta": {
-                "title": "login",
-                "highlight": "5"
-            }
+        "group": "helpers"
+    },
+    {
+        "name": "concat",
+        "contract": "Rule unknown ignore\n\nGiven I send array 'array' and send values 'values' and manipulate and concat and output into 'result'\n\nGiven I have a 'string array' named 'result'\nThen print the data\n",
+        "keys": "{\n\t\"values\": [\n\t\t\"third\",\n\t\t\"foruth\",\n\t\t\"fifth\"\n\t]\n}\n",
+        "data": "{\n    \"array\": [\n\t\t\"first\",\n\t\t\"second\"\n\t]\n}\n",
+        "meta": {
+            "title": "manipulate and concat",
+            "highlight": "3"
         },
-        "get_some_records": {
-            "group": "pocketbase",
-            "contract": "Rule unknown ignore\n\nGiven I connect to 'pb_address' and start pb client\n\nGiven I send list_parameters 'list_parameters' and get some records and output into 'result'\n\nGiven I have a 'string dictionary' named 'result'\nThen print the 'result'\n",
-            "keys": "{\n\t\"pb_address\": \"http://127.0.0.1:8090\"\n}\n",
-            "data": "{\n\t\"list_parameters\": {\n\t\t\"type\": \"list\",\n\t\t\"pagination\": {\n\t\t\t\"page\": 2,\n\t\t\t\"perPage\": 20\n\t\t},\n\t\t\"collection\": \"organizations\"\n\t}\n}\n",
-            "meta": {
-                "title": "get some records",
-                "highlight": "5"
-            }
+        "group": "helpers"
+    },
+    {
+        "name": "compact",
+        "contract": "Rule unknown ignore\n\nGiven I send array 'array' and manipulate and compact and output into 'result'\n\nGiven I have a 'string array' named 'result'\nThen print the data\n",
+        "keys": "{}\n",
+        "data": "{\n\t\"the_array\": [\n\t\t0,\n\t\t\"c\",\n\t\tfalse,\n\t\t\"d\",\n\t\t\"\"\n\t]\n}\n",
+        "meta": {
+            "title": "manipulate and compact",
+            "highlight": "3"
         },
-        "get_one_record": {
-            "group": "pocketbase",
-            "contract": "Rule unknown ignore\n\nGiven I connect to 'pb_address' and start pb client\n\nGiven I send show_parameters 'show_parameters' and get one record and output into 'result'\n\nGiven I have a 'string dictionary' named 'result'\nThen print the 'result'\n",
-            "keys": "{\n\t\"pb_address\": \"http://127.0.0.1:8090\"\n}\n",
-            "data": "{\n\t\"show_parameters\": {\n\t\t\"collection\": \"organizations\",\n\t\t\"id\": \"p7viyzsihrn52uj\",\n\t\t\"fields\": \"name\"\n\t}\n}\n",
-            "meta": {
-                "title": "get one record",
-                "highlight": "5"
-            }
+        "group": "helpers"
+    },
+    {
+        "name": "validate",
+        "contract": "Rule unknown ignore\n\nGiven I send json_data 'json_data' and send json_schema 'json_schema' and validate json and output into 'result'\n\nGiven I have a 'string dictionary' named 'result'\nThen print the 'result'\n",
+        "keys": "{\n\t\"json_schema\": {\n\t\t\"type\": \"object\",\n\t\t\"properties\": {\n\t\t\t\"first_name\": {\n\t\t\t\t\"type\": \"string\"\n\t\t\t},\n\t\t\t\"last_name\": {\n\t\t\t\t\"type\": \"string\"\n\t\t\t}\n\t\t},\n\t\t\"required\": [\n\t\t\t\"first_name\",\n\t\t\t\"last_name\"\n\t\t]\n\t}\n}\n",
+        "data": "{\n    \"json_data\": {\n        \"first_name\": \"Jhon\",\n        \"last_name\": \"Doe\"\n    }\n}\n",
+        "meta": {
+            "title": "validate json",
+            "highlight": "3"
         },
-        "delete_record": {
-            "group": "pocketbase",
-            "contract": "Rule unknown ignore\n\nGiven I connect to 'pb_address' and start pb client\nGiven I send my_credentials 'my_credentials' and login\n\nGiven I send delete_parameters 'delete_parameters' and delete record and output into 'result'\n\nGiven I have a 'string' named 'result'\nThen print the 'result'\n",
-            "keys": "{\n\t\"pb_address\": \"http://127.0.0.1:8090\",\n\t\"my_credentials\": {\n\t\t\"email\": \"test@test.eu\",\n\t\t\"password\": \"testtest\"\n\t}\n}\n",
-            "data": "{\n\t\"delete_parameters\": {\n\t\t\"collection\": \"organizations\",\n\t\t\"id\": \"q3vijjsacrn32tk\"\n\t}\n}\n",
-            "meta": {
-                "title": "delete a record",
-                "highlight": "6"
-            }
+        "group": "json-schema"
+    },
+    {
+        "name": "qr_code",
+        "contract": "Rule unknown ignore\n\nGiven I send text 'text' and create qr code and output into 'result'\n\nGiven I have a 'string' named 'result'\nThen print the 'result'\n",
+        "keys": "{}\n",
+        "data": "{\n    \"text\": \"Hello World!\"\n}\n",
+        "meta": {
+            "title": "create qr code",
+            "highlight": "3"
         },
-        "create_record": {
-            "group": "pocketbase",
-            "contract": "Rule unknown ignore\n\nGiven I connect to 'pb_address' and start pb client\nGiven I send my_credentials 'my_credentials' and login\n\nGiven I send create_parameters 'create_parameters' and send record_parameters 'record_parameters' and create record and output into 'result'\n\nGiven I have a 'string dictionary' named 'result'\nThen print the 'result'\n",
-            "keys": "{\n\t\"pb_address\": \"http://127.0.0.1:8090\",\n\t\"my_credentials\": {\n\t\t\"email\": \"test@test.eu\",\n\t\t\"password\": \"testtest\"\n\t}\n}\n",
-            "data": "{\n\t\"create_parameters\": {\n\t\t\"collection\": \"organizations\",\n\t\t\"record\": {\n\t\t\t\"name\": \"Jhon org\"\n\t\t}\n\t},\n\t\"record_parameters\": {\n\t\t\"requestKey\": \"testCreate\"\n\t}\n}\n",
-            "meta": {
-                "title": "create a record",
-                "highlight": "6"
-            }
-        }
+        "group": "qrcode"
+    },
+    {
+        "name": "update_record",
+        "contract": "Rule unknown ignore\n\nGiven I connect to 'pb_address' and start pb client\nGiven I send my_credentials 'my_credentials' and login\n\nGiven I send update_parameters 'update_parameters' and send record_parameters 'record_parameters' and update record and output into 'result'\n\nGiven I have a 'string dictionary' named 'result'\nThen print the 'result'\n",
+        "keys": "{\n\t\"pb_address\": \"http://127.0.0.1:8090\",\n\t\"my_credentials\": {\n\t\t\"email\": \"test@test.eu\",\n\t\t\"password\": \"testtest\"\n\t}\n}\n",
+        "data": "{\n\t\"update_parameters\": {\n\t\t\"id\": \"q3vijjsacrn32tk\",\n\t\t\"collection\": \"organizations\",\n\t\t\"record\": {\n\t\t\t\"name\": \"new value for name\"\n\t\t}\n\t},\n\t\"record_parameters\": {\n\t\t\"fields\": \"id, name\"\n\t}\n}\n",
+        "meta": {
+            "title": "update a record",
+            "highlight": "6"
+        },
+        "group": "pocketbase"
+    },
+    {
+        "name": "start_pb",
+        "contract": "Rule unknown ignore\n\nGiven I connect to 'pb_address' and start pb client and output into 'result'\n# for mobile contracts use instead\n# Given I connect to 'pb_address' and start capacitor pb client and output into 'result'\n\nGiven I have a 'string' named 'result'\nThen print the 'result'\n",
+        "keys": "{\n\t\"pb_address\": \"http://127.0.0.1:8090\"\n}\n",
+        "data": "{}\n",
+        "meta": {
+            "title": "start pb client",
+            "highlight": "3"
+        },
+        "group": "pocketbase"
+    },
+    {
+        "name": "send_request",
+        "contract": "Rule unknown ignore\n\nGiven I connect to 'pb_address' and start pb client\n\nGiven I send url 'url' and send send_parameters 'send_parameters' and send request and output into 'result'\n\nGiven I have a 'string dictionary' named 'result'\nThen print the 'result'\n",
+        "keys": "{\n\t\"pb_address\": \"http://127.0.0.1:8090\"\n}\n",
+        "data": "{\n\t\"url\": \"/api/hello/user\",\n\t\"send_parameters\": {}\n}\n",
+        "meta": {
+            "title": "send request",
+            "highlight": "5"
+        },
+        "group": "pocketbase"
+    },
+    {
+        "name": "pw_reset",
+        "contract": "Rule unknown ignore\n\nGiven I connect to 'pb_address' and start pb client\nGiven I send my_credentials 'my_credentials' and login\n\nGiven I send email 'email' and ask password reset and output into 'result'\n\nGiven I have a 'string dictionary' named 'result'\nThen print the 'result'\n",
+        "keys": "{\n\t\"pb_address\": \"http://127.0.0.1:8090\",\n\t\"my_credentials\": {\n\t\t\"email\": \"test@test.eu\",\n\t\t\"password\": \"testtest\"\n\t}\n}\n",
+        "data": "{\n\t\"email\": \"test@test.eu\"\n}\n",
+        "meta": {
+            "title": "password reset",
+            "highlight": "6"
+        },
+        "group": "pocketbase"
+    },
+    {
+        "name": "login",
+        "contract": "Rule unknown ignore\n\nGiven I connect to 'pb_address' and start pb client\n\nGiven I send my_credentials 'my_credentials' and login and output into 'result'\n\nGiven I have a 'string' named 'result'\nThen print the 'result'\n",
+        "keys": "{\n\t\"pb_address\": \"http://127.0.0.1:8090\"\n}\n",
+        "data": "{\n\t\"my_credentials\": {\n\t\t\"email\": \"test@test.eu\",\n\t\t\"password\": \"testtest\"\n\t}\n}\n",
+        "meta": {
+            "title": "login",
+            "highlight": "5"
+        },
+        "group": "pocketbase"
+    },
+    {
+        "name": "get_some_records",
+        "contract": "Rule unknown ignore\n\nGiven I connect to 'pb_address' and start pb client\n\nGiven I send list_parameters 'list_parameters' and get some records and output into 'result'\n\nGiven I have a 'string dictionary' named 'result'\nThen print the 'result'\n",
+        "keys": "{\n\t\"pb_address\": \"http://127.0.0.1:8090\"\n}\n",
+        "data": "{\n\t\"list_parameters\": {\n\t\t\"type\": \"list\",\n\t\t\"pagination\": {\n\t\t\t\"page\": 2,\n\t\t\t\"perPage\": 20\n\t\t},\n\t\t\"collection\": \"organizations\"\n\t}\n}\n",
+        "meta": {
+            "title": "get some records",
+            "highlight": "5"
+        },
+        "group": "pocketbase"
+    },
+    {
+        "name": "get_one_record",
+        "contract": "Rule unknown ignore\n\nGiven I connect to 'pb_address' and start pb client\n\nGiven I send show_parameters 'show_parameters' and get one record and output into 'result'\n\nGiven I have a 'string dictionary' named 'result'\nThen print the 'result'\n",
+        "keys": "{\n\t\"pb_address\": \"http://127.0.0.1:8090\"\n}\n",
+        "data": "{\n\t\"show_parameters\": {\n\t\t\"collection\": \"organizations\",\n\t\t\"id\": \"p7viyzsihrn52uj\",\n\t\t\"fields\": \"name\"\n\t}\n}\n",
+        "meta": {
+            "title": "get one record",
+            "highlight": "5"
+        },
+        "group": "pocketbase"
+    },
+    {
+        "name": "delete_record",
+        "contract": "Rule unknown ignore\n\nGiven I connect to 'pb_address' and start pb client\nGiven I send my_credentials 'my_credentials' and login\n\nGiven I send delete_parameters 'delete_parameters' and delete record and output into 'result'\n\nGiven I have a 'string' named 'result'\nThen print the 'result'\n",
+        "keys": "{\n\t\"pb_address\": \"http://127.0.0.1:8090\",\n\t\"my_credentials\": {\n\t\t\"email\": \"test@test.eu\",\n\t\t\"password\": \"testtest\"\n\t}\n}\n",
+        "data": "{\n\t\"delete_parameters\": {\n\t\t\"collection\": \"organizations\",\n\t\t\"id\": \"q3vijjsacrn32tk\"\n\t}\n}\n",
+        "meta": {
+            "title": "delete a record",
+            "highlight": "6"
+        },
+        "group": "pocketbase"
+    },
+    {
+        "name": "create_record",
+        "contract": "Rule unknown ignore\n\nGiven I connect to 'pb_address' and start pb client\nGiven I send my_credentials 'my_credentials' and login\n\nGiven I send create_parameters 'create_parameters' and send record_parameters 'record_parameters' and create record and output into 'result'\n\nGiven I have a 'string dictionary' named 'result'\nThen print the 'result'\n",
+        "keys": "{\n\t\"pb_address\": \"http://127.0.0.1:8090\",\n\t\"my_credentials\": {\n\t\t\"email\": \"test@test.eu\",\n\t\t\"password\": \"testtest\"\n\t}\n}\n",
+        "data": "{\n\t\"create_parameters\": {\n\t\t\"collection\": \"organizations\",\n\t\t\"record\": {\n\t\t\t\"name\": \"Jhon org\"\n\t\t}\n\t},\n\t\"record_parameters\": {\n\t\t\"requestKey\": \"testCreate\"\n\t}\n}\n",
+        "meta": {
+            "title": "create a record",
+            "highlight": "6"
+        },
+        "group": "pocketbase"
     }
-}
+]

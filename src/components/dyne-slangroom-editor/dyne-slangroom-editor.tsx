@@ -154,9 +154,12 @@ export class DyneSlangroomEditor {
           <Container>
             <div class="flex justify-between items-center">
               <Title name="Slangroom" />
-              <dyne-button size="small" emphasis="high" onClick={() => this.executeContract()}>
-                Execute contract
-              </dyne-button>
+              <div class="flex items-center gap-2">
+                <slot name="topbar-right"></slot>
+                <dyne-button size="small" emphasis="high" onClick={() => this.executeContract()}>
+                  Execute contract
+                </dyne-button>
+              </div>
             </div>
           </Container>
 
