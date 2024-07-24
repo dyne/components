@@ -34,13 +34,14 @@
   <body class="p-8">
     <div class="component-container">
       <h1 class="component-title">Slangroom Preset Loader</h1>
-      <dyne-slangroom-preset-loader></dyne-slangroom-preset-loader>
+      <dyne-slangroom-preset-loader editor-id="slangroom-editor"></dyne-slangroom-preset-loader>
     </div>
 
     <div class="component-container">
       <h1 class="component-title">Slangroom editor</h1>
 
       <dyne-slangroom-editor
+        id="slangroom-editor"
         contract="Rule unknown ignore
 Given I connect to 'did_url' and do get and output into 'did'
 Given I have a 'string dictionary' named 'did'
