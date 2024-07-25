@@ -6,6 +6,6 @@ describe('dyne-slangroom-preset', () => {
     await page.setContent('<dyne-slangroom-preset></dyne-slangroom-preset>');
 
     const element = await page.find('dyne-slangroom-preset');
-    expect(element).toHaveClass('hydrated');
+    expect(element).toHaveAttribute('contract');
   });
 });

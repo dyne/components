@@ -6,6 +6,6 @@ describe('dyne-slangroom-preset-loader', () => {
     await page.setContent('<dyne-slangroom-preset-loader></dyne-slangroom-preset-loader>');
 
     const element = await page.find('dyne-slangroom-preset-loader');
-    expect(element).toHaveClass('hydrated');
+    expect(element).toHaveAttribute('editor-id');
   });
 });
