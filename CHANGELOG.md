@@ -1,3 +1,10 @@
+## [1.2.3](https://github.com/dyne/components/compare/v1.2.2...v1.2.3) (2024-07-29)
+
+
+### Bug Fixes
+
+* add pre to preserve whitespace ([#16](https://github.com/dyne/components/issues/16)) ([4b4c2ce](https://github.com/dyne/components/commit/4b4c2cefc347f62e0b9f8aa6f73bc86dbe173205))
+
 ## [1.2.2](https://github.com/dyne/components/compare/v1.2.1...v1.2.2) (2024-07-23)
 
 
