@@ -244,9 +244,9 @@ function ErrorRenderer(props: { error: SlangroomError }) {
     } else {
       return (
         <Section title="Error">
-          <p class="bg-red-50  text-red-800 rounded-lg border border-red-300  divide-red-300  p-4 gap-3 text-sm flex items-center">
+          <pre class="bg-red-50  text-red-800 rounded-lg border border-red-300  divide-red-300  p-4 gap-3 text-sm flex items-center">
             {error}
-          </p>
+          </pre>
         </Section>
       );
     }
