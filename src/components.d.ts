@@ -29,6 +29,7 @@ export namespace Components {
     interface DyneCodeEditor {
         "class": string;
         "config": EditorStateConfig;
+        "content": string;
         "getContent": () => Promise<string>;
         "name": string;
         "setContent": (text: string) => Promise<void>;
@@ -95,6 +96,7 @@ declare namespace LocalJSX {
     interface DyneCodeEditor {
         "class"?: string;
         "config"?: EditorStateConfig;
+        "content"?: string;
         "name"?: string;
     }
     interface DyneInline {

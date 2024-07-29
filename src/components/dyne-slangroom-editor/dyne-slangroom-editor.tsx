@@ -1,4 +1,4 @@
-import { Component, Element, State, Prop, Method, h } from '@stencil/core';
+import { Component, Element, State, Prop, Method, h, Watch } from '@stencil/core';
 
 // import { dracula } from 'thememirror';
 import { defaultKeymap } from '@codemirror/commands';
@@ -76,6 +76,7 @@ export class DyneSlangroomEditor {
       data: parseJsonObjectWithFallback(data),
       keys,
     });
+
     this.isExecuting = false;
   }
 
@@ -155,14 +156,16 @@ export class DyneSlangroomEditor {
               <Section title={EditorId.CONTRACT}>
                 <dyne-code-editor
                   name={EditorId.CONTRACT}
-                  config={{ doc: this.contract, extensions: this.keyboardExtension }}
+                  content={this.contract}
+                  config={{ extensions: this.keyboardExtension }}
                 ></dyne-code-editor>
               </Section>
 
               <Section title={EditorId.DATA}>
                 <dyne-code-editor
                   name={EditorId.DATA}
-                  config={{ doc: this.data, extensions: [this.keyboardExtension, json()] }}
+                  content={this.data}
+                  config={{ extensions: [this.keyboardExtension, json()] }}
                 ></dyne-code-editor>
               </Section>
 
@@ -170,7 +173,8 @@ export class DyneSlangroomEditor {
                 <Section title={EditorId.KEYS}>
                   <dyne-code-editor
                     name={EditorId.KEYS}
-                    config={{ doc: this.keys, extensions: [this.keyboardExtension, json()] }}
+                    content={this.keys}
+                    config={{ extensions: [this.keyboardExtension, json()] }}
                   ></dyne-code-editor>
                 </Section>
               )}
@@ -180,8 +184,7 @@ export class DyneSlangroomEditor {
           <Container className="md:grow md:w-0 shrink-0 md:basis-2">
             {this.showEmptyState && <EmptyState />}
             {this.isExecuting && <Spinner />}
-            {this.value && <ValueRenderer value={this.value} />}
-            {this.error && <ErrorRenderer error={this.error} />}
+            {this.result && <ResultRenderer result={this.result} />}
           </Container>
         </div>
       </div>
@@ -218,13 +221,19 @@ function parseJsonObjectWithFallback(string: string): Record<string, unknown> {
 
 // Partials
 
+function ResultRenderer(props: { result: SlangroomResult }) {
+  const { result } = props;
+  if (result.success === true) return <ValueRenderer value={result.value} />;
+  else return <ErrorRenderer error={result.error} />;
+}
+
 function ValueRenderer(props: { value: SlangroomValue }) {
   return (
     <Section title="Result">
       <dyne-code-editor
         name={EditorId.RESULT}
+        content={JSON.stringify(props.value, null, 2)}
         config={{
-          doc: JSON.stringify(props.value, null, 2),
           extensions: [json()],
         }}
       ></dyne-code-editor>
@@ -259,7 +268,7 @@ function ErrorRenderer(props: { error: SlangroomError }) {
 // text-slate-800 -> #1E293B
 function AnsiRenderer(props: { text: string; className?: string }) {
   const { text, className = '' } = props;
-  const converter = new Convert({bg: '#F1F5F9', fg: '#1E293B'});
+  const converter = new Convert({ bg: '#F1F5F9', fg: '#1E293B' });
   return <pre class={className} innerHTML={converter.toHtml(text)}></pre>;
 }
 
@@ -268,23 +277,16 @@ function ZencodeErrorRenderer(props: { error: ZencodeRuntimeError }) {
   return (
     <div>
       <Title name="trace" className="mb-1" />
-      <dyne-code-editor
-        config={{
-          doc: error.trace.join('\n'),
-        }}
-      ></dyne-code-editor>
+      <dyne-code-editor name="trace" content={error.trace.join('\n')}></dyne-code-editor>
 
       <Title name="logs" className="mb-1" />
-      <dyne-code-editor
-        config={{
-          doc: error.logs.join('\n'),
-        }}
-      ></dyne-code-editor>
+      <dyne-code-editor name="logs" content={error.logs.join('\n')}></dyne-code-editor>
 
       <Title name="heap" className="mb-1" />
       <dyne-code-editor
+        name="heap"
+        content={JSON.stringify(error.heap, null, 2)}
         config={{
-          doc: JSON.stringify(error.heap, null, 2),
           extensions: [json()],
         }}
       ></dyne-code-editor>
