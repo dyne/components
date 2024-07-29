@@ -275,21 +275,27 @@ function AnsiRenderer(props: { text: string; className?: string }) {
 function ZencodeErrorRenderer(props: { error: ZencodeRuntimeError }) {
   const { error } = props;
   return (
-    <div>
-      <Title name="trace" className="mb-1" />
-      <dyne-code-editor name="trace" content={error.trace.join('\n')}></dyne-code-editor>
+    <div class="space-y-4">
+      <div>
+        <Title name="trace" className="mb-2" />
+        <dyne-code-editor name="trace" content={error.trace.join('\n')}></dyne-code-editor>
+      </div>
 
-      <Title name="logs" className="mb-1" />
-      <dyne-code-editor name="logs" content={error.logs.join('\n')}></dyne-code-editor>
+      <div>
+        <Title name="logs" className="mb-2" />
+        <dyne-code-editor name="logs" content={error.logs.join('\n')}></dyne-code-editor>
+      </div>
 
-      <Title name="heap" className="mb-1" />
-      <dyne-code-editor
-        name="heap"
-        content={JSON.stringify(error.heap, null, 2)}
-        config={{
-          extensions: [json()],
-        }}
-      ></dyne-code-editor>
+      <div>
+        <Title name="heap" className="mb-2" />
+        <dyne-code-editor
+          name="heap"
+          content={JSON.stringify(error.heap, null, 2)}
+          config={{
+            extensions: [json()],
+          }}
+        ></dyne-code-editor>
+      </div>
     </div>
   );
 }
