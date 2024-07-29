@@ -1,3 +1,10 @@
+## [1.2.5](https://github.com/dyne/components/compare/v1.2.4...v1.2.5) (2024-07-29)
+
+
+### Bug Fixes
+
+* responsiveness ([#15](https://github.com/dyne/components/issues/15)) ([355c6bc](https://github.com/dyne/components/commit/355c6bc3dcbfbbfd8452a690efd09e319118223f))
+
 ## [1.2.4](https://github.com/dyne/components/compare/v1.2.3...v1.2.4) (2024-07-29)
 
 
