@@ -1,7 +1,8 @@
 import { newE2EPage } from '@stencil/core/testing';
+import { test } from '@stencil/playwright';
 
-describe('dyne-slangroom-preset-loader', () => {
-  it('renders', async () => {
+test.describe('dyne-slangroom-preset-loader', () => {
+  test('renders', async () => {
     const page = await newE2EPage();
     await page.setContent('<dyne-slangroom-preset-loader></dyne-slangroom-preset-loader>');
 
