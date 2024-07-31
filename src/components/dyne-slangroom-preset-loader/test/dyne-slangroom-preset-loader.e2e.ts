@@ -1,12 +1,13 @@
-import { newE2EPage } from '@stencil/core/testing';
 import { test } from '@stencil/playwright';
+import { expect } from '@playwright/test';
 
 test.describe('dyne-slangroom-preset-loader', () => {
-  test('renders', async () => {
-    const page = await newE2EPage();
-    await page.setContent('<dyne-slangroom-preset-loader></dyne-slangroom-preset-loader>');
+  test('renders', async ({ page }) => {
+    await page.goto(
+      '/components/dyne-slangroom-preset-loader/test/dyne-slangroom-preset-loader.e2e.html',
+    );
 
-    const element = await page.find('dyne-slangroom-preset-loader');
-    expect(element).toHaveAttribute('editor-id');
+    const element = page.locator('dyne-slangroom-preset-loader');
+    await expect(element).toHaveAttribute('editor-id');
   });
 });
