@@ -1,4 +1,4 @@
-import { Component, Element, Method, State, h, Prop } from '@stencil/core';
+import { Component, Element, Method, State, h, Prop, Host, Watch } from '@stencil/core';
 
 import { basicSetup } from 'codemirror';
 import { EditorState, EditorStateConfig } from '@codemirror/state';
@@ -16,15 +16,29 @@ import { nanoid } from 'nanoid';
 export class DyneCodeEditor {
   @Element() el: HTMLElement;
 
-  @Prop() name = nanoid(5);
-  @Prop() config: EditorStateConfig = { extensions: basicSetup };
-  @Prop() class = '';
+  @Prop({ reflect: true }) name = nanoid(5);
+  @Prop({ reflect: true }) config: EditorStateConfig = { extensions: basicSetup };
+  @Prop({ reflect: true }) class = '';
+  @Prop({ reflect: true }) content = '';
 
-  @State() view: EditorView;
+  view: EditorView;
+
+  @Watch('content')
+  async updateEditorContent() {
+    await this.setContent(this.content);
+  }
 
   private get state() {
     return this.view.state;
   }
+
+  //
+
+  async componentDidLoad() {
+    this.view = createEditor(this.getContainer(), { ...this.config, doc: this.content });
+  }
+
+  //
 
   @Method()
   async getContent(): Promise<string> {
@@ -40,18 +54,20 @@ export class DyneCodeEditor {
 
   //
 
-  async componentDidLoad() {
-    this.view = createEditor(this.getContainer(), this.config);
-  }
-
   private getContainer() {
     const editorContainer = this.el.shadowRoot?.getElementById(this.name);
     if (!editorContainer) throw new Error('Container not initialized');
     return editorContainer;
   }
 
+  //
+
   render() {
-    return <div id={this.name} class={this.class}></div>;
+    return (
+      <Host>
+        <div id={this.name} class={this.class}></div>
+      </Host>
+    );
   }
 }
 

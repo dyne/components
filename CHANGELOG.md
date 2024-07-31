@@ -1,3 +1,31 @@
+## [1.2.5](https://github.com/dyne/components/compare/v1.2.4...v1.2.5) (2024-07-29)
+
+
+### Bug Fixes
+
+* responsiveness ([#15](https://github.com/dyne/components/issues/15)) ([355c6bc](https://github.com/dyne/components/commit/355c6bc3dcbfbbfd8452a690efd09e319118223f))
+
+## [1.2.4](https://github.com/dyne/components/compare/v1.2.3...v1.2.4) (2024-07-29)
+
+
+### Bug Fixes
+
+* solved reactivity issue ([#17](https://github.com/dyne/components/issues/17)) ([e6fd8e6](https://github.com/dyne/components/commit/e6fd8e6eb400f03fca0102a60c300cf8a6356c5c))
+
+## [1.2.3](https://github.com/dyne/components/compare/v1.2.2...v1.2.3) (2024-07-29)
+
+
+### Bug Fixes
+
+* add pre to preserve whitespace ([#16](https://github.com/dyne/components/issues/16)) ([4b4c2ce](https://github.com/dyne/components/commit/4b4c2cefc347f62e0b9f8aa6f73bc86dbe173205))
+
+## [1.2.2](https://github.com/dyne/components/compare/v1.2.1...v1.2.2) (2024-07-23)
+
+
+### Bug Fixes
+
+* slangroom error now are rendered with the correct background and foreground colors ([#11](https://github.com/dyne/components/issues/11)) ([50505cb](https://github.com/dyne/components/commit/50505cb5112cb7b9eec1d3bed98543a147beb42e))
+
 ## [1.2.1](https://github.com/dyne/components/compare/v1.2.0...v1.2.1) (2024-07-22)
 
 
