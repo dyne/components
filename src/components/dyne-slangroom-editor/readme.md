@@ -26,6 +26,23 @@ Type: `Promise<SlangroomEditorContent>`
 
 
 
+### `setContent(editor: EditorId, content: string) => Promise<void>`
+
+
+
+#### Parameters
+
+| Name      | Type       | Description |
+| --------- | ---------- | ----------- |
+| `editor`  | `EditorId` |             |
+| `content` | `string`   |             |
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
 
 ## Dependencies
 

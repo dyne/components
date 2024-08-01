@@ -7,7 +7,7 @@ test.describe('dyne-slangroom-editor', () => {
     await page.goto('/components/dyne-slangroom-editor/test/dyne-slangroom-editor.e2e.html');
 
     // Rest of test
-    const component = await page.locator('dyne-slangroom-editor');
-    await expect(component).toHaveAttribute("contract");
+    const component = page.locator('dyne-slangroom-editor');
+    await expect(component).toHaveAttribute('contract');
   });
 });

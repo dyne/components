@@ -15,13 +15,28 @@
       body {
         background-color: var(--md-sys-color-surface-container);
       }
+
+      .component-title {
+        color: white;
+        font-weight: bolder;
+        font-size: larger;
+        margin-bottom: 32px;
+      }
+
+      .component-container {
+        padding: 32px;
+        border: 1px solid gray;
+        margin-bottom: 32px;
+        background-color: black;
+      }
     </style>
   </head>
   <body class="p-8">
-    <div class="p-8 bg-slate-900 border border-slate-700 mb-8">
-      <h1 class="text-xl pb-8 font-extrabold text-white">Slangroom editor</h1>
+    <div class="component-container">
+      <h1 class="component-title">Slangroom editor</h1>
 
       <dyne-slangroom-editor
+        id="slangroom-editor"
         contract="Rule unknown ignore
 Given I connect to 'did_url' and do get and output into 'did'
 Given I have a 'string dictionary' named 'did'
@@ -31,22 +46,31 @@ Then print data"
   "foo": "bar",
   "did_url": "https://did.dyne.org/dids/did:dyne:sandbox.test:pEn78CGNEKvMR7DJQ1yvUVUpAHKzsBz45mQw3zD2js9"
 }'
-      ></dyne-slangroom-editor>
+      >
+        <dyne-slangroom-preset-loader slot="topbar-right" editor-id="slangroom-editor">
+          <dyne-slangroom-preset
+            group="helpers"
+            name="Preset Element Test"
+            contract="Test"
+            data="Test"
+          ></dyne-slangroom-preset>
+        </dyne-slangroom-preset-loader>
+      </dyne-slangroom-editor>
       <!-- <dyne-slangroom-editor></dyne-slangroom-editor> -->
     </div>
 
-    <div class="p-8 bg-slate-900 border border-slate-700 mb-8">
-      <h1 class="text-xl pb-8 font-extrabold text-white">Code editor</h1>
+    <div class="component-container">
+      <h1 class="component-title">Code editor</h1>
       <dyne-code-editor></dyne-code-editor>
     </div>
 
-    <div class="p-8 bg-slate-900 border border-slate-700 mb-8">
-      <h1 class="text-xl pb-8 font-extrabold text-white">Buttons</h1>
+    <div class="component-container">
+      <h1 class="component-title">Buttons</h1>
       <div class="grid grid-cols-3 gap-4" id="buttons"></div>
     </div>
 
-    <div class="p-8 bg-slate-900 border border-slate-700 mb-8">
-      <h1 class="text-xl pb-8 font-extrabold text-white">Inline</h1>
+    <div class="component-container">
+      <h1 class="component-title">Inline</h1>
       <dyne-inline>
         <dyne-button>Click me</dyne-button>
         <dyne-button>Trust me</dyne-button>

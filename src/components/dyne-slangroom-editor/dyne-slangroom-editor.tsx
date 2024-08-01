@@ -1,4 +1,4 @@
-import { Component, Element, State, Prop, Method, h, Watch } from '@stencil/core';
+import { Component, Element, State, Prop, Method, h, Host } from '@stencil/core';
 
 // import { dracula } from 'thememirror';
 import { defaultKeymap } from '@codemirror/commands';
@@ -48,6 +48,16 @@ export class DyneSlangroomEditor {
     };
   }
 
+  @Method()
+  async setContent(editor: EditorId, content: string): Promise<void> {
+    try {
+      await this.getEditor(editor).setContent(content);
+      this.result = undefined;
+    } catch (e) {
+      console.warn(e);
+    }
+  }
+
   //
 
   async componentDidLoad() {
@@ -76,7 +86,6 @@ export class DyneSlangroomEditor {
       data: parseJsonObjectWithFallback(data),
       keys,
     });
-
     this.isExecuting = false;
   }
 
@@ -140,54 +149,57 @@ export class DyneSlangroomEditor {
 
   render() {
     return (
-      <div class="space-y-4">
-        <Container>
-          <div class="flex justify-between items-center">
-            <Title name="Slangroom" />
-            <dyne-button size="small" emphasis="high" onClick={() => this.executeContract()}>
-              Execute contract
-            </dyne-button>
-          </div>
-        </Container>
-
-        <div class="flex sm:flex-col md:flex-row items-stretch gap-4">
-          <Container className="md:grow md:w-0 shrink-0 md:basis-2">
-            <div class="space-y-4">
-              <Section title={EditorId.CONTRACT}>
-                <dyne-code-editor
-                  name={EditorId.CONTRACT}
-                  content={this.contract}
-                  config={{ extensions: this.keyboardExtension }}
-                ></dyne-code-editor>
-              </Section>
-
-              <Section title={EditorId.DATA}>
-                <dyne-code-editor
-                  name={EditorId.DATA}
-                  content={this.data}
-                  config={{ extensions: [this.keyboardExtension, json()] }}
-                ></dyne-code-editor>
-              </Section>
-
-              {this.keysMode == 'editor' && (
-                <Section title={EditorId.KEYS}>
-                  <dyne-code-editor
-                    name={EditorId.KEYS}
-                    content={this.keys}
-                    config={{ extensions: [this.keyboardExtension, json()] }}
-                  ></dyne-code-editor>
-                </Section>
-              )}
+      <Host>
+        <div class="space-y-4">
+          <Container>
+            <div class="flex justify-between items-center">
+              <Title name="Slangroom" />
+              <div class="flex items-center gap-2">
+                <slot name="topbar-right"></slot>
+                <dyne-button size="small" emphasis="high" onClick={() => this.executeContract()}>
+                  Execute contract
+                </dyne-button>
+              </div>
             </div>
           </Container>
 
-          <Container className="md:grow md:w-0 shrink-0 md:basis-2">
-            {this.showEmptyState && <EmptyState />}
-            {this.isExecuting && <Spinner />}
-            {this.result && <ResultRenderer result={this.result} />}
-          </Container>
+          <div class="flex sm:flex-col md:flex-row items-stretch gap-4">
+            <Container className="md:grow md:w-0 shrink-0 md:basis-2">
+              <div class="space-y-4">
+                <Section title={EditorId.CONTRACT}>
+                  <dyne-code-editor
+                    name={EditorId.CONTRACT}
+                    config={{ doc: this.contract, extensions: this.keyboardExtension }}
+                  ></dyne-code-editor>
+                </Section>
+
+                <Section title={EditorId.DATA}>
+                  <dyne-code-editor
+                    name={EditorId.DATA}
+                    config={{ doc: this.data, extensions: [this.keyboardExtension, json()] }}
+                  ></dyne-code-editor>
+                </Section>
+
+                {this.keysMode == 'editor' && (
+                  <Section title={EditorId.KEYS}>
+                    <dyne-code-editor
+                      name={EditorId.KEYS}
+                      config={{ doc: this.keys, extensions: [this.keyboardExtension, json()] }}
+                    ></dyne-code-editor>
+                  </Section>
+                )}
+              </div>
+            </Container>
+
+            <Container className="md:grow md:w-0 shrink-0 md:basis-2">
+              {this.showEmptyState && <EmptyState />}
+              {this.isExecuting && <Spinner />}
+              {this.value && <ValueRenderer value={this.value} />}
+              {this.error && <ErrorRenderer error={this.error} />}
+            </Container>
+          </div>
         </div>
-      </div>
+      </Host>
     );
   }
 }
@@ -221,19 +233,13 @@ function parseJsonObjectWithFallback(string: string): Record<string, unknown> {
 
 // Partials
 
-function ResultRenderer(props: { result: SlangroomResult }) {
-  const { result } = props;
-  if (result.success === true) return <ValueRenderer value={result.value} />;
-  else return <ErrorRenderer error={result.error} />;
-}
-
 function ValueRenderer(props: { value: SlangroomValue }) {
   return (
     <Section title="Result">
       <dyne-code-editor
         name={EditorId.RESULT}
-        content={JSON.stringify(props.value, null, 2)}
         config={{
+          doc: JSON.stringify(props.value, null, 2),
           extensions: [json()],
         }}
       ></dyne-code-editor>
@@ -253,9 +259,9 @@ function ErrorRenderer(props: { error: SlangroomError }) {
     } else {
       return (
         <Section title="Error">
-          <pre class="bg-red-50  text-red-800 rounded-lg border border-red-300  divide-red-300  p-4 gap-3 text-sm flex items-center">
+          <p class="bg-red-50  text-red-800 rounded-lg border border-red-300  divide-red-300  p-4 gap-3 text-sm flex items-center">
             {error}
-          </pre>
+          </p>
         </Section>
       );
     }
@@ -264,38 +270,37 @@ function ErrorRenderer(props: { error: SlangroomError }) {
   }
 }
 
-// bg-slate-100 -> #F1F5F9
-// text-slate-800 -> #1E293B
 function AnsiRenderer(props: { text: string; className?: string }) {
   const { text, className = '' } = props;
-  const converter = new Convert({ bg: '#F1F5F9', fg: '#1E293B' });
+  const converter = new Convert();
   return <pre class={className} innerHTML={converter.toHtml(text)}></pre>;
 }
 
 function ZencodeErrorRenderer(props: { error: ZencodeRuntimeError }) {
   const { error } = props;
   return (
-    <div class="space-y-4">
-      <div>
-        <Title name="trace" className="mb-2" />
-        <dyne-code-editor name="trace" content={error.trace.join('\n')}></dyne-code-editor>
-      </div>
+    <div>
+      <Title name="trace" className="mb-1" />
+      <dyne-code-editor
+        config={{
+          doc: error.trace.join('\n'),
+        }}
+      ></dyne-code-editor>
 
-      <div>
-        <Title name="logs" className="mb-2" />
-        <dyne-code-editor name="logs" content={error.logs.join('\n')}></dyne-code-editor>
-      </div>
+      <Title name="logs" className="mb-1" />
+      <dyne-code-editor
+        config={{
+          doc: error.logs.join('\n'),
+        }}
+      ></dyne-code-editor>
 
-      <div>
-        <Title name="heap" className="mb-2" />
-        <dyne-code-editor
-          name="heap"
-          content={JSON.stringify(error.heap, null, 2)}
-          config={{
-            extensions: [json()],
-          }}
-        ></dyne-code-editor>
-      </div>
+      <Title name="heap" className="mb-1" />
+      <dyne-code-editor
+        config={{
+          doc: JSON.stringify(error.heap, null, 2),
+          extensions: [json()],
+        }}
+      ></dyne-code-editor>
     </div>
   );
 }

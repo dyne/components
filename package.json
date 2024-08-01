@@ -37,7 +37,8 @@
     "sbb": "stencil build && storybook build --docs",
     "dev": "NODE_ENV=development npm-run-all -p dev:*",
     "dev:start": "stencil build --watch --dev --serve",
-    "dev:storybook": "sleep 6 && storybook dev -p 6006"
+    "dev:storybook": "sleep 6 && storybook dev -p 6006",
+    "generate-slangroom-presets-file": "node src/components/dyne-slangroom-preset-loader/utils/generate-preset-json.mjs"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^1.5.0",
@@ -68,6 +69,8 @@
     "@storybook/theming": "^8.1.10",
     "@tailwindcss/line-clamp": "^0.4.4",
     "@types/jest": "^29.5.12",
+    "degit": "^2.8.4",
+    "glob": "^11.0.0",
     "jest": "29",
     "jest-cli": "29",
     "lit": "^3.1.4",
@@ -78,6 +81,7 @@
     "stencil-tailwind-plugin": "^1.8.0",
     "storybook": "^8.1.10",
     "tailwindcss": "^3.4.4",
+    "ts-node": "^10.9.2",
     "typescript": "^5.5.2",
     "vite": "^5.3.1"
   },
@@ -89,9 +93,12 @@
     "@codemirror/view": "^6.28.2",
     "@sinclair/typebox": "^0.32.34",
     "@slangroom/browser": "^1.33.12",
+    "@types/degit": "^2.8.6",
     "@types/node": "^20.14.8",
     "ansi-to-html": "^0.7.2",
     "codemirror": "^6.0.1",
+    "effect": "^3.5.7",
+    "fuse.js": "^7.0.0",
     "has-ansi": "^6.0.0",
     "lucide-react": "^0.396.0",
     "nanoid": "^5.0.7",

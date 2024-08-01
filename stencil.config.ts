@@ -1,7 +1,11 @@
 import { Config } from '@stencil/core';
 import { sass } from '@stencil/sass';
 import nodePolyfills from 'rollup-plugin-node-polyfills';
-import tailwind, { PluginOpts, setPluginConfigurationDefaults, tailwindHMR } from 'stencil-tailwind-plugin';
+import tailwind, {
+  PluginOpts,
+  setPluginConfigurationDefaults,
+  tailwindHMR,
+} from 'stencil-tailwind-plugin';
 import tailwindConf from './tailwind.config.ts';
 
 setPluginConfigurationDefaults({

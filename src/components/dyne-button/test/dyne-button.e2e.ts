@@ -7,9 +7,7 @@ test.describe('dyne-button', () => {
     await page.goto('/components/dyne-button/test/dyne-button.e2e.html');
 
     // Rest of test
-    const component = await page.locator('dyne-button');
+    const component = page.locator('dyne-button');
     await expect(component).toHaveText(`ciao`);
   });
 });
-
-
