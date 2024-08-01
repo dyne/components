@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/dyne/components/compare/v1.2.5...v1.3.0) (2024-08-01)
+
+
+### Features
+
+* Add slangroom preset loader ([#14](https://github.com/dyne/components/issues/14)) ([9a4bc20](https://github.com/dyne/components/commit/9a4bc2078b42a9adc95a73f5fc1d0ae6d14282b1))
+
 ## [1.2.5](https://github.com/dyne/components/compare/v1.2.4...v1.2.5) (2024-07-29)
 
 
