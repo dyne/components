@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/dyne/components/compare/v1.4.0...v1.4.1) (2024-08-05)
+
+
+### Bug Fixes
+
+* set correctly default background and foreground color for ansi errors ([#22](https://github.com/dyne/components/issues/22)) ([5875d23](https://github.com/dyne/components/commit/5875d23a5814b292573f030ac0155c9bccd5a7ee))
+
 # [1.4.0](https://github.com/dyne/components/compare/v1.3.2...v1.4.0) (2024-08-05)
 
 
