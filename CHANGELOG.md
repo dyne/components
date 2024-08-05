@@ -1,3 +1,10 @@
+## [1.3.2](https://github.com/dyne/components/compare/v1.3.1...v1.3.2) (2024-08-05)
+
+
+### Bug Fixes
+
+* various ([#20](https://github.com/dyne/components/issues/20)) ([a3bcfb1](https://github.com/dyne/components/commit/a3bcfb12a304971b6aca4bffa432069fe8da1277))
+
 ## [1.3.1](https://github.com/dyne/components/compare/v1.3.0...v1.3.1) (2024-08-05)
 
 

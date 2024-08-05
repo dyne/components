@@ -1,6 +1,6 @@
 {
   "name": "@dyne/components",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "description": " ♻️ Recycled UI for dyners",
   "publishConfig": {
     "access": "public"
