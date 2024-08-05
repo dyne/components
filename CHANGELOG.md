@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/dyne/components/compare/v1.3.0...v1.3.1) (2024-08-05)
+
+
+### Bug Fixes
+
+* reactivity ([#18](https://github.com/dyne/components/issues/18)) ([96487b8](https://github.com/dyne/components/commit/96487b8544ef5a77bcb50d47332f46a8eaa7ebc9))
+
 # [1.3.0](https://github.com/dyne/components/compare/v1.2.5...v1.3.0) (2024-08-01)
 
 
