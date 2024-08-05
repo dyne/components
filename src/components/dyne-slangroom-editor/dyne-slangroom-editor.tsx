@@ -18,6 +18,8 @@ import {
 import hasAnsi from 'has-ansi';
 import Convert from 'ansi-to-html';
 
+import { version } from '@/package.json';
+
 //
 
 @Component({
@@ -153,7 +155,10 @@ export class DyneSlangroomEditor {
         <div class="space-y-4">
           <Container>
             <div class="flex justify-between items-center">
-              <Title name="Slangroom" />
+              <div class="flex items-baseline">
+                <Title name="Slangroom Editor" />
+                <p class="text-xs font-mono text-slate-300 ml-2">(v {version})</p>
+              </div>
               <div class="flex items-center gap-2">
                 <slot name="topbar-right"></slot>
                 <dyne-button size="small" emphasis="high" onClick={() => this.executeContract()}>
