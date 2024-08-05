@@ -238,8 +238,8 @@ function ValueRenderer(props: { value: SlangroomValue }) {
     <Section title="Result">
       <dyne-code-editor
         name={EditorId.RESULT}
+        content={JSON.stringify(props.value, null, 2)}
         config={{
-          doc: JSON.stringify(props.value, null, 2),
           extensions: [json()],
         }}
       ></dyne-code-editor>
@@ -280,27 +280,22 @@ function ZencodeErrorRenderer(props: { error: ZencodeRuntimeError }) {
   const { error } = props;
   return (
     <div>
-      <Title name="trace" className="mb-1" />
-      <dyne-code-editor
-        config={{
-          doc: error.trace.join('\n'),
-        }}
-      ></dyne-code-editor>
+      <Section title="Trace">
+        <dyne-code-editor content={error.trace.join('\n')}></dyne-code-editor>
+      </Section>
 
-      <Title name="logs" className="mb-1" />
-      <dyne-code-editor
-        config={{
-          doc: error.logs.join('\n'),
-        }}
-      ></dyne-code-editor>
+      <Section title="Logs">
+        <dyne-code-editor content={error.logs.join('\n')}></dyne-code-editor>
+      </Section>
 
-      <Title name="heap" className="mb-1" />
-      <dyne-code-editor
-        config={{
-          doc: JSON.stringify(error.heap, null, 2),
-          extensions: [json()],
-        }}
-      ></dyne-code-editor>
+      <Section title="Heap">
+        <dyne-code-editor
+          content={JSON.stringify(error.heap, null, 2)}
+          config={{
+            extensions: [json()],
+          }}
+        ></dyne-code-editor>
+      </Section>
     </div>
   );
 }
