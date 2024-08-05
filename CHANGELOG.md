@@ -1,3 +1,10 @@
+## [1.4.2](https://github.com/dyne/components/compare/v1.4.1...v1.4.2) (2024-08-05)
+
+
+### Bug Fixes
+
+* build after version released ([#23](https://github.com/dyne/components/issues/23)) ([250356a](https://github.com/dyne/components/commit/250356af5164f2c3ac05831e4e86b03e863eb239))
+
 ## [1.4.1](https://github.com/dyne/components/compare/v1.4.0...v1.4.1) (2024-08-05)
 
 
