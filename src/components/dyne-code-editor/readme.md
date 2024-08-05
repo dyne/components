@@ -5,11 +5,12 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type                | Default                      |
-| -------- | --------- | ----------- | ------------------- | ---------------------------- |
-| `class`  | `class`   |             | `string`            | `''`                         |
-| `config` | --        |             | `EditorStateConfig` | `{ extensions: basicSetup }` |
-| `name`   | `name`    |             | `string`            | `nanoid(5)`                  |
+| Property  | Attribute | Description | Type                | Default                      |
+| --------- | --------- | ----------- | ------------------- | ---------------------------- |
+| `class`   | `class`   |             | `string`            | `''`                         |
+| `config`  | --        |             | `EditorStateConfig` | `{ extensions: basicSetup }` |
+| `content` | `content` |             | `string`            | `''`                         |
+| `name`    | `name`    |             | `string`            | `nanoid(5)`                  |
 
 
 ## Methods

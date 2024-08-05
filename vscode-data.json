@@ -76,6 +76,10 @@
           "description": ""
         },
         {
+          "name": "content",
+          "description": ""
+        },
+        {
           "name": "name",
           "description": ""
         }

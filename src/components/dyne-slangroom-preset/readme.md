@@ -17,6 +17,19 @@
 | `name`        | `name`        |             | `string` | `''`    |
 
 
+## Methods
+
+### `getPreset() => Promise<SlangroomPreset>`
+
+
+
+#### Returns
+
+Type: `Promise<{ name: string; contract: string; keys: string; data: string; meta: { title: string; highlight: string; }; group: string; }>`
+
+
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*
