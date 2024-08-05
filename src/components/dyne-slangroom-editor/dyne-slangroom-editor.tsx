@@ -279,7 +279,7 @@ function AnsiRenderer(props: { text: string; className?: string }) {
 function ZencodeErrorRenderer(props: { error: ZencodeRuntimeError }) {
   const { error } = props;
   return (
-    <div>
+    <div class="space-y-4">
       <Section title="Trace">
         <dyne-code-editor content={error.trace.join('\n')}></dyne-code-editor>
       </Section>
