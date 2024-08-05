@@ -104,7 +104,7 @@ export class DyneSlangroomPresetLoader {
         <dyne-button size="small" emphasis="m" onClick={() => this.dialog?.showModal()}>
           Select preset
         </dyne-button>
-        <dialog class="backdrop:bg-black backdrop:opacity-75 h-screen m-0">
+        <dialog class="backdrop:bg-black backdrop:opacity-75 h-screen m-0 bg-white">
           <div class="sticky top-0 bg-white">
             <div class="flex gap-4 justify-between items-center p-4 border-b ">
               <p>Select a Slangroom preset</p>
