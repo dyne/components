@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/dyne/components/compare/v1.3.2...v1.4.0) (2024-08-05)
+
+
+### Features
+
+* add version number in slangroom editor ([#21](https://github.com/dyne/components/issues/21)) ([cb57cd8](https://github.com/dyne/components/commit/cb57cd8ef39531f6bd14a8bdb23a94f3a8f5077d))
+
 ## [1.3.2](https://github.com/dyne/components/compare/v1.3.1...v1.3.2) (2024-08-05)
 
 
