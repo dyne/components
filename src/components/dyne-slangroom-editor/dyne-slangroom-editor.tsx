@@ -169,14 +169,16 @@ export class DyneSlangroomEditor {
                 <Section title={EditorId.CONTRACT}>
                   <dyne-code-editor
                     name={EditorId.CONTRACT}
-                    config={{ doc: this.contract, extensions: this.keyboardExtension }}
+                    content={this.contract}
+                    config={{ extensions: this.keyboardExtension }}
                   ></dyne-code-editor>
                 </Section>
 
                 <Section title={EditorId.DATA}>
                   <dyne-code-editor
                     name={EditorId.DATA}
-                    config={{ doc: this.data, extensions: [this.keyboardExtension, json()] }}
+                    content={this.data}
+                    config={{ extensions: [this.keyboardExtension, json()] }}
                   ></dyne-code-editor>
                 </Section>
 
@@ -184,7 +186,8 @@ export class DyneSlangroomEditor {
                   <Section title={EditorId.KEYS}>
                     <dyne-code-editor
                       name={EditorId.KEYS}
-                      config={{ doc: this.keys, extensions: [this.keyboardExtension, json()] }}
+                      content={this.keys}
+                      config={{ extensions: [this.keyboardExtension, json()] }}
                     ></dyne-code-editor>
                   </Section>
                 )}
