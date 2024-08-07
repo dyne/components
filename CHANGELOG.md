@@ -1,3 +1,10 @@
+## [1.4.3](https://github.com/dyne/components/compare/v1.4.2...v1.4.3) (2024-08-07)
+
+
+### Bug Fixes
+
+* solved preset loader text color ([#24](https://github.com/dyne/components/issues/24)) ([0a55b56](https://github.com/dyne/components/commit/0a55b563c124b1eb6cbb7a055f7b1511c02a32aa))
+
 ## [1.4.2](https://github.com/dyne/components/compare/v1.4.1...v1.4.2) (2024-08-05)
 
 
