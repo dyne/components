@@ -104,7 +104,8 @@ export class DyneSlangroomPresetLoader {
         <dyne-button size="small" emphasis="m" onClick={() => this.dialog?.showModal()}>
           Select preset
         </dyne-button>
-        <dialog class="backdrop:bg-black backdrop:opacity-75 h-screen m-0 bg-white">
+
+        <dialog class="backdrop:bg-black backdrop:opacity-75 h-screen m-0 bg-white text-black">
           <div class="sticky top-0 bg-white">
             <div class="flex gap-4 justify-between items-center p-4 border-b ">
               <p>Select a Slangroom preset</p>
@@ -112,9 +113,10 @@ export class DyneSlangroomPresetLoader {
                 X
               </dyne-button>
             </div>
+
             <div class="p-4 border-b">
               <input
-                class="block border w-full p-2 rounded-md hover:bg-slate-100 focus:bg-transparent"
+                class="block border w-full p-2 rounded-md hover:bg-slate-100 focus:bg-transparent bg-transparent"
                 name="search"
                 value={this.searchText}
                 placeholder="Search for a topic"
@@ -122,6 +124,7 @@ export class DyneSlangroomPresetLoader {
               ></input>
             </div>
           </div>
+
           <PresetsSelect
             presets={this.filteredPresets}
             onPresetSelect={this.onPresetSelect.bind(this)}
@@ -148,10 +151,10 @@ function PresetsSelect(props: PresetsProps) {
   );
 
   return (
-    <div class="p-4 space-y-4">
+    <div class="p-4 space-y-6">
       {Object.entries(groupedPresets).map(([groupName, groupContent]) => (
         <div>
-          <p class="uppercase text-xs font-semibold tracking-wide text-slate-600 mb-2">
+          <p class="uppercase text-xs font-semibold tracking-wide text-slate-500 mb-2">
             {groupName}
           </p>
           <ul class="space-y-1">
