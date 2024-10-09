@@ -14,6 +14,7 @@ import {
   executeSlangroomContract,
   loadSlangroom,
 } from './utils/slangroom';
+import { Slangroom } from "codemirror-lang-slangroom"
 
 import hasAnsi from 'has-ansi';
 import Convert from 'ansi-to-html';
@@ -175,7 +176,7 @@ export class DyneSlangroomEditor {
                   <dyne-code-editor
                     name={EditorId.CONTRACT}
                     content={this.contract}
-                    config={{ extensions: this.keyboardExtension }}
+                    config={{ extensions: [this.keyboardExtension, Slangroom()] }}
                   ></dyne-code-editor>
                 </Section>
 
