@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/dyne/components/compare/v1.4.3...v1.5.0) (2024-10-09)
+
+
+### Features
+
+* add autocompletion of contracts and syntax highlighting ([#27](https://github.com/dyne/components/issues/27)) ([de4ad7b](https://github.com/dyne/components/commit/de4ad7b2f817e571d79e3a6af1d8d7f117c83d8c))
+
 ## [1.4.3](https://github.com/dyne/components/compare/v1.4.2...v1.4.3) (2024-08-07)
 
 
