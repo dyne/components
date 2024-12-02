@@ -9,7 +9,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
   <a href="https://dyne.org/components">
     Dyne components
   </a>
-  </br>
+  <br>
   <sub>Make your HTML a Dyner place</sub>
 </h1>
 
