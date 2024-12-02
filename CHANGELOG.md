@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/dyne/components/compare/v1.5.0...v1.5.1) (2024-12-02)
+
+
+### Bug Fixes
+
+* line break in README ([#29](https://github.com/dyne/components/issues/29)) ([699fe05](https://github.com/dyne/components/commit/699fe05cfd5900e742b2131ca8e22d4c8abc0acd))
+
 # [1.5.0](https://github.com/dyne/components/compare/v1.4.3...v1.5.0) (2024-10-09)
 
 
