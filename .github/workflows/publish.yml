@@ -58,4 +58,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-
+  cdn:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: gacts/purge-jsdelivr-cache@v1
+        with:
+          url: |
+            https://cdn.jsdelivr.net/npm/@dyne/components@latest/dist/dyne-components/dyne-components.esm.js
+            https://cdn.jsdelivr.net/npm/@dyne/components@latest/dist/dyne-components/dyne-components.css
