@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/dyne/components/compare/v1.5.1...v1.6.0) (2024-12-02)
+
+
+### Features
+
+* automagically cleanes the CDN cache ([#31](https://github.com/dyne/components/issues/31)) ([b6de448](https://github.com/dyne/components/commit/b6de44888cda2b8a75c68b1e1727e6fed93e0cad)), closes [#30](https://github.com/dyne/components/issues/30)
+
 ## [1.5.1](https://github.com/dyne/components/compare/v1.5.0...v1.5.1) (2024-12-02)
 
 
