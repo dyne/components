@@ -59,6 +59,8 @@ export namespace Components {
     }
     interface DyneSlangroomPresetLoader {
         "editorId": string;
+        "loadLocalPresets": boolean;
+        "oasEndpoint"?: string;
     }
 }
 declare global {
@@ -148,6 +150,8 @@ declare namespace LocalJSX {
     }
     interface DyneSlangroomPresetLoader {
         "editorId"?: string;
+        "loadLocalPresets"?: boolean;
+        "oasEndpoint"?: string;
     }
     interface IntrinsicElements {
         "dyne-button": DyneButton;

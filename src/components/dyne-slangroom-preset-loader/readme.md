@@ -7,9 +7,11 @@
 
 ## Properties
 
-| Property   | Attribute   | Description | Type     | Default     |
-| ---------- | ----------- | ----------- | -------- | ----------- |
-| `editorId` | `editor-id` |             | `string` | `undefined` |
+| Property           | Attribute            | Description | Type                  | Default     |
+| ------------------ | -------------------- | ----------- | --------------------- | ----------- |
+| `editorId`         | `editor-id`          |             | `string`              | `undefined` |
+| `loadLocalPresets` | `load-local-presets` |             | `boolean`             | `true`      |
+| `oasEndpoint`      | `oas-endpoint`       |             | `string \| undefined` | `undefined` |
 
 
 ## Dependencies
