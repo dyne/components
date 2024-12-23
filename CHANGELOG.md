@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/dyne/components/compare/v1.6.0...v1.7.0) (2024-12-23)
+
+
+### Features
+
+* **preset-loader:** add the possibility to not show local preset and create one from a ncr oas endpoint response ([#33](https://github.com/dyne/components/issues/33)) ([670fc54](https://github.com/dyne/components/commit/670fc54948613ba020b8b87906bf8c5c5da1ba5a))
+
 # [1.6.0](https://github.com/dyne/components/compare/v1.5.1...v1.6.0) (2024-12-02)
 
 
