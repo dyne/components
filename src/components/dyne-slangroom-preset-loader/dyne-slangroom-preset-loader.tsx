@@ -13,10 +13,11 @@ export class DyneSlangroomPresetLoader {
   @Element() el: HTMLElement;
 
   @Prop({ reflect: true }) editorId: string;
+  @Prop() loadLocalPresets: boolean = true;
+  @Prop() oasEndpoint?: string;
 
-  @State() presets: SlangroomPreset[] = SlangroomPresets;
-
-  @State() filteredPresets: SlangroomPreset[] = this.presets;
+  @State() presets: SlangroomPreset[] = [];
+  @State() filteredPresets: SlangroomPreset[] = [];
   @State() searchText = '';
 
   get dialog() {
@@ -28,6 +29,13 @@ export class DyneSlangroomPresetLoader {
   }
 
   async componentDidLoad() {
+    if (this.loadLocalPresets) {
+      this.presets = SlangroomPresets;
+    }
+    if (this.oasEndpoint) {
+      const apiPresets = await this.fetchPresetsFromOas();
+      this.addPresets(apiPresets);
+    }
     await this.loadPresetsFromElements();
     lockScrollOnDialogOpen(this.dialog!);
   }
@@ -70,6 +78,43 @@ export class DyneSlangroomPresetLoader {
 
   private addPresets(presets: SlangroomPreset[]) {
     this.presets = [...this.presets, ...presets];
+  }
+
+  private async fetchPresetsFromOas(): Promise<SlangroomPreset[]> {
+    if (!this.oasEndpoint) return [];
+
+    try {
+      const response = await fetch(this.oasEndpoint);
+      if (!response.ok) {
+        console.error('Failed to fetch presets:', response.statusText);
+        return [];
+      }
+      const oas = await response.json();
+      const oasPaths: OasPaths = oas.paths;
+      const res: SlangroomPreset[] = [];
+      for (const [contractPath, contractMethods] of Object.entries(oasPaths)) {
+        if (contractPath.endsWith('/app') || contractPath.endsWith('/raw')) {
+          continue;
+        }
+        const contractInfo = contractMethods?.post || contractMethods?.get;
+        if (!contractInfo) continue;
+        res.push({
+          name: contractPath,
+          contract: contractInfo.description,
+          keys: contractInfo.keys,
+          data: '',
+          meta: {
+            title: contractPath,
+            highlight: ""
+          },
+          group: contractInfo.tags[0]
+        });
+      }
+      return res;
+    } catch (error) {
+      console.error('Error fetching presets:', error);
+      return [];
+    }
   }
 
   @Watch('presets')
@@ -141,6 +186,19 @@ type PresetsProps = {
   onPresetSelect?: (preset: SlangroomPreset) => void;
   presets?: SlangroomPreset[];
 };
+
+type OasPathMethod = {
+  description: string;
+  keys: string;
+  tags: string[];
+};
+
+type OasPathValue = {
+  get?: OasPathMethod;
+  post?: OasPathMethod;
+};
+
+type OasPaths = Record<string, OasPathValue>;
 
 function PresetsSelect(props: PresetsProps) {
   const { onPresetSelect = () => {}, presets = [] } = props;

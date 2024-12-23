@@ -181,6 +181,14 @@
         {
           "name": "editor-id",
           "description": ""
+        },
+        {
+          "name": "load-local-presets",
+          "description": ""
+        },
+        {
+          "name": "oas-endpoint",
+          "description": ""
         }
       ]
     }
