@@ -37,6 +37,7 @@ export class DyneSlangroomEditor {
   @Prop() contract = '';
   @Prop() data = '';
   @Prop() keys = '';
+  @Prop({ mutable: true }) name = '';
 
   @Prop() keysMode: 'none' | 'editor' | 'localStorage' = 'editor';
   @Prop() keysLocalStorageKey: string | undefined = undefined;
@@ -44,6 +45,7 @@ export class DyneSlangroomEditor {
   @Method()
   async getContent(): Promise<SlangroomEditorContent> {
     return {
+      name: this.name,
       contract: await this.getEditor(EditorId.CONTRACT).getContent(),
       data: await this.getEditor(EditorId.DATA).getContent(),
       keys: await this.getEditor(EditorId.KEYS).getContent(),
@@ -53,6 +55,10 @@ export class DyneSlangroomEditor {
 
   @Method()
   async setContent(editor: EditorId, content: string): Promise<void> {
+    if (editor == EditorId.NAME) {
+      await this.setName(content);
+      return;
+    }
     try {
       await this.getEditor(editor).setContent(content);
       this.result = undefined;
@@ -148,6 +154,11 @@ export class DyneSlangroomEditor {
     return editor;
   }
 
+  private setName(content: string): Promise<void> {
+    this.el.dispatchEvent(new CustomEvent('nameChanged', { detail: content }));
+    this.name = content;
+  }
+
   //
 
   render() {
@@ -159,6 +170,9 @@ export class DyneSlangroomEditor {
               <div class="flex items-baseline">
                 <Title name="Slangroom Editor" />
                 <p class="text-xs font-mono text-slate-300 ml-2">(v {version})</p>
+              </div>
+              <div class="flex-1 mx-4">
+                <slot name="topbar"></slot>
               </div>
               <div class="flex items-center gap-2">
                 <slot name="topbar-right"></slot>
@@ -216,6 +230,7 @@ export class DyneSlangroomEditor {
 // Types
 
 export enum EditorId {
+  NAME = 'name',
   CONTRACT = 'contract',
   DATA = 'data',
   KEYS = 'keys',
@@ -224,6 +239,7 @@ export enum EditorId {
 }
 
 export type SlangroomEditorContent = {
+  name: string,
   contract: string;
   data: string;
   keys: string;

@@ -30,6 +30,19 @@ Type: `Promise<{ name: string; contract: string; keys: string; data: string; met
 
 
 
+## Dependencies
+
+### Used by
+
+ - [forkbombeu-ncr-editor](../forkbombeu-ncr-editor)
+
+### Graph
+```mermaid
+graph TD;
+  forkbombeu-ncr-editor --> dyne-slangroom-preset
+  style dyne-slangroom-preset fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

@@ -16,6 +16,10 @@
 
 ## Dependencies
 
+### Used by
+
+ - [forkbombeu-ncr-editor](../forkbombeu-ncr-editor)
+
 ### Depends on
 
 - [dyne-button](../dyne-button)
@@ -26,6 +30,7 @@
 graph TD;
   dyne-slangroom-preset-loader --> dyne-button
   dyne-slangroom-preset-loader --> dyne-code-editor
+  forkbombeu-ncr-editor --> dyne-slangroom-preset-loader
   style dyne-slangroom-preset-loader fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

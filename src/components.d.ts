@@ -9,10 +9,14 @@ import { Color, Emphasis, Size } from "./components/types";
 import { EditorStateConfig } from "@codemirror/state";
 import { EditorId, SlangroomEditorContent } from "./components/dyne-slangroom-editor/dyne-slangroom-editor";
 import { SlangroomPreset } from "./components/dyne-slangroom-preset-loader/dyne-slangroom-preset-loader";
+import { NcrEditorContent, NcrExtensions } from "./components/forkbombeu-ncr-editor/forkbombeu-ncr-editor";
+import { EditorId as EditorId1 } from "./components/dyne-slangroom-editor/dyne-slangroom-editor";
 export { Color, Emphasis, Size } from "./components/types";
 export { EditorStateConfig } from "@codemirror/state";
 export { EditorId, SlangroomEditorContent } from "./components/dyne-slangroom-editor/dyne-slangroom-editor";
 export { SlangroomPreset } from "./components/dyne-slangroom-preset-loader/dyne-slangroom-preset-loader";
+export { NcrEditorContent, NcrExtensions } from "./components/forkbombeu-ncr-editor/forkbombeu-ncr-editor";
+export { EditorId as EditorId1 } from "./components/dyne-slangroom-editor/dyne-slangroom-editor";
 export namespace Components {
     interface DyneButton {
         /**
@@ -46,6 +50,7 @@ export namespace Components {
         "keys": string;
         "keysLocalStorageKey": string | undefined;
         "keysMode": 'none' | 'editor' | 'localStorage';
+        "name": string;
         "setContent": (editor: EditorId, content: string) => Promise<void>;
     }
     interface DyneSlangroomPreset {
@@ -61,6 +66,17 @@ export namespace Components {
         "editorId": string;
         "loadLocalPresets": boolean;
         "oasEndpoint"?: string;
+    }
+    interface ForkbombeuNcrEditor {
+        "contract": string;
+        "data": string;
+        "getContent": () => Promise<NcrEditorContent | undefined>;
+        "keys": string;
+        "metadata": string;
+        "oasEndpoint": string;
+        "saveContractUrl": string;
+        "schema": string;
+        "setContent": (editor: EditorId1 | NcrExtensions, content: string) => Promise<void>;
     }
 }
 declare global {
@@ -100,6 +116,12 @@ declare global {
         prototype: HTMLDyneSlangroomPresetLoaderElement;
         new (): HTMLDyneSlangroomPresetLoaderElement;
     };
+    interface HTMLForkbombeuNcrEditorElement extends Components.ForkbombeuNcrEditor, HTMLStencilElement {
+    }
+    var HTMLForkbombeuNcrEditorElement: {
+        prototype: HTMLForkbombeuNcrEditorElement;
+        new (): HTMLForkbombeuNcrEditorElement;
+    };
     interface HTMLElementTagNameMap {
         "dyne-button": HTMLDyneButtonElement;
         "dyne-code-editor": HTMLDyneCodeEditorElement;
@@ -107,6 +129,7 @@ declare global {
         "dyne-slangroom-editor": HTMLDyneSlangroomEditorElement;
         "dyne-slangroom-preset": HTMLDyneSlangroomPresetElement;
         "dyne-slangroom-preset-loader": HTMLDyneSlangroomPresetLoaderElement;
+        "forkbombeu-ncr-editor": HTMLForkbombeuNcrEditorElement;
     }
 }
 declare namespace LocalJSX {
@@ -139,6 +162,7 @@ declare namespace LocalJSX {
         "keys"?: string;
         "keysLocalStorageKey"?: string | undefined;
         "keysMode"?: 'none' | 'editor' | 'localStorage';
+        "name"?: string;
     }
     interface DyneSlangroomPreset {
         "contract"?: string;
@@ -153,6 +177,15 @@ declare namespace LocalJSX {
         "loadLocalPresets"?: boolean;
         "oasEndpoint"?: string;
     }
+    interface ForkbombeuNcrEditor {
+        "contract"?: string;
+        "data"?: string;
+        "keys"?: string;
+        "metadata"?: string;
+        "oasEndpoint"?: string;
+        "saveContractUrl"?: string;
+        "schema"?: string;
+    }
     interface IntrinsicElements {
         "dyne-button": DyneButton;
         "dyne-code-editor": DyneCodeEditor;
@@ -160,6 +193,7 @@ declare namespace LocalJSX {
         "dyne-slangroom-editor": DyneSlangroomEditor;
         "dyne-slangroom-preset": DyneSlangroomPreset;
         "dyne-slangroom-preset-loader": DyneSlangroomPresetLoader;
+        "forkbombeu-ncr-editor": ForkbombeuNcrEditor;
     }
 }
 export { LocalJSX as JSX };
@@ -172,6 +206,7 @@ declare module "@stencil/core" {
             "dyne-slangroom-editor": LocalJSX.DyneSlangroomEditor & JSXBase.HTMLAttributes<HTMLDyneSlangroomEditorElement>;
             "dyne-slangroom-preset": LocalJSX.DyneSlangroomPreset & JSXBase.HTMLAttributes<HTMLDyneSlangroomPresetElement>;
             "dyne-slangroom-preset-loader": LocalJSX.DyneSlangroomPresetLoader & JSXBase.HTMLAttributes<HTMLDyneSlangroomPresetLoaderElement>;
+            "forkbombeu-ncr-editor": LocalJSX.ForkbombeuNcrEditor & JSXBase.HTMLAttributes<HTMLForkbombeuNcrEditorElement>;
         }
     }
 }

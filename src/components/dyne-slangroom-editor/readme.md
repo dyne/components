@@ -12,6 +12,7 @@
 | `keys`                | `keys`                   |             | `string`                               | `''`        |
 | `keysLocalStorageKey` | `keys-local-storage-key` |             | `string \| undefined`                  | `undefined` |
 | `keysMode`            | `keys-mode`              |             | `"editor" \| "localStorage" \| "none"` | `'editor'`  |
+| `name`                | `name`                   |             | `string`                               | `''`        |
 
 
 ## Methods
@@ -46,6 +47,10 @@ Type: `Promise<void>`
 
 ## Dependencies
 
+### Used by
+
+ - [forkbombeu-ncr-editor](../forkbombeu-ncr-editor)
+
 ### Depends on
 
 - [dyne-button](../dyne-button)
@@ -56,6 +61,7 @@ Type: `Promise<void>`
 graph TD;
   dyne-slangroom-editor --> dyne-button
   dyne-slangroom-editor --> dyne-code-editor
+  forkbombeu-ncr-editor --> dyne-slangroom-editor
   style dyne-slangroom-editor fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

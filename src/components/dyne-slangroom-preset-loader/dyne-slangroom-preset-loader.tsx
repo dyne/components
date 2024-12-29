@@ -48,6 +48,7 @@ export class DyneSlangroomPresetLoader {
   }
 
   private async loadPresetInEditor(preset: SlangroomPreset) {
+    await this.editor.setContent(EditorId.NAME, preset.name);
     await this.editor.setContent(EditorId.CONTRACT, preset.contract);
     await this.editor.setContent(EditorId.DATA, preset.data);
     await this.editor.setContent(EditorId.KEYS, preset.keys);
