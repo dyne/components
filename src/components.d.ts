@@ -9,13 +9,13 @@ import { Color, Emphasis, Size } from "./components/types";
 import { EditorStateConfig } from "@codemirror/state";
 import { EditorId, SlangroomEditorContent } from "./components/dyne-slangroom-editor/dyne-slangroom-editor";
 import { SlangroomPreset } from "./components/dyne-slangroom-preset-loader/dyne-slangroom-preset-loader";
-import { NcrEditorContent, NcrExtensions } from "./components/forkbombeu-ncr-editor/forkbombeu-ncr-editor";
+import { NcrEditorContent } from "./components/forkbombeu-ncr-editor/forkbombeu-ncr-editor";
 import { EditorId as EditorId1 } from "./components/dyne-slangroom-editor/dyne-slangroom-editor";
 export { Color, Emphasis, Size } from "./components/types";
 export { EditorStateConfig } from "@codemirror/state";
 export { EditorId, SlangroomEditorContent } from "./components/dyne-slangroom-editor/dyne-slangroom-editor";
 export { SlangroomPreset } from "./components/dyne-slangroom-preset-loader/dyne-slangroom-preset-loader";
-export { NcrEditorContent, NcrExtensions } from "./components/forkbombeu-ncr-editor/forkbombeu-ncr-editor";
+export { NcrEditorContent } from "./components/forkbombeu-ncr-editor/forkbombeu-ncr-editor";
 export { EditorId as EditorId1 } from "./components/dyne-slangroom-editor/dyne-slangroom-editor";
 export namespace Components {
     interface DyneButton {
@@ -50,7 +50,9 @@ export namespace Components {
         "keys": string;
         "keysLocalStorageKey": string | undefined;
         "keysMode": 'none' | 'editor' | 'localStorage';
+        "metadata": string;
         "name": string;
+        "schema": string;
         "setContent": (editor: EditorId, content: string) => Promise<void>;
     }
     interface DyneSlangroomPreset {
@@ -66,6 +68,7 @@ export namespace Components {
         "editorId": string;
         "loadLocalPresets": boolean;
         "oasEndpoint"?: string;
+        "reloadPresets": boolean;
     }
     interface ForkbombeuNcrEditor {
         "contract": string;
@@ -76,7 +79,7 @@ export namespace Components {
         "oasEndpoint": string;
         "saveContractUrl": string;
         "schema": string;
-        "setContent": (editor: EditorId1 | NcrExtensions, content: string) => Promise<void>;
+        "setContent": (editor: EditorId1, content: string) => Promise<void>;
     }
 }
 declare global {
@@ -162,7 +165,9 @@ declare namespace LocalJSX {
         "keys"?: string;
         "keysLocalStorageKey"?: string | undefined;
         "keysMode"?: 'none' | 'editor' | 'localStorage';
+        "metadata"?: string;
         "name"?: string;
+        "schema"?: string;
     }
     interface DyneSlangroomPreset {
         "contract"?: string;
@@ -176,6 +181,7 @@ declare namespace LocalJSX {
         "editorId"?: string;
         "loadLocalPresets"?: boolean;
         "oasEndpoint"?: string;
+        "reloadPresets"?: boolean;
     }
     interface ForkbombeuNcrEditor {
         "contract"?: string;

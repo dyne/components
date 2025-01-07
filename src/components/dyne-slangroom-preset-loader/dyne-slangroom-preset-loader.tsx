@@ -15,6 +15,7 @@ export class DyneSlangroomPresetLoader {
   @Prop({ reflect: true }) editorId: string;
   @Prop() loadLocalPresets: boolean = true;
   @Prop() oasEndpoint?: string;
+  @Prop({ mutable: true }) reloadPresets: boolean = false;
 
   @State() presets: SlangroomPreset[] = [];
   @State() filteredPresets: SlangroomPreset[] = [];
@@ -29,6 +30,14 @@ export class DyneSlangroomPresetLoader {
   }
 
   async componentDidLoad() {
+    await this.loadPresets();
+    lockScrollOnDialogOpen(this.dialog!);
+  }
+
+  // Preset selection
+
+  private async loadPresets() {
+    this.presets = [];
     if (this.loadLocalPresets) {
       this.presets = SlangroomPresets;
     }
@@ -37,10 +46,7 @@ export class DyneSlangroomPresetLoader {
       this.addPresets(apiPresets);
     }
     await this.loadPresetsFromElements();
-    lockScrollOnDialogOpen(this.dialog!);
   }
-
-  // Preset selection
 
   private onPresetSelect(preset: SlangroomPreset) {
     this.loadPresetInEditor(preset);
@@ -48,10 +54,12 @@ export class DyneSlangroomPresetLoader {
   }
 
   private async loadPresetInEditor(preset: SlangroomPreset) {
-    await this.editor.setContent(EditorId.NAME, preset.name);
     await this.editor.setContent(EditorId.CONTRACT, preset.contract);
     await this.editor.setContent(EditorId.DATA, preset.data);
     await this.editor.setContent(EditorId.KEYS, preset.keys);
+    await this.editor.setContent(EditorId.SCHEMA, preset.schema || '');
+    await this.editor.setContent(EditorId.METADATA, preset.metadata || '');
+    await this.editor.setContent(EditorId.NAME, preset.name);
   }
 
   // Load presets from dyne-slangroom-preset
@@ -103,6 +111,8 @@ export class DyneSlangroomPresetLoader {
           name: contractPath,
           contract: contractInfo.description,
           keys: contractInfo.keys,
+          metadata: contractInfo.metadata,
+          schema: contractInfo.schema,
           data: '',
           meta: {
             title: contractPath,
@@ -142,12 +152,19 @@ export class DyneSlangroomPresetLoader {
     this.dialog?.addEventListener('cancel', () => unlockScroll());
   }
 
+  private async selectPresetButton() {
+    if (this.reloadPresets) {
+      await this.loadPresets();
+    }
+    await this.dialog?.showModal()
+  }
+
   //
 
   render() {
     return (
       <Host>
-        <dyne-button size="small" emphasis="m" onClick={() => this.dialog?.showModal()}>
+        <dyne-button size="small" emphasis="m" onClick={async () => await this.selectPresetButton()}>
           Select preset
         </dyne-button>
 
@@ -181,7 +198,10 @@ export class DyneSlangroomPresetLoader {
   }
 }
 
-export type SlangroomPreset = (typeof SlangroomPresets)[number];
+export type SlangroomPreset = (typeof SlangroomPresets)[number] & {
+  metadata?: string;
+  schema?: string;
+};
 
 type PresetsProps = {
   onPresetSelect?: (preset: SlangroomPreset) => void;
@@ -192,6 +212,8 @@ type OasPathMethod = {
   description: string;
   keys: string;
   tags: string[];
+  metadata: string;
+  schema: string;
 };
 
 type OasPathValue = {

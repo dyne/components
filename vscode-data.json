@@ -135,6 +135,10 @@
               "name": "none"
             }
           ]
+        },
+        {
+          "name": "name",
+          "description": ""
         }
       ]
     },
@@ -188,6 +192,43 @@
         },
         {
           "name": "oas-endpoint",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "name": "forkbombeu-ncr-editor",
+      "description": {
+        "kind": "markdown",
+        "value": ""
+      },
+      "attributes": [
+        {
+          "name": "contract",
+          "description": ""
+        },
+        {
+          "name": "data",
+          "description": ""
+        },
+        {
+          "name": "keys",
+          "description": ""
+        },
+        {
+          "name": "metadata",
+          "description": ""
+        },
+        {
+          "name": "oas-endpoint",
+          "description": ""
+        },
+        {
+          "name": "save-contract-url",
+          "description": ""
+        },
+        {
+          "name": "schema",
           "description": ""
         }
       ]

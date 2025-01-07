@@ -38,6 +38,8 @@ export class DyneSlangroomEditor {
   @Prop() data = '';
   @Prop() keys = '';
   @Prop({ mutable: true }) name = '';
+  @Prop({ mutable: true }) metadata = '';
+  @Prop({ mutable: true }) schema = '';
 
   @Prop() keysMode: 'none' | 'editor' | 'localStorage' = 'editor';
   @Prop() keysLocalStorageKey: string | undefined = undefined;
@@ -46,6 +48,8 @@ export class DyneSlangroomEditor {
   async getContent(): Promise<SlangroomEditorContent> {
     return {
       name: this.name,
+      metadata: this.metadata,
+      schema: this.schema,
       contract: await this.getEditor(EditorId.CONTRACT).getContent(),
       data: await this.getEditor(EditorId.DATA).getContent(),
       keys: await this.getEditor(EditorId.KEYS).getContent(),
@@ -56,7 +60,11 @@ export class DyneSlangroomEditor {
   @Method()
   async setContent(editor: EditorId, content: string): Promise<void> {
     if (editor == EditorId.NAME) {
-      await this.setName(content);
+      this.setName(content);
+      return;
+    }
+    if (editor == EditorId.METADATA || editor == EditorId.SCHEMA) {
+      this[editor] = content;
       return;
     }
     try {
@@ -154,7 +162,7 @@ export class DyneSlangroomEditor {
     return editor;
   }
 
-  private setName(content: string): Promise<void> {
+  private setName(content: string): void {
     this.el.dispatchEvent(new CustomEvent('nameChanged', { detail: content }));
     this.name = content;
   }
@@ -236,6 +244,8 @@ export enum EditorId {
   KEYS = 'keys',
   HEAP = 'heap',
   RESULT = 'result',
+  SCHEMA = 'schema',
+  METADATA = 'metadata'
 }
 
 export type SlangroomEditorContent = {
@@ -244,6 +254,8 @@ export type SlangroomEditorContent = {
   data: string;
   keys: string;
   result: SlangroomResult | undefined;
+  schema: string;
+  metadata: string;
 };
 
 // Utils
