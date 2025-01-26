@@ -203,12 +203,6 @@ export class ForkbombeuNcrEditor {
               oas-endpoint={this.oasEndpoint}
               reload-presets={this.reloadPresets}
             >
-              <dyne-slangroom-preset
-                group="helpers"
-                name="Preset Element Test"
-                contract="Test"
-                data="Test"
-              ></dyne-slangroom-preset>
             </dyne-slangroom-preset-loader>
             <dyne-button slot="topbar-right" size="small" onClick={() => this.saveContract()}>
               Save contract
