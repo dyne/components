@@ -48,14 +48,12 @@ Type: `Promise<void>`
 
  - [dyne-slangroom-editor](../dyne-slangroom-editor)
  - [dyne-slangroom-preset-loader](../dyne-slangroom-preset-loader)
- - [forkbombeu-ncr-editor](../forkbombeu-ncr-editor)
 
 ### Graph
 ```mermaid
 graph TD;
   dyne-slangroom-editor --> dyne-code-editor
   dyne-slangroom-preset-loader --> dyne-code-editor
-  forkbombeu-ncr-editor --> dyne-code-editor
   style dyne-code-editor fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

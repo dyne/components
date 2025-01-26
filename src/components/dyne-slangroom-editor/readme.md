@@ -12,7 +12,9 @@
 | `keys`                | `keys`                   |             | `string`                               | `''`        |
 | `keysLocalStorageKey` | `keys-local-storage-key` |             | `string \| undefined`                  | `undefined` |
 | `keysMode`            | `keys-mode`              |             | `"editor" \| "localStorage" \| "none"` | `'editor'`  |
+| `metadata`            | `metadata`               |             | `string`                               | `''`        |
 | `name`                | `name`                   |             | `string`                               | `''`        |
+| `schema`              | `schema`                 |             | `string`                               | `''`        |
 
 
 ## Methods

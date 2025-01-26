@@ -12,6 +12,7 @@
 | `editorId`         | `editor-id`          |             | `string`              | `undefined` |
 | `loadLocalPresets` | `load-local-presets` |             | `boolean`             | `true`      |
 | `oasEndpoint`      | `oas-endpoint`       |             | `string \| undefined` | `undefined` |
+| `reloadPresets`    | `reload-presets`     |             | `boolean`             | `false`     |
 
 
 ## Dependencies

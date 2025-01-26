@@ -25,23 +25,10 @@
 
 #### Returns
 
-Type: `Promise<{ name: string; contract: string; keys: string; data: string; meta: { title: string; highlight: string; }; group: string; }>`
+Type: `Promise<SlangroomPreset>`
 
 
 
-
-## Dependencies
-
-### Used by
-
- - [forkbombeu-ncr-editor](../forkbombeu-ncr-editor)
-
-### Graph
-```mermaid
-graph TD;
-  forkbombeu-ncr-editor --> dyne-slangroom-preset
-  style dyne-slangroom-preset fill:#f9f,stroke:#333,stroke-width:4px
-```
 
 ----------------------------------------------
 

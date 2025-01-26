@@ -137,7 +137,15 @@
           ]
         },
         {
+          "name": "metadata",
+          "description": ""
+        },
+        {
           "name": "name",
+          "description": ""
+        },
+        {
+          "name": "schema",
           "description": ""
         }
       ]
@@ -192,6 +200,10 @@
         },
         {
           "name": "oas-endpoint",
+          "description": ""
+        },
+        {
+          "name": "reload-presets",
           "description": ""
         }
       ]
