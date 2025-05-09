@@ -1,5 +1,170 @@
 [
     {
+        "name": "store",
+        "contract": "Rule unknown ignore\nGiven I have a 'string' named 'file_path'\nWhen I create the random object of '128' bits\nThen print the 'random_object'\nThen print the 'file_path'\nThen I send path 'file_path' and send content 'random_object' and store in file\n",
+        "keys": "{}\n",
+        "data": "{\n\t\"file_path\": \"path/to/file/from/FILES_DIR\"\n}\n",
+        "meta": {
+            "title": "store in file",
+            "highlight": "6"
+        },
+        "group": "fs"
+    },
+    {
+        "name": "read_verbatim",
+        "contract": "Rule unknown ignore\nGiven I send path 'file_path' and read verbatim file content and output into 'file_content'\nGiven I have a 'string' named 'file_content'\nThen print the 'file_content'\n",
+        "keys": "{}\n",
+        "data": "{\n\t\"file_path\": \"path/to/file/from/FILES_DIR\"\n}\n",
+        "meta": {
+            "title": "read string file",
+            "highlight": "2"
+        },
+        "group": "fs"
+    },
+    {
+        "name": "read_json",
+        "contract": "Rule unknown ignore\nGiven I send path 'file_path' and read file content and output into 'file_content'\nGiven I have a 'string dictionay' named 'file_content'\nThen print the 'file_content'\n",
+        "keys": "{}\n",
+        "data": "{\n\t\"file_path\": \"path/to/file/from/FILES_DIR\"\n}\n",
+        "meta": {
+            "title": "read json file",
+            "highlight": "2"
+        },
+        "group": "fs"
+    },
+    {
+        "name": "ls",
+        "contract": "Rule unknown ignore\nGiven I send path 'directory_path' and list directory content and output into 'directory_content'\nGiven I have a 'string array' named 'directory_content'\nThen print the 'directory_content'\n",
+        "keys": "{}\n",
+        "data": "{\n\t\"directory_path\": \"path/to/directory/from/FILES_DIR\"\n}\n",
+        "meta": {
+            "title": "list a directory content",
+            "highlight": "2"
+        },
+        "group": "fs"
+    },
+    {
+        "name": "exist",
+        "contract": "Rule unknown ignore\nGiven I send path 'file_path_1' and verify file exists\nGiven I send path 'file_path_2' and verify file does not exist\nGiven I have a 'string' named 'file_path_1'\nThen print the 'file_path_1'\n",
+        "keys": "{}\n",
+        "data": "{\n\t\"file_path_1\": \"path/to/file/that/should/exists/from/FILES_DIR\",\n\t\"file_path_2\": \"path/to/file/that/should/not/exists/from/FILES_DIR\"\n}\n",
+        "meta": {
+            "title": "verify file exists or does not exist",
+            "highlight": "2,3"
+        },
+        "group": "fs"
+    },
+    {
+        "name": "verify_git",
+        "contract": "Rule unknown ignore\n\nGiven I open 'path' and verify git repository\n\nGiven I have a 'string' named 'verified_git_repo'\nThen print data\n",
+        "keys": "{\n    \"path\": \"path/to/repository\"\n}\n",
+        "data": "{\n\t\"verified_git_repo\": \"true\"\n}\n",
+        "meta": {
+            "title": "verify git repository",
+            "highlight": "3"
+        },
+        "group": "git"
+    },
+    {
+        "name": "commit",
+        "contract": "Rule unknown ignore\n\nGiven I open 'path' and send commit 'commit' and create new git commit and output into 'commit_hash'\n\nGiven I have a 'string' named 'commit hash'\nThen print the data\n",
+        "keys": "{\n\t\"path\": \"slangroom\"\n}\n",
+        "data": "{\n\t\"commit\": {\n\t\t\"author\": \"Jhon Doe\",\n\t\t\"message\": \"docs: update readme\",\n\t\t\"email\": \"jhon.doe@example.com\",\n\t\t\"files\": [ \"README.md\" ]\n\t},\n}\n",
+        "meta": {
+            "title": "create new git commit",
+            "highlight": "3"
+        },
+        "group": "git"
+    },
+    {
+        "name": "clone_repository",
+        "contract": "Rule unknown ignore\n\nGiven I connect to 'url' and send path 'path' and clone repository\n\nGiven I have a 'string' named 'cloned_repository'\nThen print the data\n",
+        "keys": "{\n\t\"url\": \"https://github.com/dyne/slangroom\",\n\t\"path\": \"slangroom\"\n}\n",
+        "data": "{\n\t\"cloned_repository\": \"true\"\n}\n",
+        "meta": {
+            "title": "clone repository",
+            "highlight": "3"
+        },
+        "group": "git"
+    },
+    {
+        "name": "set",
+        "contract": "Rule unknown ignore\n\nGiven I send object 'object' and send path 'path' and send value 'value' and manipulate and set\n\nGiven I have a 'string dictionary' named 'object'\nThen print 'mimmo'\n",
+        "keys": "{\n\t\"path\": \"root.element\"\n}\n",
+        "data": "{\n\t\"value\": { \"name\": \"Jhon\" },\n\t\"object\": {\n\t\t\"surname\": \"Doe\"\n\t}\n}\n",
+        "meta": {
+            "title": "manipulate and set",
+            "highlight": "3"
+        },
+        "group": "helpers"
+    },
+    {
+        "name": "pick",
+        "contract": "Rule unknown ignore\n\nGiven I send object 'object' and send properties 'properties' and manipulate and pick and output into 'result'\n\nGiven I have a 'string dictionary' named 'result'\nThen print the data\n",
+        "keys": "{\n\t\"properties\": [\n\t\t\"name\",\n\t\t\"personal_information.email.first\"\n\t]\n}\n",
+        "data": "{\n\t\"object\": {\n\t\t\"name\": \"Jhon\",\n\t\t\"personal_information\": {\n\t\t\t\"email\": {\n\t\t\t\t\"first\": \"example@example.org\",\n\t\t\t\t\"second\": \"email@example.org\"\n\t\t\t},\n\t\t\t\"phone\": \"3338957823\"\n\t\t}\n\t}\n}\n",
+        "meta": {
+            "title": "manipulate and pick",
+            "highlight": "3"
+        },
+        "group": "helpers"
+    },
+    {
+        "name": "omit",
+        "contract": "Rule unknown ignore\n\nGiven I send object 'object' and send paths 'paths' and manipulate and omit and output into 'result'\n\nGiven I have a 'string dictionary' named 'result'\nThen print the data\n",
+        "keys": "{\n\t\"path\": [\n\t\t\"names.third\",\n\t\t\"surnames.second\"\n\t]\n}\n",
+        "data": "{\n\t\"object\": {\n\t\t\"names\": {\n\t\t\t\"first\": \"Bella\",\n\t\t\t\"third\": \"Owen\"\n\t\t},\n\t\t\"surnames\": {\n\t\t\t\"first\": \"Allen\",\n\t\t\t\"second\": \"Briggs\"\n\t\t}\n\t}\n}\n",
+        "meta": {
+            "title": "manipulate and omit",
+            "highlight": "3"
+        },
+        "group": "helpers"
+    },
+    {
+        "name": "merge",
+        "contract": "Rule unknown ignore\n\nGiven I send object 'object' and send sources 'sources' and manipulate and merge and output into 'result'\n\nGiven I have a 'string dictionary' named 'result'\nThen print the data\n",
+        "keys": "{\n\t\"sources\": [\n\t\t{\n\t\t\t\"names\": {\n\t\t\t\t\"second\": \"Jhon\"\n\t\t\t}\n\t\t},\n\t\t{\n\t\t\t\"surnames\": {\n\t\t\t\t\"third\": \"Doe\"\n\t\t\t}\n\t\t}\n\t]\n}\n",
+        "data": "{\n\t\"object\": {\n\t\t\"names\": {\n\t\t\t\"first\": \"Bella\",\n\t\t\t\"third\": \"Owen\"\n\t\t},\n\t\t\"surnames\": {\n\t\t\t\"first\": \"Allen\",\n\t\t\t\"second\": \"Briggs\"\n\t\t}\n\t}\n}\n",
+        "meta": {
+            "title": "manipulate and merge",
+            "highlight": "3"
+        },
+        "group": "helpers"
+    },
+    {
+        "name": "get",
+        "contract": "Rule unknown ignore\n\nGiven I send object 'object' and send path 'path' and manipulate and get and output into 'result'\n\nGiven I have a 'string' named 'result'\nThen print the data\n",
+        "keys": "{\n\t\"the_path\": \"root.element\"\n}\n",
+        "data": "{\n\t\"object\": {\n\t\t\"root\": {\n\t\t\t\"element\": \"value\"\n\t\t}\n\t}\n}\n",
+        "meta": {
+            "title": "manipulate and get",
+            "highlight": "3"
+        },
+        "group": "helpers"
+    },
+    {
+        "name": "concat",
+        "contract": "Rule unknown ignore\n\nGiven I send array 'array' and send values 'values' and manipulate and concat and output into 'result'\n\nGiven I have a 'string array' named 'result'\nThen print the data\n",
+        "keys": "{\n\t\"values\": [\n\t\t\"third\",\n\t\t\"foruth\",\n\t\t\"fifth\"\n\t]\n}\n",
+        "data": "{\n    \"array\": [\n\t\t\"first\",\n\t\t\"second\"\n\t]\n}\n",
+        "meta": {
+            "title": "manipulate and concat",
+            "highlight": "3"
+        },
+        "group": "helpers"
+    },
+    {
+        "name": "compact",
+        "contract": "Rule unknown ignore\n\nGiven I send array 'array' and manipulate and compact and output into 'result'\n\nGiven I have a 'string array' named 'result'\nThen print the data\n",
+        "keys": "{}\n",
+        "data": "{\n\t\"the_array\": [\n\t\t0,\n\t\t\"c\",\n\t\tfalse,\n\t\t\"d\",\n\t\t\"\"\n\t]\n}\n",
+        "meta": {
+            "title": "manipulate and compact",
+            "highlight": "3"
+        },
+        "group": "helpers"
+    },
+    {
         "name": "post_with_headers",
         "contract": "Rule unknown ignore\nGiven I connect to 'address' and send object 'body' and send headers 'headers' and do post and output into 'result'\nGiven I have a 'string dictionary' named 'result'\nThen print the 'result'\n",
         "keys": "{\n\t\"address\": \"https://dyne.org/slangroom\"\n}\n",
@@ -33,83 +198,6 @@
         "group": "http"
     },
     {
-        "name": "get",
-        "contract": "Rule unknown ignore\nGiven I connect to 'address' and do get and output into 'result'\nGiven I have a 'string dictionary' named 'result'\nThen print the 'result'\n",
-        "keys": "{\n\t\"secret\": \"foo\"\n}\n",
-        "data": "{\n\t\"address\": \"https://dyne.org/slangroom\"\n}\n",
-        "meta": {
-            "title": "http get",
-            "highlight": "2"
-        },
-        "group": "http"
-    },
-    {
-        "name": "set",
-        "contract": "Rule unknown ignore\n\nGiven I send object 'object' and send path 'path' and send value 'value' and manipulate and set\n\nGiven I have a 'string dictionary' named 'object'\nThen print 'mimmo'\n",
-        "keys": "{\n\t\"path\": \"root.element\"\n}\n",
-        "data": "{\n\t\"value\": { \"name\": \"Jhon\" },\n\t\"object\": {\n\t\t\"surname\": \"Doe\"\n\t}\n}\n",
-        "meta": {
-            "title": "manipulate and set",
-            "highlight": "3"
-        },
-        "group": "helpers"
-    },
-    {
-        "name": "pick",
-        "contract": "Rule unknown ignore\n\nGiven I send object 'object' and send properties 'properties' and manipulate and pick and output into 'result'\n\nGiven I have a 'string dictionary' named 'result'\nThen print the data\n",
-        "keys": "{\n\t\"properties\": [\n\t\t\"name\",\n\t\t\"personal_information.email.first\"\n\t]\n}\n",
-        "data": "{\n\t\"object\": {\n\t\t\"name\": \"Jhon\",\n\t\t\"personal_information\": {\n\t\t\t\"email\": {\n\t\t\t\t\"frist\": \"example@example.org\",\n\t\t\t\t\"second\": \"email@example.org\"\n\t\t\t},\n\t\t\t\"phone\": \"3338957823\"\n\t\t}\n\t}\n}\n",
-        "meta": {
-            "title": "manipulate and pick",
-            "highlight": "3"
-        },
-        "group": "helpers"
-    },
-    {
-        "name": "omit",
-        "contract": "Rule unknown ignore\n\nGiven I send object 'object' and send paths 'paths' and manipulate and omit and output into 'result'\n\nGiven I have a 'string dictionary' named 'result'\nThen print the data\n",
-        "keys": "{\n\t\"path\": [\n\t\t\"names.third\",\n\t\t\"surnames.second\"\n\t]\n}\n",
-        "data": "{\n\t\"object\": {\n\t\t\"names\": {\n\t\t\t\"first\": \"Bella\",\n\t\t\t\"third\": \"Owen\"\n\t\t},\n\t\t\"surnames\": {\n\t\t\t\"first\": \"Allen\",\n\t\t\t\"second\": \"Briggs\"\n\t\t}\n\t}\n}\n",
-        "meta": {
-            "title": "manipulate and omit",
-            "highlight": "3"
-        },
-        "group": "helpers"
-    },
-    {
-        "name": "merge",
-        "contract": "Rule unknown ignore\n\nGiven I send object 'object' and send sources 'sources' and manipulate and merge and output into 'result'\n\nGiven I have a 'string dictionary' named 'result'\nThen print the data\n",
-        "keys": "{\n\t\"sources\": [\n\t\t{\n\t\t\t\"names\": {\n\t\t\t\t\"second\": \"Jhon\"\n\t\t\t}\n\t\t},\n\t\t{\n\t\t\t\"surnames\": {\n\t\t\t\t\"third\": \"Doe\"\n\t\t\t}\n\t\t}\n\t]\n}\n",
-        "data": "{\n\t\"object\": {\n\t\t\"names\": {\n\t\t\t\"first\": \"Bella\",\n\t\t\t\"third\": \"Owen\"\n\t\t},\n\t\t\"surnames\": {\n\t\t\t\"first\": \"Allen\",\n\t\t\t\"second\": \"Briggs\"\n\t\t}\n\t}\n}\n",
-        "meta": {
-            "title": "manipulate and merge",
-            "highlight": "3"
-        },
-        "group": "helpers"
-    },
-    {
-        "name": "concat",
-        "contract": "Rule unknown ignore\n\nGiven I send array 'array' and send values 'values' and manipulate and concat and output into 'result'\n\nGiven I have a 'string array' named 'result'\nThen print the data\n",
-        "keys": "{\n\t\"values\": [\n\t\t\"third\",\n\t\t\"foruth\",\n\t\t\"fifth\"\n\t]\n}\n",
-        "data": "{\n    \"array\": [\n\t\t\"first\",\n\t\t\"second\"\n\t]\n}\n",
-        "meta": {
-            "title": "manipulate and concat",
-            "highlight": "3"
-        },
-        "group": "helpers"
-    },
-    {
-        "name": "compact",
-        "contract": "Rule unknown ignore\n\nGiven I send array 'array' and manipulate and compact and output into 'result'\n\nGiven I have a 'string array' named 'result'\nThen print the data\n",
-        "keys": "{}\n",
-        "data": "{\n\t\"the_array\": [\n\t\t0,\n\t\t\"c\",\n\t\tfalse,\n\t\t\"d\",\n\t\t\"\"\n\t]\n}\n",
-        "meta": {
-            "title": "manipulate and compact",
-            "highlight": "3"
-        },
-        "group": "helpers"
-    },
-    {
         "name": "validate",
         "contract": "Rule unknown ignore\n\nGiven I send json_data 'json_data' and send json_schema 'json_schema' and validate json and output into 'result'\n\nGiven I have a 'string dictionary' named 'result'\nThen print the 'result'\n",
         "keys": "{\n\t\"json_schema\": {\n\t\t\"type\": \"object\",\n\t\t\"properties\": {\n\t\t\t\"first_name\": {\n\t\t\t\t\"type\": \"string\"\n\t\t\t},\n\t\t\t\"last_name\": {\n\t\t\t\t\"type\": \"string\"\n\t\t\t}\n\t\t},\n\t\t\"required\": [\n\t\t\t\"first_name\",\n\t\t\t\"last_name\"\n\t\t]\n\t}\n}\n",
@@ -121,15 +209,114 @@
         "group": "json-schema"
     },
     {
-        "name": "qr_code",
-        "contract": "Rule unknown ignore\n\nGiven I send text 'text' and create qr code and output into 'result'\n\nGiven I have a 'string' named 'result'\nThen print the 'result'\n",
+        "name": "replace",
+        "contract": "Rule unknown ignore\n\nGiven I send url 'url' and replace the current location\n\nGiven nothing\nThen print data\n",
         "keys": "{}\n",
-        "data": "{\n    \"text\": \"Hello World!\"\n}\n",
+        "data": "{\n    \"url\": \"https://example.com\"\n}\n",
         "meta": {
-            "title": "create qr code",
+            "title": "replace the current location",
             "highlight": "3"
         },
-        "group": "qrcode"
+        "group": "location"
+    },
+    {
+        "name": "reload",
+        "contract": "Rule unknown ignore\n\nGiven I reload the current page\n\nGiven nothing\nThen print data\n",
+        "keys": "{}\n",
+        "data": "{}\n",
+        "meta": {
+            "title": "reload the page",
+            "highlight": "3"
+        },
+        "group": "location"
+    },
+    {
+        "name": "redirect",
+        "contract": "Rule unknown ignore\n\nGiven I send url 'url' and redirect to the url\n\nGiven nothing\nThen print data\n",
+        "keys": "{}\n",
+        "data": "{\n    \"url\": \"https://example.com\"\n}\n",
+        "meta": {
+            "title": "redirect to the url",
+            "highlight": "3"
+        },
+        "group": "location"
+    },
+    {
+        "name": "new_window",
+        "contract": "Rule unknown ignore\n\nGiven I send url 'url' and open the url in a new window\n\nGiven nothing\nThen print data\n",
+        "keys": "{}\n",
+        "data": "{\n    \"url\": \"https://example.com\"\n}\n",
+        "meta": {
+            "title": "open the url in a new window",
+            "highlight": "3"
+        },
+        "group": "location"
+    },
+    {
+        "name": "location",
+        "contract": "Rule unknown ignore\n\n# this reutrn the window.location object\n# singular element of location can be obtained by adding\n# the reuqest element, i.e. href, protocol, host, hostname, port,\n# pathname, search params, hash, after 'location' like\n# Given I get the current location href and output into 'result'\n\nGiven I get the current location and output into 'location'\n\nGiven I have a 'string dictionary' named 'location'\nThen print data\n",
+        "keys": "{}\n",
+        "data": "{}\n",
+        "meta": {
+            "title": "get the current location",
+            "highlight": "9"
+        },
+        "group": "location"
+    },
+    {
+        "name": "history_length",
+        "contract": "Rule unknown ignore\n\nGiven I get the history length and output into 'history_length'\n\nGiven I have a 'number' named 'history_length'\nThen print data\n",
+        "keys": "{}\n",
+        "data": "{}\n",
+        "meta": {
+            "title": "get the history length",
+            "highlight": "3"
+        },
+        "group": "location"
+    },
+    {
+        "name": "go_to_index",
+        "contract": "Rule unknown ignore\n\nGiven send index 'index' and I go to a specific page in history\n\nGiven nothing\nThen print data\n",
+        "keys": "{}\n",
+        "data": "{\n    \"index\": -1\n}\n",
+        "meta": {
+            "title": "go to a specific page in history",
+            "highlight": 3
+        },
+        "group": "location"
+    },
+    {
+        "name": "go_forward",
+        "contract": "Rule unknown ignore\n\nGiven I go forward in history\n\nGiven nothing\nThen print data\n",
+        "keys": "{}\n",
+        "data": "{}\n",
+        "meta": {
+            "title": "go forward in history",
+            "highlight": "3"
+        },
+        "group": "location"
+    },
+    {
+        "name": "go_back",
+        "contract": "Rule unknown ignore\n\nGiven I go back in history\n\nGiven nothing\nThen print data\n",
+        "keys": "{}\n",
+        "data": "{}\n",
+        "meta": {
+            "title": "go back in history",
+            "highlight": "3"
+        },
+        "group": "location"
+    },
+    {
+        "name": "assign",
+        "contract": "Rule unknown ignore\n\nGiven I send url 'url' and assign the current location\n\nGiven nothing\nThen print data\n",
+        "keys": "{}\n",
+        "data": "{\n    \"url\": \"https://example.com\"\n}\n",
+        "meta": {
+            "title": "assign the current location",
+            "highlight": "3"
+        },
+        "group": "location"
     },
     {
         "name": "update_record",
@@ -160,6 +347,17 @@
         "data": "{\n\t\"url\": \"/api/hello/user\",\n\t\"send_parameters\": {}\n}\n",
         "meta": {
             "title": "send request",
+            "highlight": "5"
+        },
+        "group": "pocketbase"
+    },
+    {
+        "name": "refresh_token",
+        "contract": "Rule unknown ignore\n\nGiven I connect to 'pb_address' and start capacitor pb client and output into 'result'\n\nGiven I refresh token and output into 'refresh_output'\n\nGiven I have a 'string dictionary' named 'refresh_output'\nThen print data\n",
+        "keys": "{\n\t\"pb_address\": \"http://127.0.0.1:8090\"\n}\n",
+        "data": "{}\n",
+        "meta": {
+            "title": "refresh token",
             "highlight": "5"
         },
         "group": "pocketbase"
@@ -229,5 +427,27 @@
             "highlight": "6"
         },
         "group": "pocketbase"
+    },
+    {
+        "name": "qr_code",
+        "contract": "Rule unknown ignore\n\nGiven I send text 'text' and create qr code and output into 'result'\n\nGiven I have a 'string' named 'result'\nThen print the 'result'\n",
+        "keys": "{}\n",
+        "data": "{\n    \"text\": \"Hello World!\"\n}\n",
+        "meta": {
+            "title": "create qr code",
+            "highlight": "3"
+        },
+        "group": "qrcode"
+    },
+    {
+        "name": "fetch_timestamp",
+        "contract": "Rule unknown ignore\n\nGiven I fetch the local timestamp in seconds and output into 'result_in_seconds'\nGiven I fetch the local timestamp in milliseconds and output into 'result_in_milliseconds'\n\nGiven I have a 'string' named 'result_in_seconds'\nGiven I have a 'string' named 'result_in_milliseconds'\nThen print the 'result_in_seconds'\nThen print the 'result_in_milliseconds'\n",
+        "keys": "{}\n",
+        "data": "{}\n",
+        "meta": {
+            "title": "fetch the local timestamp",
+            "highlight": "3-4"
+        },
+        "group": "timestamp"
     }
 ]
