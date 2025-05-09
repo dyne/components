@@ -7,7 +7,7 @@ import degit from 'degit';
 
 // -- Config -- //
 
-const SLANGROOM_REPO = 'github:dyne/slangroom';
+const SLANGROOM_REPO = 'dyne/slangroom';
 const SLANGROOM_DIR = 'slangroom';
 const EXAMPLES_DIR = 'examples';
 const PRESETS_FILE = 'slangroom-presets.json';
