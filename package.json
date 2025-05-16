@@ -93,7 +93,7 @@
     "@codemirror/state": "^6.4.1",
     "@codemirror/view": "^6.28.2",
     "@sinclair/typebox": "^0.32.34",
-    "@slangroom/browser": "^1.48.0",
+    "@slangroom/browser": "^1.48.3",
     "@types/degit": "^2.8.6",
     "@types/node": "^20.14.8",
     "ansi-to-html": "^0.7.2",
