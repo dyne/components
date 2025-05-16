@@ -105,7 +105,7 @@ function getSlangroomBrowserModulePackageJson() {
 function cloneRepo(repo, dest) {
   return new Promise((resolve, reject) => {
     const emitter = degit(repo, {
-      cache: true,
+      cache: false,
       force: true,
       verbose: true,
     });

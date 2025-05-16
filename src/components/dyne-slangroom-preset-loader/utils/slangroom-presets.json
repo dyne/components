@@ -1,5 +1,71 @@
 [
     {
+        "name": "read_tx_id",
+        "contract": "Rule unknown ignore\n\nGiven I connect to 'ethereum' and send transaction 'signed_transaction' and read the ethereum transaction id after broadcast and output into 'transaction_id'\n\nGiven I have a 'string' named 'transaction_id'\nThen print the data\n",
+        "keys": "{\n\t\"ethereum\": \"http://78.47.38.223:9485\"\n}\n",
+        "data": "{\n    \"signed_transaction\": \"f8ee8085174876e800830493e094e54c7b475644fbd918cfedc57b1c9179939921e680b884b374012b0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003354686973206973206d7920666972737420646174612073746f726564206f6e20657468657265756d20626c6f636b636861696e0000000000000000000000000084ccc2c50ca0776b58c34145c9553b5235fe211a6237c48b90b4784bc6d86660b0236af3bab2a07b57259d71f12666d962eb7a06b2b8332323a614071d0b39c35181b2aee04b8e\"\n}\n",
+        "meta": {
+            "title": "read the ethereum transaction id after broadcast",
+            "highlight": "3"
+        },
+        "group": "ethereum"
+    },
+    {
+        "name": "read_nonce",
+        "contract": "Rule unknown ignore\nScenario 'ethereum': read nonce\n\nGiven I connect to 'ethereum' and send address 'address' and read the ethereum nonce and output into 'ethereum_nonce'\n\nGiven I have a 'ethereum nonce'\nThen print the 'ethereum_nonce'\n",
+        "keys": "{\n\t\"ethereum\": \"http://78.47.38.223:9485\"\n}\n",
+        "data": "{\n\t\"address\": \"0x7d6df85bDBCe99151c813fd1DDE6BC007c523C27\"\n}\n",
+        "meta": {
+            "title": "read the ethereum nonce",
+            "highlight": "4"
+        },
+        "group": "ethereum"
+    },
+    {
+        "name": "read_gas",
+        "contract": "Rule unknown ignore\nScenario 'ethereum': read gas price\n\nGiven I connect to 'ethereum' and read the ethereum suggested gas price and output into 'gas_price'\n\nGiven I have a 'gas price'\nThen print the data\n",
+        "keys": "{\n\t\"ethereum\": \"http://78.47.38.223:9485\"\n}\n",
+        "data": "{}\n",
+        "meta": {
+            "title": "read the ethereum suggested gas price",
+            "highlight": "4"
+        },
+        "group": "ethereum"
+    },
+    {
+        "name": "read_bytes",
+        "contract": "Rule unknown ignore\nScenario 'ethereum': read transaction\n\nGiven I connect to 'ethereum' and send transaction_id 'tag' and read the ethereum bytes and output into 'hex_result'\n\nGiven I have a 'hex' named 'hex_result'\nWhen I create the string from the ethereum bytes named 'hex_result'\nWhen I rename the 'string' to 'string_result'\nThen print data\n",
+        "keys": "{\n\t\"ethereum\": \"http://78.47.38.223:9485\"\n}\n",
+        "data": "{\n\t\"tag\": \"0467636a2557a1ccdaf10ce17ee74340096c510acfa9181c85756d43a8bed522\"\n}\n",
+        "meta": {
+            "title": "read the ethereum transaction body",
+            "highlight": "4"
+        },
+        "group": "ethereum"
+    },
+    {
+        "name": "read_balance",
+        "contract": "Rule unknown ignore\n\nGiven I connect to 'ethereum' and send address 'address' and read the ethereum balance and output into 'balance'\nGiven I connect to 'ethereum' and send addresses 'addresses' and read the ethereum balance and output into 'balances'\n\nGiven I have a 'string' named 'balance'\nGiven I have a 'string array' named 'balances'\nThen print the data\n",
+        "keys": "{\n\t\"ethereum\": \"http://78.47.38.223:9485\"\n}\n",
+        "data": "{\n\t\"address\": \"0x2D010920b43aFb54f8d5fB51c9354FbC674b28Fc\",\n\t\"addresses\": [\n\t\t\"0xc32510251F77382bb9214144D2c488408Ec2047C\",\n\t\t\"0xFf02577F140557190693cFf549025e66119FEA52\",\n\t\t\"0x4743879F5e9dc3fcE41E30380365441E8D14CCEc\"\n    ]\n}\n",
+        "meta": {
+            "title": "read the ethereum balance",
+            "highlight": "3-4"
+        },
+        "group": "ethereum"
+    },
+    {
+        "name": "complex",
+        "contract": "Rule unknown ignore\nScenario 'ethereum': Store an object on eth\n\nGiven I connect to 'ethereum' and send address 'address' and read the ethereum nonce and output into 'ethereum_nonce'\nGiven I connect to 'ethereum' and read the suggested gas price and output into 'gas_price'\n\n# from slangroom\nGiven I have a 'ethereum nonce'\nGiven I have a 'gas price'\n\n# from keys\nGiven I have the 'keyring'\n\n# from data\nGiven I have a 'ethereum address' named 'storage contract'\nGiven I have a 'string' named 'to be stored'\nGiven I have a 'gas limit'\n\n# create the signed transaction to store the data\nWhen I create the ethereum transaction to 'storage contract'\nWhen I use the ethereum transaction to store 'to be stored'\nWhen I create the signed ethereum transaction for chain 'fabt'\n\nThen print the 'signed ethereum transaction'\n\nThen I connect to 'ethereum' and send transaction 'signed_ethereum_transaction' and read the ethereum transaction id after broadcast and output into 'transaction_id'\n",
+        "keys": "{\n\t\"ethereum\": \"http://78.47.38.223:9485\",\n\t\"keyring\": {\n\t\t\"ethereum\": \"078ad84d6c7a50c6dcd983d644da65e30d8cea063d8ea49aeb7ee7f0aaf6a4f7\"\n\t}\n}\n",
+        "data": "{\n    \"gas_limit\": \"100000\",\n\t\"storage_contract\": \"0x662c4017C01bA23c94257289Dab8C2757b472B81\",\n\t\"to_be_srtored\": \"Some data\",\n}\n",
+        "meta": {
+            "title": "complex example",
+            "highlight": "4,5,26"
+        },
+        "group": "ethereum"
+    },
+    {
         "name": "store",
         "contract": "Rule unknown ignore\nGiven I have a 'string' named 'file_path'\nWhen I create the random object of '128' bits\nThen print the 'random_object'\nThen print the 'file_path'\nThen I send path 'file_path' and send content 'random_object' and store in file\n",
         "keys": "{}\n",
@@ -449,5 +515,16 @@
             "highlight": "3-4"
         },
         "group": "timestamp"
+    },
+    {
+        "name": "execute_zencode",
+        "contract": "Rule unknown ignore\n\nGiven I send keys 'keys' and send data 'data' and send script 'script' and execute zencode and output into 'result'\n\nGiven I have a 'string dictionary' named 'result'\nThen print the 'result'\n",
+        "keys": "{\n\t\"zencode\": \"Scenario 'ecdh': Create the public key\\nGiven I have the 'keyring'\\nWhen I create the ecdh public key\\nThen print the 'ecdh public key'\\n\",\n\t\"data\": {}\n}\n",
+        "data": "{\n\t\"keys\": {\n\t\t\"keyring\": {\n\t\t\t\"ecdh\": \"FJ5Esc1koLSH+9pKSdI65tcyH2HowzXMe0UdsqktmZU=\"\n\t\t}\n\t}\n}\n",
+        "meta": {
+            "title": " execute zencode",
+            "highlight": "3"
+        },
+        "group": "zencode"
     }
 ]
