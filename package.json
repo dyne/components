@@ -37,7 +37,7 @@
     "sbb": "stencil build && storybook build --docs",
     "dev": "NODE_ENV=development npm-run-all -p dev:*",
     "dev:start": "stencil build --watch --dev --serve",
-    "dev:storybook": "sleep 6 && storybook dev -p 6006",
+    "dev:storybook": "sleep 20 && storybook dev -p 6006",
     "generate-slangroom-presets-file": "node src/components/dyne-slangroom-preset-loader/utils/generate-preset-json.mjs"
   },
   "devDependencies": {

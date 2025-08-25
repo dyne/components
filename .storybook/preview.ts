@@ -1,7 +1,14 @@
 import { withThemeByClassName } from '@storybook/addon-themes';
 import { Preview } from '@storybook/html';
-import { defineCustomElements } from '../loader';
+// import { defineCustomElements } from '../loader';
 import dyneTheme from './dyne-theme';
+
+let defineCustomElements: () => void = () => {};
+
+if (process.env.NODE_ENV !== 'development') {
+  // Only import the loader in production builds
+  defineCustomElements = require('../loader').defineCustomElements;
+}
 
 defineCustomElements();
 
