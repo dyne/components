@@ -1,3 +1,10 @@
+## [1.7.4](https://github.com/dyne/components/compare/v1.7.3...v1.7.4) (2025-08-25)
+
+
+### Bug Fixes
+
+* **docs:** correct links to file and dev mode ([#40](https://github.com/dyne/components/issues/40)) ([5139af1](https://github.com/dyne/components/commit/5139af135fd86bdadb7fe9c87fd7bff7cf40cb89))
+
 ## [1.7.3](https://github.com/dyne/components/compare/v1.7.2...v1.7.3) (2025-08-25)
 
 
