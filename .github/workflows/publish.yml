@@ -12,6 +12,8 @@ jobs:
   test:
     name: 🧪
     runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: "--max-old-space-size=4096"
     steps:
       - uses: dyne/pnpm@main
         with:
