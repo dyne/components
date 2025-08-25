@@ -1,5 +1,12 @@
 ## [1.7.3](https://github.com/dyne/components/compare/v1.7.2...v1.7.3) (2025-08-25)
 
+
+### Bug Fixes
+
+* **ci:** use 6GB sd msc old space size also in release step ([b0b2b0a](https://github.com/dyne/components/commit/b0b2b0ad6911dbedb35a463c7c8b11a99297e125))
+
+## [1.7.3](https://github.com/dyne/components/compare/v1.7.2...v1.7.3) (2025-08-25)
+
 ## [1.7.2](https://github.com/dyne/components/compare/v1.7.1...v1.7.2) (2025-07-09)
 
 ## [1.7.1](https://github.com/dyne/components/compare/v1.7.0...v1.7.1) (2025-05-16)
