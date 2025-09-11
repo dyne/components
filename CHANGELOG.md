@@ -1,3 +1,5 @@
+## [1.7.5](https://github.com/dyne/components/compare/v1.7.4...v1.7.5) (2025-09-11)
+
 ## [1.7.4](https://github.com/dyne/components/compare/v1.7.3...v1.7.4) (2025-08-25)
 
 
