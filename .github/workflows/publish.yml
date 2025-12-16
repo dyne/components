@@ -61,10 +61,11 @@ jobs:
       - uses: dyne/pnpm@main
         with:
           node-version: 22
-      - run: pnpm semantic-release
+      - run: |
+          npm install -g npm@latest
+          pnpm semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   cdn:
     name: 🗑️
